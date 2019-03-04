@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
@@ -31,7 +32,7 @@ module.exports = {
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
-    watchContentBase: true,
+    hot: true,
     port: 8000
   },
   plugins: [
@@ -41,7 +42,8 @@ module.exports = {
       template: 'public/index.html',
       filename: 'index.html'
     }),
-    new ManifestPlugin()
+    new ManifestPlugin(),
+    new webpack.HotModuleReplacementPlugin()
   ],
   output: {
     filename: 'bundle.js',
