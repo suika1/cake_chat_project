@@ -1,2 +1,4 @@
 node_modules
+backend/.prettierrc.js
+backend/package-lock.json
 frontend/package-lock.json

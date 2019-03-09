@@ -1,19 +1,38 @@
 const express = require('express');
 const app = express();
-const port = 8001;
+
+const api = require('./temporary-store/chats');
 
 app.get('/:chatId?', (req, res) => {
-  console.log('request body: ', req.body);
-  console.log('cookies: ', req.cookies);
-  console.log('ip: ', req.ip);
-  console.log('params', req.params);
-  console.log('------')
-  
-  
-  res.status(200);
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  // res.send(`{"text": "${req.body || 'haru'}"}`);
-  res.send('hellloooo!!!');
+  // console.log('------');
+
+  const chatId = req.params.chatId;
+  const foundChat = api.getChat(chatId);
+  const allChats = api.getChatList();
+  // console.log('all chats: ', allChats);
+  // console.log('found chat: ', foundChat);
+  console.log();
+  console.log('------');
+
+  // set headers
+  res
+    .set('Content-Type', 'application/json')
+    .set('Access-Control-Allow-Origin', '*');
+  if (!foundChat) {
+    return res
+      .status(400)
+      .header('Content-Type', 'text/plain')
+      .send(`Chat with id: ${chatId} not found.`);
+  }
+  // send response
+  res.send(
+    JSON.stringify({
+      matching: foundChat,
+      all: allChats,
+    }),
+  );
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
