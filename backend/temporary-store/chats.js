@@ -1,5 +1,9 @@
 // TODO: rework with database
 
+const {
+  ChatNotFoundException,
+  BadFieldsException,
+} = require('../exceptions/exceptions');
 const moment = require('moment');
 const uuid = require('uuid/v4');
 const lodash = require('lodash');
@@ -57,11 +61,18 @@ const chatStore = [
 
 const getChatList = () => [...chatStore];
 
-const getChat = chatId => chatStore.find(chat => chat.id === chatId);
+const getChat = chatId => {
+  const res = chatStore.find(chat => chat.id === chatId);
+  if (!res) throw new ChatNotFoundException(chatId);
+  return res;
+};
 
 // Mutations
 
 const addChat = name => {
+  if (!name) {
+    throw new BadFieldsException('name');
+  }
   const newChat = {
     id: uuid(),
     chatName: name,
@@ -71,25 +82,58 @@ const addChat = name => {
   chatStore.push(newChat);
 };
 
+const updateChatProperty = (chatId, prop, value) => {
+  if (!chatId || !prop || !value) {
+    const badFields = {};
+    [{ chatId }, { prop }, { value }]
+      .filter(a => !Object.values(a)[0])
+      .forEach(a => Object.assign(badFields, a));
+    console.log('BadFields: ', badFields);
+    throw new BadFieldsException(...Object.keys(badFields));
+  }
+  let foundIndex = -1;
+  const found = chatStore.find((chat, index) => {
+    if (chat.id === chatId) {
+      foundIndex = index;
+      return true;
+    }
+    return false;
+  });
+  if (foundIndex === -1) {
+    throw new ChatNotFoundException(chatId);
+  }
+
+  chatStore.splice(foundIndex, 1, {
+    ...found,
+    [prop]: value,
+  });
+};
+
 const removeChat = chatId => {
+  if (!chatStore.find(chat => chat.id === chatId)) {
+    throw new ChatNotFoundException(chatId);
+  }
   lodash.remove(chat => chat.id === chatId);
 };
 
 const addMessage = (chatId, text, author) => {
-  chatStore
-    .find(chat => chat.id === chatId)
-    .messages.push({
-      id: uuid(),
-      author,
-      sendTime: moment().toISOString(),
-      content: text,
-    });
+  const found = chatStore.find(chat => chat.id === chatId);
+  if (!found) {
+    throw new ChatNotFoundException(chatId);
+  }
+  found.messages.push({
+    id: uuid(),
+    author,
+    sendTime: moment().format('DD-MM-YYYY'),
+    content: text,
+  });
 };
 
 module.exports = {
   getChatList,
   getChat,
   addChat,
+  updateChatProperty,
   removeChat,
   addMessage,
 };

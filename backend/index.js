@@ -1,38 +1,55 @@
 const express = require('express');
 const app = express();
+const {
+  ChatNotFoundException,
+  BadFieldsException,
+} = require('./exceptions/exceptions');
+const { generateResponse } = require('./utils/utils');
 
-const api = require('./temporary-store/chats');
+// parse application/x-www-form-urlencoded && application/json
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
-app.get('/:chatId?', (req, res) => {
-  // console.log('------');
-
-  const chatId = req.params.chatId;
-  const foundChat = api.getChat(chatId);
-  const allChats = api.getChatList();
-  // console.log('all chats: ', allChats);
-  // console.log('found chat: ', foundChat);
-  console.log();
-  console.log('------');
-
-  // set headers
+// Middleware to set headers
+app.use((req, res, next) => {
   res
     .set('Content-Type', 'application/json')
     .set('Access-Control-Allow-Origin', '*');
-  if (!foundChat) {
-    return res
-      .status(400)
-      .header('Content-Type', 'text/plain')
-      .send(`Chat with id: ${chatId} not found.`);
+  next();
+});
+
+// Delegate '/' path to router
+app.use('/', require('./routes/api/chatRoutes'));
+
+// Log errors && Return response with error
+app.use((err, req, res, next) => {
+  console.warn('\n--------------- Error ---------------\n', err.message);
+  if (err instanceof ChatNotFoundException) {
+    console.warn('--------------------------------------\n');
+    return generateResponse({
+      res,
+      status: 400,
+      error: err.message,
+    });
+  } else if (err instanceof BadFieldsException) {
+    return generateResponse({
+      res,
+      status: 400,
+      error: {
+        message: err.message,
+        fields: err.fields,
+      },
+    });
   }
-  // send response
-  res.send(
-    JSON.stringify({
-      matching: foundChat,
-      all: allChats,
-    }),
-  );
+  console.warn('--------------------------------------\n');
+  return generateResponse({
+    res,
+    status: 500,
+    results: '',
+    error: 'Internal server error',
+  });
 });
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
+app.listen(PORT, () => console.log(`Server is listening on port ${PORT}.`));
