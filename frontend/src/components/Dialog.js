@@ -1,76 +1,78 @@
-import React from "react";
-import { List, Button, Fab, Typography, TextField } from "@material-ui/core";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import MessageFormContainer from "../modules/MessageFormContainer";
-import Message from "./Message";
-import * as Scroll from "react-scroll/modules";
-import { Link, NavLink, Redirect } from "react-router-dom";
-import { COOKIE_CHATS, HOMEPAGE } from "../actions/MessageActions";
-import Cookies from "js-cookie";
-import { getDocHeight } from "../utils/utils";
-import { handleAuthClick } from "../actions/AuthActions";
+import React from 'react';
+import { List, Button, Fab, Typography, TextField } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import MessageFormContainer from '../modules/MessageFormContainer';
+import Message from './Message';
+import * as Scroll from 'react-scroll/modules';
+import { Link, NavLink, Redirect } from 'react-router-dom';
+
+import { COOKIE_CHATS, HOMEPAGE } from 'utils/app-constants';
+
+import Cookies from 'js-cookie';
+import { getDocHeight } from '../utils/utils';
+import { handleAuthClick } from '../actions/auth/actions';
 
 const styles = {
   dialog: {
-    position: "relative",
-    width: "70%",
-    padding: "20px",
-    margin: "15px 0",
-    left: "20%"
+    position: 'relative',
+    width: '70%',
+    padding: '20px',
+    margin: '15px 0',
+    left: '20%',
   },
   messageList: {
-    margin: "50px auto",
-    width: "70%",
-    maxWidth: "800px"
+    margin: '50px auto',
+    width: '70%',
+    maxWidth: '800px',
   },
   topFab: {
-    position: "fixed",
-    bottom: "140px",
-    right: "10%"
+    position: 'fixed',
+    bottom: '140px',
+    right: '10%',
   },
   chatKeyInput: {
-    width: "60%"
+    width: '60%',
   },
   botFab: {
-    position: "fixed",
-    bottom: "70px",
-    right: "10%"
+    position: 'fixed',
+    bottom: '70px',
+    right: '10%',
   },
-  "@media (max-width: 1200px)": {
+  '@media (max-width: 1200px)': {
     dialog: {
-      left: "25%"
-    }
+      left: '25%',
+    },
   },
-  "@media (max-width: 900px)": {
+  '@media (max-width: 900px)': {
     dialog: {
-      textAlign: "center",
-      margin: "0",
-      width: "100%",
-      left: "0"
+      textAlign: 'center',
+      margin: '0',
+      width: '100%',
+      left: '0',
     },
     messageList: {
-      width: "95%",
-      paddingRight: "50px"
+      width: '95%',
+      paddingRight: '50px',
     },
     chatKeyInput: {
-      width: "100%"
+      width: '100%',
     },
     topFab: {
-      right: "5px"
+      right: '5px',
     },
     botFab: {
-      right: "5px"
+      right: '5px',
     },
     chatLinkBlock: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      "& > * + *": {
-        marginTop: "10px"
-      }
-    }
-  }
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      '& > * + *': {
+        marginTop: '10px',
+      },
+    },
+  },
 };
 
 const INTERVAL = 5000;
@@ -83,7 +85,7 @@ class Dialog extends React.Component {
       timerId: null,
       lastId: null,
       chatKey: this.props.match.params.chatKey,
-      newPosted: false
+      newPosted: false,
     };
   }
 
@@ -94,9 +96,6 @@ class Dialog extends React.Component {
 
   //Every component update - setup new state
   componentDidUpdate() {
-    console.log(`dialog did update`) ||
-      console.log(this.props) ||
-      console.log(this.state);
     //this.resetTimer();
   }
 
@@ -108,7 +107,6 @@ class Dialog extends React.Component {
   //resets intervals
   resetTimer = () => {
     if (this.props.isFetching) return;
-    //console.log(`doc height ::`) || console.log(getDocHeight());
     let { messages, getMessages } = this.props;
     let chatKey = this.props.match.params.chatKey;
     let msgs;
@@ -124,7 +122,7 @@ class Dialog extends React.Component {
         this.setState({
           chatKey: chatKey,
           timerId: setInterval(() => getMessages(-1, chatKey), INTERVAL),
-          lastId: -1
+          lastId: -1,
         });
       } else {
         let lastId = msgs[msgs.length - 1].id;
@@ -132,16 +130,17 @@ class Dialog extends React.Component {
           {
             timerId: setInterval(() => getMessages(lastId, chatKey), INTERVAL),
             lastId: lastId,
-            chatKey: this.props.match.params.chatKey
+            chatKey: this.props.match.params.chatKey,
           },
-          () => Scroll.animateScroll.scrollTo(getDocHeight())
+          () => Scroll.animateScroll.scrollTo(getDocHeight()),
         );
       }
     } else if (msgs && (msgs[msgs.length - 1] || msgs.length === 0)) {
       let lastId;
       if (msgs.length === 0) {
         lastId = -1;
-      } else {ss
+      } else {
+        ss;
         lastId = msgs[msgs.length - 1].id;
       }
       //if interval set and new messages are present
@@ -152,23 +151,23 @@ class Dialog extends React.Component {
             {
               timerId: setInterval(
                 () => getMessages(lastId, chatKey),
-                INTERVAL
+                INTERVAL,
               ),
               lastId: lastId,
-              newPosted: false
+              newPosted: false,
             },
-            () => Scroll.animateScroll.scrollTo(getDocHeight())
+            () => Scroll.animateScroll.scrollTo(getDocHeight()),
           );
         } else {
           this.setState(
             {
               timerId: setInterval(
                 () => getMessages(lastId, chatKey),
-                INTERVAL
+                INTERVAL,
               ),
-              lastId: lastId
+              lastId: lastId,
             },
-            () => Scroll.animateScroll.scrollTo(getDocHeight())
+            () => Scroll.animateScroll.scrollTo(getDocHeight()),
           );
         }
       } else if (this.state.timerId === null && this.state.lastId === null) {
@@ -176,9 +175,9 @@ class Dialog extends React.Component {
         this.setState(
           {
             timerId: setInterval(() => getMessages(lastId, chatKey), INTERVAL),
-            lastId: lastId
+            lastId: lastId,
           },
-          () => Scroll.animateScroll.scrollTo(getDocHeight())
+          () => Scroll.animateScroll.scrollTo(getDocHeight()),
         );
       }
     }
@@ -220,14 +219,13 @@ class Dialog extends React.Component {
     let msg;
     if (!messages.find(a => a.chatKey === chatKey)) msg = [];
     else msg = messages.find(a => a.chatKey === chatKey).msg;
-    //console.log(`location == `) || console.log(this.props.location);
-    if (this.props.match.url === "/") {
-      return <Redirect to={`/${Cookies.getJSON(COOKIE_CHATS)[0].key}`} />;
-    }
+    // if (this.props.match.url === "/") {
+    //   return <Redirect to={`/${Cookies.getJSON(COOKIE_CHATS)[0] ? Cookies.getJSON(COOKIE_CHATS)[0].key : '/1'}`} />;
+    // }
     return (
       <div className={classes.dialog}>
         <Typography variant="h3">
-          {this.props.user.fullName !== "" ? this.props.user.fullName : ""}
+          {this.props.user.fullName !== '' ? this.props.user.fullName : ''}
         </Typography>
         <Button
           id="auth-btn"
@@ -238,7 +236,7 @@ class Dialog extends React.Component {
               : () => handleAuthClick()
           }
         >
-          {this.props.user.name === "" ? "Войти" : "Выйти"}
+          {this.props.user.name === '' ? 'Войти' : 'Выйти'}
         </Button>
         <Button onClick={() => getInitialMessages(chatKey)}>
           Try to load again
@@ -250,8 +248,12 @@ class Dialog extends React.Component {
           Clear cookies
         </Button>
         <Link
-          style={{ textDecoration: "none" }}
-          to={`/${Cookies.getJSON(COOKIE_CHATS)[0].key}`}
+          style={{ textDecoration: 'none' }}
+          to={`/${
+            Cookies.getJSON(COOKIE_CHATS)[0]
+              ? Cookies.getJSON(COOKIE_CHATS)[0].key
+              : '/1'
+          }`}
         >
           <Button onClick={() => this.props.leaveChat(this.state.chatKey)}>
             Leave this chat
@@ -270,9 +272,9 @@ class Dialog extends React.Component {
           />
           <Fab
             onClick={() => {
-              let input = document.getElementById("current-chat-key");
+              let input = document.getElementById('current-chat-key');
               input.select();
-              document.execCommand("copy");
+              document.execCommand('copy');
             }}
           >
             Copy
@@ -297,7 +299,7 @@ class Dialog extends React.Component {
           lastId={this.state.lastId}
           onSend={() =>
             this.setState({
-              newPosted: true
+              newPosted: true,
             })
           }
         />
@@ -315,7 +317,7 @@ Dialog.propTypes = {
   error: PropTypes.string.isRequired,
   getMessages: PropTypes.func.isRequired,
   getInitialMessages: PropTypes.func.isRequired,
-  leaveChat: PropTypes.func.isRequired
+  leaveChat: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Dialog);

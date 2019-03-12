@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import DialogList from "../components/DialogList";
-import { createChat } from "../actions/MessageActions";
+import { createChat } from "../actions/messages/actions";
 import { withRouter } from "react-router";
 
 const mapStateToProps = store => {

@@ -1,18 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-import Page from "../components/Page";
-import Cookies from "js-cookie";
-import { COOKIE_CHATS } from "../actions/MessageActions";
-import { triggerGoogleLoaded } from "../actions/AuthActions";
+// import Page from "components/Page";
+// import Cookies from "js-cookie";
+// import { COOKIE_CHATS } from 'utils/app-constants';
+import { triggerGoogleLoaded } from "actions/auth/thunks";
 
 //import { withStyles } from '@material-ui/core/styles';
 
 const checkCookies = () => {
   if (!navigator.cookieEnabled) {
     alert("Включите cookie для комфортной работы с этим сайтом");
-  } else {
-    let chatKeys = Cookies.getJSON(COOKIE_CHATS);
-    console.log(`\n\n\nChatKeys: `) || console.log(chatKeys);
   }
 };
 
@@ -31,11 +28,9 @@ class App extends React.Component {
     s.src = "https://apis.google.com/js/api.js";
     s.defer = true;
     s.onload = () => {
-      console.log(`js api loaded`);
       this.props.triggerGoogleLoaded();
       loaded = true;
     };
-    s.onerror = () => console.log(`error while loading script`);
     document.head.appendChild(s);
   };
 

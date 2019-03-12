@@ -1,4 +1,4 @@
-import { AUTH_SIGNED_OUT, AUTH_SIGNED_IN } from "../actions/AuthActions";
+import * as AT from "./action-types";
 
 const initialState = {
   error: "",
@@ -11,7 +11,7 @@ const initialState = {
 
 export default function AuthReducer(state = initialState, action) {
   switch (action.type) {
-    case AUTH_SIGNED_IN: {
+    case AT.AUTH_SIGNED_IN: {
       let { name, familyName, fullName, imageUrl, email } = action.user;
       return {
         ...state,
@@ -23,7 +23,7 @@ export default function AuthReducer(state = initialState, action) {
         email: email
       };
     }
-    case AUTH_SIGNED_OUT:
+    case AT.AUTH_SIGNED_OUT:
       return { ...initialState, loaded: state.loaded };
     default:
       return state;

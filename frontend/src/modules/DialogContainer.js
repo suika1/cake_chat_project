@@ -4,7 +4,7 @@ import {
   getInitialMessages,
   getMessages,
   leaveChat
-} from "../actions/MessageActions";
+} from "../actions/messages/actions";
 import { withRouter } from "react-router";
 
 const mapStateToProps = store => {

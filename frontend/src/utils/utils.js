@@ -11,16 +11,6 @@
 // }
 
 export function getDocHeight() {
-  console.log(`now it's :: `) ||
-    console.log(
-      Math.max(
-        document.body.scrollHeight,
-        document.body.offsetHeight,
-        document.documentElement.clientHeight,
-        document.documentElement.scrollHeight,
-        document.documentElement.offsetHeight
-      )
-    );
   return Math.max(
     document.body.scrollHeight,
     document.body.offsetHeight,

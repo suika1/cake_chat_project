@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { Switch, Route, Link, BrowserRouter as Router } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import { handleAuthClick } from "../actions/AuthActions";
+import { handleAuthClick } from "../actions/auth/actions";
 
 const styles = {
   page: {

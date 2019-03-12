@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import MessageForm from "../components/MessageForm";
-import { postMessages } from "../actions/MessageActions";
+import { postMessages } from "actions/messages/thunks";
 import { withRouter } from "react-router";
 
 const mapDispatchToProps = dispatch => {
