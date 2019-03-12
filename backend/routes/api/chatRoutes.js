@@ -45,8 +45,7 @@ router.post('/:chatId', (req, res) => {
   console.log('Add new message');
 
   const chatId = req.params.chatId;
-  const { text } = req.body;
-  api.addMessage(chatId, text);
+  api.addMessage(chatId, req.body);
 
   return generateResponse({
     res,

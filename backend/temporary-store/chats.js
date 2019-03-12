@@ -19,7 +19,7 @@ const chatStore = [
         author: 'My_user',
         sendTime: moment()
           .subtract(30, 'minutes')
-          .format('DD-MM-YYYY'),
+          .format('DD-MM-YYYY HH-mm'),
         content: 'Hello there, boys',
       },
       {
@@ -27,7 +27,7 @@ const chatStore = [
         author: 'Another_user',
         sendTime: moment()
           .subtract(10, 'minutes')
-          .format('DD-MM-YYYY'),
+          .format('DD-MM-YYYY HH-mm'),
         content: 'No, you, leatherman',
       },
     ],
@@ -42,7 +42,7 @@ const chatStore = [
         author: 'Another_user',
         sendTime: moment()
           .subtract(1.5, 'hours')
-          .format('DD-MM-YYYY'),
+          .format('DD-MM-YYYY HH-mm'),
         content: 'Hehehe',
       },
       {
@@ -50,7 +50,7 @@ const chatStore = [
         author: 'User_3',
         sendTime: moment()
           .subtract(5, 'minutes')
-          .format('DD-MM-YYYY'),
+          .format('DD-MM-YYYY HH-mm'),
         content: 'Chat created!',
       },
     ],
@@ -88,7 +88,7 @@ const updateChatProperty = (chatId, prop, value) => {
     [{ chatId }, { prop }, { value }]
       .filter(a => !Object.values(a)[0])
       .forEach(a => Object.assign(badFields, a));
-    console.log('BadFields: ', badFields);
+      console.log('BadFields: ', badFields);
     throw new BadFieldsException(...Object.keys(badFields));
   }
   let foundIndex = -1;
@@ -116,7 +116,10 @@ const removeChat = chatId => {
   lodash.remove(chat => chat.id === chatId);
 };
 
-const addMessage = (chatId, text, author) => {
+const addMessage = (chatId, {
+  text,
+  author,
+}) => {
   const found = chatStore.find(chat => chat.id === chatId);
   if (!found) {
     throw new ChatNotFoundException(chatId);
@@ -124,7 +127,7 @@ const addMessage = (chatId, text, author) => {
   found.messages.push({
     id: uuid(),
     author,
-    sendTime: moment().format('DD-MM-YYYY'),
+    sendTime: moment().format('DD-MM-YYYY HH-mm'),
     content: text,
   });
 };
