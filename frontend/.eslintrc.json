@@ -1,8 +1,7 @@
 {
   "rules": {
       "semi": "off",
-      "allowArrowFunctions": true,
-      "comma-dangle": ["error", "never"]
+      "allowArrowFunctions": true
   },
   "parser": "babel-eslint",
   "parserOptions": {
@@ -12,6 +11,17 @@
           "jsx": true
       }
   },
+  "globals": {
+    "fetch": false,
+    "window": false,
+    "document": false,
+    "require": false,
+    "module": false,
+    "__dirname": false,
+    "navigator": false,
+    "alert": false
+  },
+  "extends": "eslint:recommended",
   "plugins": [
     "react",
     "redux-saga"
