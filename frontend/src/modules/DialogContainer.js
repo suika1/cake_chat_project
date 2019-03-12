@@ -1,11 +1,11 @@
-import { connect } from "react-redux";
-import Dialog from "../components/Dialog";
+import { connect } from 'react-redux';
+import Dialog from '../components/Dialog';
 import {
   getInitialMessages,
   getMessages,
-  leaveChat
-} from "../actions/messages/actions";
-import { withRouter } from "react-router";
+  leaveChat,
+} from '../actions/messages/actions';
+import { withRouter } from 'react-router';
 
 const mapStateToProps = store => {
   return {
@@ -16,9 +16,9 @@ const mapStateToProps = store => {
       familyName: store.auth.familyName,
       fullName: store.auth.fullName,
       imageUrl: store.auth.imageUrl,
-      email: store.auth.email
+      email: store.auth.email,
     },
-    loaded: store.auth.loaded
+    loaded: store.auth.loaded,
     // chatKeys: store.chatKeys,
   };
 };
@@ -27,13 +27,13 @@ const mapDispatchToProps = dispatch => {
   return {
     getMessages: (lastId, dialogId) => dispatch(getMessages(lastId, dialogId)),
     getInitialMessages: chatKey => dispatch(getInitialMessages(chatKey)),
-    leaveChat: chatKey => dispatch(leaveChat(chatKey))
+    leaveChat: chatKey => dispatch(leaveChat(chatKey)),
   };
 };
 
 const DialogContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Dialog);
 
 export default withRouter(DialogContainer);

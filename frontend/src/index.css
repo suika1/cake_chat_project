@@ -1,94 +1,21 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 html {
-    overflow-y:scroll;
+    overflow-y: scroll;
     min-height: 100vh;
 }
 
-html{
+html {
     background: url("./img/aska_4.jpg") no-repeat fixed 100%;
     background-size: 500px 100%;
 }
 
 @media screen and (max-width: 900px) {
-    html{
-        background: linear-gradient(#4d78ff , #f1feff );
+    html {
+        background: linear-gradient(#4d78ff, #f1feff);
     }
 }
-
-/*.page{*/
-    /*width: 100%;*/
-/*}*/
-
-/*.message{*/
-    /*width: 50%;*/
-    /*display: flex;*/
-    /*flex-direction: row;*/
-    /*height: 200px;*/
-    /*margin: 50px auto;*/
-    /*box-shadow: 0 0 15px 3px palevioletred;*/
-    /*background: white;*/
-/*}*/
-
-/*.message:last-child{*/
-    /*margin-bottom: 150px;*/
-/*}*/
-
-/*.message-user-info{*/
-    /*width: 15%;*/
-    /*border: 1px solid grey;*/
-    /*text-align: center;*/
-    /*padding: 10px 0 10px 0;*/
-/*}*/
-
-/*.message-main{*/
-    /*position: relative;*/
-    /*width: 80%;*/
-    /*padding: 10px;*/
-/*}*/
-
-/*.message-date{*/
-    /*position: absolute;*/
-    /*bottom: 10px;*/
-    /*right: 10px;*/
-/*}*/
-
-/*.message-form{*/
-    /*position: fixed;*/
-    /*bottom: 0;*/
-    /*left: calc(50% - 200px);*/
-    /*width: 400px;*/
-    /*display: flex;*/
-    /*justify-content: center;*/
-    /*height: 60px;*/
-/*}*/
-
-/*.message-form > *{*/
-    /*height: 100%;*/
-    /*border: 1px solid grey;*/
-/*}*/
-
-/*.message-form-name{*/
-    /*width: 100px;*/
-/*}*/
-
-/*.message-form-text{*/
-    /*width: 100px;*/
-/*}*/
-
-/*.message-form > button{*/
-    /*width: 60px;*/
-/*}*/
-
-/*.form-labels{*/
-    /*position: fixed;*/
-     /*width: 140px;*/
-    /*left: calc(50% - 90px);*/
-    /*bottom: 70px;*/
-    /*display: flex;*/
-    /*justify-content: space-between;*/
-/*}*/

@@ -1,23 +1,23 @@
-import { connect } from "react-redux";
-import DialogList from "../components/DialogList";
-import { createChat } from "../actions/messages/actions";
-import { withRouter } from "react-router";
+import { connect } from 'react-redux';
+import DialogList from '../components/DialogList';
+import { createChat } from '../actions/messages/actions';
+import { withRouter } from 'react-router';
 
 const mapStateToProps = store => {
   return {
-    chats: store.messages.chats
+    chats: store.messages.chats,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    createChat: chatName => dispatch(createChat(chatName))
+    createChat: chatName => dispatch(createChat(chatName)),
   };
 };
 
 const DialogListContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(DialogList);
 
 export default withRouter(DialogListContainer);

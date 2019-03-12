@@ -12,7 +12,7 @@ export default {
   postMessageReqest,
   postMessageSuccess,
   postMessageError,
-}
+};
 
 //Get action creators
 
@@ -44,7 +44,7 @@ const leftChat = chatKey => {
   };
 };
 
-const getMessagesRequest = (chatKey) => {
+const getMessagesRequest = chatKey => {
   return {
     type: AT.GET_MESSAGES_REQUEST,
     chatKey: chatKey,
@@ -59,11 +59,7 @@ const getMessagesSuccess = (newMessages, chatKey) => {
   };
 };
 
-const getInitialSuccess = ({
-  newMessages,
-  chatName,
-  chatKey,
-}) => {
+const getInitialSuccess = ({ newMessages, chatName, chatKey }) => {
   return {
     type: AT.GET_INITIAL_SUCCESS,
     newMessages: newMessages,
@@ -97,4 +93,3 @@ const postMessageError = () => {
     type: AT.POST_MESSAGE_ERROR,
   };
 };
-

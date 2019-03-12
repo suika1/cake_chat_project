@@ -1,15 +1,15 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react';
+import { connect } from 'react-redux';
 // import Page from "components/Page";
 // import Cookies from "js-cookie";
 // import { COOKIE_CHATS } from 'utils/app-constants';
-import { triggerGoogleLoaded } from "actions/auth/thunks";
+import { triggerGoogleLoaded } from 'actions/auth/thunks';
 
 //import { withStyles } from '@material-ui/core/styles';
 
 const checkCookies = () => {
   if (!navigator.cookieEnabled) {
-    alert("Включите cookie для комфортной работы с этим сайтом");
+    alert('Включите cookie для комфортной работы с этим сайтом');
   }
 };
 
@@ -24,8 +24,8 @@ class App extends React.Component {
 
   //load Google's JS lib and let user authenticate
   attachAuthScript = () => {
-    let s = document.createElement("script");
-    s.src = "https://apis.google.com/js/api.js";
+    let s = document.createElement('script');
+    s.src = 'https://apis.google.com/js/api.js';
     s.defer = true;
     s.onload = () => {
       this.props.triggerGoogleLoaded();
@@ -44,17 +44,17 @@ class App extends React.Component {
 
 const mapStateToProps = store => {
   return {
-    page: store.messages
+    page: store.messages,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    triggerGoogleLoaded: () => dispatch(triggerGoogleLoaded())
+    triggerGoogleLoaded: () => dispatch(triggerGoogleLoaded()),
   };
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(App);

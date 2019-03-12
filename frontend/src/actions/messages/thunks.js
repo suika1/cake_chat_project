@@ -30,7 +30,6 @@ export const createChat = chatName => {
   };
 };
 
-
 export const leaveChat = chatKey => {
   return dispatch => {
     const cookiesJson = Cookies.getJSON(COOKIE_CHATS);
@@ -54,11 +53,13 @@ export const getInitialMessages = chatKey => {
       });
       const json = await res.json();
 
-      dispatch(actions.getInitialSuccess({
-        newMessages: json.results.messages,
-        chatKey,
-        chatName: json.results.chatName,
-      }));
+      dispatch(
+        actions.getInitialSuccess({
+          newMessages: json.results.messages,
+          chatKey,
+          chatName: json.results.chatName,
+        }),
+      );
     } catch (err) {
       dispatch(actions.getMessagesError());
     }
@@ -116,7 +117,7 @@ export const postMessages = (text, name, chatKey, penultimateId) => {
           text: text,
         }),
       });
-  
+
       dispatch(actions.postMessageSuccess());
       dispatch(actions.getMessages(penultimateId, chatKey)); //to call immediate update
     } catch (err) {

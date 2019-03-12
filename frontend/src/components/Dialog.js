@@ -253,7 +253,7 @@ class Dialog extends React.Component {
             Cookies.getJSON(COOKIE_CHATS)[0]
               ? Cookies.getJSON(COOKIE_CHATS)[0].key
               : '/1'
-          }`}
+            }`}
         >
           <Button onClick={() => this.props.leaveChat(this.state.chatKey)}>
             Leave this chat

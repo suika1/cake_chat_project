@@ -1,38 +1,38 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { TextField, Fab, Paper } from "@material-ui/core";
-import Scroll from "react-scroll";
-import { withStyles } from "@material-ui/core/styles";
-import Cookies from "js-cookie";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { TextField, Fab, Paper } from '@material-ui/core';
+import Scroll from 'react-scroll';
+import { withStyles } from '@material-ui/core/styles';
+import Cookies from 'js-cookie';
 
 const styles = {
   messageForm: {
-    position: "fixed",
-    bottom: "0",
-    left: "0",
-    right: "0",
-    margin: "0 auto",
-    border: "5px solid white",
-    borderRadius: "10px",
-    width: "70%",
-    maxWidth: "820px",
-    display: "flex"
+    position: 'fixed',
+    bottom: '0',
+    left: '0',
+    right: '0',
+    margin: '0 auto',
+    border: '5px solid white',
+    borderRadius: '10px',
+    width: '70%',
+    maxWidth: '820px',
+    display: 'flex',
   },
   btn: {
-    fontSize: "20px"
+    fontSize: '20px',
   },
   text: {
-    width: "calc(80% - 62px)",
-    marginLeft: "4px"
+    width: 'calc(80% - 62px)',
+    marginLeft: '4px',
   },
   name: {
-    width: "20%"
+    width: '20%',
   },
-  "@media (max-width: 900px)": {
+  '@media (max-width: 900px)': {
     messageForm: {
-      width: "95%"
-    }
-  }
+      width: '95%',
+    },
+  },
 };
 
 class MessageForm extends React.PureComponent {
@@ -40,14 +40,14 @@ class MessageForm extends React.PureComponent {
     super(props);
     this.state = {
       nameValue: this.initCookies(),
-      textValue: ""
+      textValue: '',
     };
   }
 
   //set initial cookie for name
   initCookies = () => {
-    if (!Cookies.get("name")) Cookies.set("name", "Имя", { expires: 1000 });
-    return Cookies.get("name");
+    if (!Cookies.get('name')) Cookies.set('name', 'Имя', { expires: 1000 });
+    return Cookies.get('name');
   };
 
   //For controlling inputs
@@ -59,18 +59,18 @@ class MessageForm extends React.PureComponent {
       this.state.textValue,
       this.state.nameValue,
       this.props.match.params.chatKey,
-      this.props.lastId
+      this.props.lastId,
     );
     this.setState(
       {
-        textValue: ""
+        textValue: '',
       },
       () => {
         //update cookie for name if needed
-        if (Cookies.get("name") !== this.state.nameValue)
-          Cookies.set("name", this.state.nameValue, { expires: 1000 });
+        if (Cookies.get('name') !== this.state.nameValue)
+          Cookies.set('name', this.state.nameValue, { expires: 1000 });
         this.props.onSend();
-      }
+      },
     );
   };
 
@@ -81,7 +81,7 @@ class MessageForm extends React.PureComponent {
           className={this.props.classes.name}
           label="Имя"
           id="form-name"
-          onChange={this.onChange("nameValue")}
+          onChange={this.onChange('nameValue')}
           value={this.state.nameValue}
           variant="standard"
         />
@@ -91,7 +91,7 @@ class MessageForm extends React.PureComponent {
           multiline
           label="Текст"
           id="form-text"
-          onChange={this.onChange("textValue")}
+          onChange={this.onChange('textValue')}
           value={this.state.textValue}
           variant="standard"
         />
@@ -108,7 +108,7 @@ class MessageForm extends React.PureComponent {
 }
 
 MessageForm.propTypes = {
-  postMessage: PropTypes.func.isRequired
+  postMessage: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(MessageForm);

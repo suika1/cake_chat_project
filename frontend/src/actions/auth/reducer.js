@@ -1,12 +1,12 @@
-import * as AT from "./action-types";
+import * as AT from './action-types';
 
 const initialState = {
-  error: "",
-  name: "",
-  familyName: "",
-  fullName: "",
-  imageUrl: "",
-  email: ""
+  error: '',
+  name: '',
+  familyName: '',
+  fullName: '',
+  imageUrl: '',
+  email: '',
 };
 
 export default function AuthReducer(state = initialState, action) {
@@ -15,12 +15,12 @@ export default function AuthReducer(state = initialState, action) {
       let { name, familyName, fullName, imageUrl, email } = action.user;
       return {
         ...state,
-        error: "",
+        error: '',
         name: name,
         familyName: familyName,
         fullName: fullName,
         imageUrl: imageUrl,
-        email: email
+        email: email,
       };
     }
     case AT.AUTH_SIGNED_OUT:

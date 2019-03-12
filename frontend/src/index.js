@@ -50,7 +50,7 @@ class BakaClass extends React.Component {
         })
         .then(res => {
           let chatKey = res.response.body.chatKey;
-        })
+        });
     } finally {
       this.setState({
         getVal: '',
@@ -71,10 +71,9 @@ class BakaClass extends React.Component {
           chatKey: 'TDa5LTBPjRpKS4c7GxOOr3-qyVj9EZ', //TDa5LTBPjRpKS4c7GxOOr3-qyVj9EZ (initial) ----    xHyfLTU7giMi77_EwGnAhwVduVDhUB -----
           text: text,
         }),
-      })
-        .then(res => {
-          return res.json();
-        })
+      }).then(res => {
+        return res.json();
+      });
     } finally {
       this.setState({
         getVal: '',
@@ -96,8 +95,7 @@ class BakaClass extends React.Component {
         .then(res => {
           return res.json();
         })
-        .then(res => {
-        })
+        .then(res => {});
     } finally {
       this.setState({
         getVal: '',
@@ -108,7 +106,7 @@ class BakaClass extends React.Component {
 
   componentDidMount() {
     //window.handleClientLoad();
-    fetch('http://localhost:8001')
+    fetch('http://localhost:8001');
   }
 
   handleChange = ({ target: { name, value } }) => {

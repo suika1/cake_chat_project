@@ -16,6 +16,6 @@ export function getDocHeight() {
     document.body.offsetHeight,
     document.documentElement.clientHeight,
     document.documentElement.scrollHeight,
-    document.documentElement.offsetHeight
+    document.documentElement.offsetHeight,
   );
 }
