@@ -11,7 +11,14 @@ class BadFieldsException extends Error {
   }
 }
 
+class ChatAlreadyExistsException extends Error {
+  constructor(name) {
+    super(`Chat with name ${name} already exists`)
+  }
+}
+
 module.exports = {
   ChatNotFoundException,
   BadFieldsException,
+  ChatAlreadyExistsException,
 };

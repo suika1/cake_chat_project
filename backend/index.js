@@ -3,6 +3,7 @@ const app = express();
 const {
   ChatNotFoundException,
   BadFieldsException,
+  ChatAlreadyExistsException,
 } = require('./exceptions/exceptions');
 const { generateResponse } = require('./utils/utils');
 
@@ -24,7 +25,8 @@ app.use('/', require('./routes/api/chatRoutes'));
 // Log errors && Return response with error
 app.use((err, req, res, next) => {
   console.warn('\n--------------- Error ---------------\n', err.message);
-  if (err instanceof ChatNotFoundException) {
+  if (err instanceof ChatNotFoundException
+    || err instanceof ChatAlreadyExistsException ) {
     console.warn('--------------------------------------\n');
     return generateResponse({
       res,

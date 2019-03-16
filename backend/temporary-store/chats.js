@@ -3,6 +3,7 @@
 const {
   ChatNotFoundException,
   BadFieldsException,
+  ChatAlreadyExistsException,
 } = require('../exceptions/exceptions');
 const moment = require('moment');
 const uuid = require('uuid/v4');
@@ -73,6 +74,9 @@ const addChat = name => {
   if (!name) {
     throw new BadFieldsException('name');
   }
+  if (chatStore.find(a => a.chatName === name)) {
+    throw new ChatAlreadyExistsException(name);
+  }
   const newChat = {
     id: uuid(),
     chatName: name,
@@ -80,6 +84,7 @@ const addChat = name => {
   };
 
   chatStore.push(newChat);
+  return newChat;
 };
 
 const updateChatProperty = (chatId, prop, value) => {

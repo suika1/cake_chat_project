@@ -32,11 +32,11 @@ router.post('/', (req, res) => {
   console.log('Add new chat');
 
   const { name } = req.body;
-  api.addChat(name);
+  const returnValue = api.addChat(name);
 
   return generateResponse({
     res,
-    results: api.getChatList(),
+    results: returnValue,
   });
 });
 
