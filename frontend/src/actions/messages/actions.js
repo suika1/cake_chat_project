@@ -1,25 +1,26 @@
 import * as AT from './action-types';
 
-export default {
-  createChatRequest,
+export {
+  createChat,
   createChatSuccess,
   createChatError,
   leftChat,
-  getMessagesRequest,
+  getMessages,
   getMessagesSuccess,
   getInitialSuccess,
   getMessagesError,
-  postMessageReqest,
+  postMessage,
   postMessageSuccess,
   postMessageError,
-};
+}
 
 //Get action creators
 
 //Chat actions
-const createChatRequest = () => {
+const createChat = chatName => {
   return {
-    type: AT.CREATE_CHAT_REQUEST,
+    type: AT.CREATE_CHAT,
+    chatName,
   };
 };
 
@@ -44,9 +45,9 @@ const leftChat = chatKey => {
   };
 };
 
-const getMessagesRequest = chatKey => {
+const getMessages = chatKey => {
   return {
-    type: AT.GET_MESSAGES_REQUEST,
+    type: AT.GET_MESSAGES,
     chatKey: chatKey,
   };
 };
@@ -76,9 +77,9 @@ const getMessagesError = () => {
 
 //Post action creators
 
-const postMessageReqest = () => {
+const postMessage = () => {
   return {
-    type: AT.POST_MESSAGE_REQUEST,
+    type: AT.POST_MESSAGE,
   };
 };
 

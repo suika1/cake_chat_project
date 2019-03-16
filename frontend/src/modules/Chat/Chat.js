@@ -1,97 +1,50 @@
 import React from 'react';
-import { List, Button, Fab, Typography, TextField } from '@material-ui/core';
+import { connect } from 'react-redux';
+
 import PropTypes from 'prop-types';
+
+import { List, Button, Fab, Typography, TextField } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import MessageFormContainer from '../modules/MessageFormContainer';
-import Message from './Message';
+import MessageForm from '../MessageForm/MessageForm';
+import Message from 'components/message/Message';
 import * as Scroll from 'react-scroll/modules';
-import { Link, NavLink, Redirect } from 'react-router-dom';
+
+import { Link, NavLink } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 import { COOKIE_CHATS, HOMEPAGE } from 'utils/app-constants';
 
 import Cookies from 'js-cookie';
-import { getDocHeight } from '../utils/utils';
-import { handleAuthClick } from '../actions/auth/actions';
+import { getDocHeight } from 'utils/utils';
+import { handleAuthClick } from 'actions/auth/actions';
 
-const styles = {
-  dialog: {
-    position: 'relative',
-    width: '70%',
-    padding: '20px',
-    margin: '15px 0',
-    left: '20%',
-  },
-  messageList: {
-    margin: '50px auto',
-    width: '70%',
-    maxWidth: '800px',
-  },
-  topFab: {
-    position: 'fixed',
-    bottom: '140px',
-    right: '10%',
-  },
-  chatKeyInput: {
-    width: '60%',
-  },
-  botFab: {
-    position: 'fixed',
-    bottom: '70px',
-    right: '10%',
-  },
-  '@media (max-width: 1200px)': {
-    dialog: {
-      left: '25%',
-    },
-  },
-  '@media (max-width: 900px)': {
-    dialog: {
-      textAlign: 'center',
-      margin: '0',
-      width: '100%',
-      left: '0',
-    },
-    messageList: {
-      width: '95%',
-      paddingRight: '50px',
-    },
-    chatKeyInput: {
-      width: '100%',
-    },
-    topFab: {
-      right: '5px',
-    },
-    botFab: {
-      right: '5px',
-    },
-    chatLinkBlock: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      '& > * + *': {
-        marginTop: '10px',
-      },
-    },
-  },
-};
+import {
+  getInitialMessages,
+  getMessages,
+  leaveChat,
+} from 'actions/messages/thunks';
+
+import styles from './styles';
 
 const INTERVAL = 5000;
 
-//renders a dialog window for current dialog id
-class Dialog extends React.Component {
+//renders a chat window for current chat id
+class Chat extends React.Component {
   constructor(props) {
     super(props);
+    const { match } = this.props
     this.state = {
       timerId: null,
       lastId: null,
-      chatKey: this.props.match.params.chatKey,
+      chatKey: match.params.chatKey,
       newPosted: false,
     };
   }
 
   //onMount - scrolls to bottom
   componentDidMount() {
-    this.props.getInitialMessages(this.props.match.params.chatKey);
+    const { match, getInitialMessages } = this.props;
+    getInitialMessages(match.params.chatKey);
   }
 
   //Every component update - setup new state
@@ -101,24 +54,38 @@ class Dialog extends React.Component {
 
   //clear timer before component is destroyed
   componentWillUnmount() {
-    clearInterval(this.state.timerId);
+    const { timerId } = this.state;
+    clearInterval(timerId);
   }
 
   //resets intervals
   resetTimer = () => {
-    if (this.props.isFetching) return;
-    let { messages, getMessages } = this.props;
-    let chatKey = this.props.match.params.chatKey;
+    const {
+      match,
+      getInitialMessages,
+      isFetching,
+    } = this.props;
+
+    const {
+      chatKey: stateChatKey,
+      timerId: stateTimerId,
+      newPosted: stateNewPosted,
+      lastId: stateLastId,
+    } = this.state;
+
+    if (isFetching) return;
+    const { messages, getMessages } = this.props;
+    let chatKey = match.params.chatKey;
     let msgs;
     if (!messages.find(a => a.chatKey === chatKey)) msgs = [];
     else msgs = messages.find(a => a.chatKey === chatKey).msg;
 
-    if (this.state.chatKey !== chatKey) {
-      //if dialog had changed
-      clearInterval(this.state.timerId);
+    if (stateChatKey !== chatKey) {
+      //if chat had changed
+      clearInterval(stateTimerId);
       if (!msgs || msgs.length === 0) {
-        //if need to initialize this dialog
-        this.props.getInitialMessages(chatKey);
+        //if need to initialize this chat
+        getInitialMessages(chatKey);
         this.setState({
           chatKey: chatKey,
           timerId: setInterval(() => getMessages(-1, chatKey), INTERVAL),
@@ -130,7 +97,7 @@ class Dialog extends React.Component {
           {
             timerId: setInterval(() => getMessages(lastId, chatKey), INTERVAL),
             lastId: lastId,
-            chatKey: this.props.match.params.chatKey,
+            chatKey: match.params.chatKey,
           },
           () => Scroll.animateScroll.scrollTo(getDocHeight()),
         );
@@ -140,13 +107,12 @@ class Dialog extends React.Component {
       if (msgs.length === 0) {
         lastId = -1;
       } else {
-        ss;
         lastId = msgs[msgs.length - 1].id;
       }
       //if interval set and new messages are present
-      if (this.state.timerId && this.state.lastId !== lastId) {
-        clearInterval(this.state.timerId);
-        if (this.state.newPosted) {
+      if (stateTimerId && stateLastId !== lastId) {
+        clearInterval(stateTimerId);
+        if (stateNewPosted) {
           this.setState(
             {
               timerId: setInterval(
@@ -170,7 +136,7 @@ class Dialog extends React.Component {
             () => Scroll.animateScroll.scrollTo(getDocHeight()),
           );
         }
-      } else if (this.state.timerId === null && this.state.lastId === null) {
+      } else if (stateTimerId === null && stateLastId === null) {
         //if initial state
         this.setState(
           {
@@ -185,7 +151,11 @@ class Dialog extends React.Component {
 
   //renders list of messages
   renderMessages = messages => {
-    if (this.props.error) {
+    const {
+      error,
+      classes,
+    } = this.props;
+    if (error) {
       return (
         <div>
           <Typography variant="h4">
@@ -199,7 +169,7 @@ class Dialog extends React.Component {
     } else {
       if (messages)
         return (
-          <List className={this.props.classes.messageList}>
+          <List className={classes.messageList}>
             {messages.map(message => (
               <Message
                 key={message.id}
@@ -214,8 +184,23 @@ class Dialog extends React.Component {
   };
 
   render() {
-    let { classes, messages, getInitialMessages } = this.props;
-    let chatKey = this.props.match.params.chatKey;
+    const {
+      classes,
+      messages,
+      getInitialMessages,
+      match,
+      user,
+      loaded,
+      leaveChat,
+    } = this.props;
+
+    const {
+      timerId: stateTimerId,
+      chatKey: stateChatKey,
+      lastId: stateLastId,
+    } = this.state;
+
+    const chatKey = match.params.chatKey;
     let msg;
     if (!messages.find(a => a.chatKey === chatKey)) msg = [];
     else msg = messages.find(a => a.chatKey === chatKey).msg;
@@ -223,25 +208,25 @@ class Dialog extends React.Component {
     //   return <Redirect to={`/${Cookies.getJSON(COOKIE_CHATS)[0] ? Cookies.getJSON(COOKIE_CHATS)[0].key : '/1'}`} />;
     // }
     return (
-      <div className={classes.dialog}>
+      <div className={classes.chat}>
         <Typography variant="h3">
-          {this.props.user.fullName !== '' ? this.props.user.fullName : ''}
+          {user.fullName !== '' ? user.fullName : ''}
         </Typography>
         <Button
           id="auth-btn"
           variant="outlined"
           onClick={
-            /*TODO: remove*/ this.props.loaded
+            /*TODO: remove*/ loaded
               ? () => false
               : () => handleAuthClick()
           }
         >
-          {this.props.user.name === '' ? 'Войти' : 'Выйти'}
+          {user.name === '' ? 'Войти' : 'Выйти'}
         </Button>
         <Button onClick={() => getInitialMessages(chatKey)}>
           Try to load again
         </Button>
-        <Button onClick={() => clearInterval(this.state.timerId)}>
+        <Button onClick={() => clearInterval(stateTimerId)}>
           Cancel updates
         </Button>
         <Button onClick={() => Cookies.remove(COOKIE_CHATS)}>
@@ -255,7 +240,7 @@ class Dialog extends React.Component {
               : '/1'
             }`}
         >
-          <Button onClick={() => this.props.leaveChat(this.state.chatKey)}>
+          <Button onClick={() => leaveChat(stateChatKey)}>
             Leave this chat
           </Button>
         </Link>
@@ -295,8 +280,8 @@ class Dialog extends React.Component {
         >
           Down
         </Fab>
-        <MessageFormContainer
-          lastId={this.state.lastId}
+        <MessageForm
+          lastId={stateLastId}
           onSend={() =>
             this.setState({
               newPosted: true,
@@ -308,16 +293,57 @@ class Dialog extends React.Component {
   }
 }
 
-Dialog.propTypes = {
+Chat.propTypes = {
   //chatKeys: PropTypes.array.isRequired,
   //TODO: remove:
   user: PropTypes.object.isRequired,
-  loaded: PropTypes.bool.isRequired,
+  loaded: PropTypes.bool,
   messages: PropTypes.array.isRequired,
-  error: PropTypes.string.isRequired,
+  error: PropTypes.string,
   getMessages: PropTypes.func.isRequired,
   getInitialMessages: PropTypes.func.isRequired,
   leaveChat: PropTypes.func.isRequired,
+  match: PropTypes.shape({}),
+  isFetching: PropTypes.bool,
+  classes: PropTypes.shape({}),
 };
 
-export default withStyles(styles)(Dialog);
+Chat.defaultProps = {
+  loaded: false,
+  error: '',
+  isFetching: false,
+}
+
+
+const mapStateToProps = store => {
+  return {
+    messages: store.messages.messages,
+    isFetching: store.messages.isFetching,
+    user: {
+      name: store.auth.name,
+      familyName: store.auth.familyName,
+      fullName: store.auth.fullName,
+      imageUrl: store.auth.imageUrl,
+      email: store.auth.email,
+    },
+    loaded: store.auth.loaded,
+    // chatKeys: store.chatKeys,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getMessages: (lastId, chatId) => dispatch(getMessages(lastId, chatId)),
+    getInitialMessages: chatKey => dispatch(getInitialMessages(chatKey)),
+    leaveChat: chatKey => dispatch(leaveChat(chatKey)),
+  };
+};
+
+export default withStyles(styles)(
+  withRouter(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps,
+    )(Chat)
+  )
+);

@@ -7,26 +7,33 @@ import { COOKIE_CHATS } from 'utils/app-constants';
 import { BaseUrl } from 'api/api';
 
 export const createChat = chatName => {
-  return dispatch => {
-    dispatch(actions.createChatRequest());
-    fetch(BaseUrl, {
-      method: 'POST',
-      mode: 'cors',
-      body: JSON.stringify({
-        name: chatName,
-      }),
-    })
-      .then(res => res.json())
-      .then(json => {
-        const chatKey = json.results.id;
-        Cookies.set(
-          COOKIE_CHATS,
-          [...Cookies.getJSON(COOKIE_CHATS), { key: chatKey, name: chatName }],
-          { expires: 1000 },
-        ); // adding new chatKey to cookie
-        dispatch(actions.createChatSuccess(chatKey, chatName));
-      })
-      .catch(() => dispatch(actions.createChatError()));
+  return async dispatch => {
+    try {
+      dispatch(actions.createChat(chatName));
+      const res = await fetch(BaseUrl, {
+        method: 'POST',
+        mode: 'cors',
+        body: JSON.stringify({
+          name: chatName,
+        }),
+      });
+      const json = await res.json();
+    
+      const { error } = json;
+      if (error && error.length) {
+        return dispatch(actions.createChatError(error));
+      }
+      const chatKey = json.results.id;
+      Cookies.set(
+        COOKIE_CHATS,
+        [...Cookies.getJSON(COOKIE_CHATS), { key: chatKey, name: chatName }],
+        { expires: 1000 },
+      ); // adding new chatKey to cookie
+      dispatch(actions.createChatSuccess(chatKey, chatName));
+    
+    } catch (err) {
+      dispatch(actions.createChatError(err));
+    }
   };
 };
 
@@ -45,7 +52,7 @@ export const leaveChat = chatKey => {
 
 export const getInitialMessages = chatKey => {
   return async dispatch => {
-    dispatch(actions.getMessagesRequest(chatKey));
+    dispatch(actions.getMessages(chatKey));
     try {
       const res = await fetch(`${BaseUrl}${chatKey}`, {
         method: 'GET',
@@ -69,7 +76,7 @@ export const getInitialMessages = chatKey => {
 export const getMessages = (lastId, chatKey) => {
   return dispatch => [];
   // return async dispatch => {
-  //   dispatch(actions.getMessagesRequest(chatKey));
+  //   dispatch(actions.getMessages(chatKey));
   //   const res = await fetch(BaseUrl, {
   //     method: 'GET',
   //     mode: 'cors',
@@ -107,7 +114,7 @@ export const getMessages = (lastId, chatKey) => {
 
 export const postMessages = (text, name, chatKey, penultimateId) => {
   return async dispatch => {
-    dispatch(actions.postMessageReqest());
+    dispatch(actions.postMessage());
     try {
       await fetch(`${BaseUrl}${chatKey}`, {
         method: 'POST',

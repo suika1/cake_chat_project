@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import Page from "components/Page";
+
+import PropTypes from 'prop-types';
+
+import Page from "components/page/Page";
 // import Cookies from "js-cookie";
 // import { COOKIE_CHATS } from 'utils/app-constants';
 import { triggerGoogleLoaded } from 'actions/auth/thunks';
@@ -24,11 +27,13 @@ class App extends React.Component {
 
   //load Google's JS lib and let user authenticate
   attachAuthScript = () => {
+    const { triggerGoogleLoaded } = this.props;
+
     let s = document.createElement('script');
     s.src = 'https://apis.google.com/js/api.js';
     s.defer = true;
     s.onload = () => {
-      this.props.triggerGoogleLoaded();
+      triggerGoogleLoaded();
       loaded = true;
     };
     document.head.appendChild(s);
@@ -37,14 +42,23 @@ class App extends React.Component {
   render() {
     const { page } = this.props;
     return (
-      <Page loaded={loaded} error={page.error} isFetching={page.isFetching} />
+      <Page
+        loaded={loaded}
+        error={page.error}
+        isFetching={page.isFetching}
+      />
     );
   }
 }
 
+App.propTypes = {
+  page: PropTypes.arrayOf(PropTypes.shape({})),
+  triggerGoogleLoaded: PropTypes.func.isRequired,
+}
+
 const mapStateToProps = store => {
   return {
-    page: store.messages,
+    page: store.messages.messages,
   };
 };
 

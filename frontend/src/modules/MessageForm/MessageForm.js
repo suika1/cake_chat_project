@@ -1,39 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import PropTypes from 'prop-types';
+
+import { withRouter } from 'react-router';
+
 import { TextField, Fab, Paper } from '@material-ui/core';
-import Scroll from 'react-scroll';
 import { withStyles } from '@material-ui/core/styles';
+
 import Cookies from 'js-cookie';
 
-const styles = {
-  messageForm: {
-    position: 'fixed',
-    bottom: '0',
-    left: '0',
-    right: '0',
-    margin: '0 auto',
-    border: '5px solid white',
-    borderRadius: '10px',
-    width: '70%',
-    maxWidth: '820px',
-    display: 'flex',
-  },
-  btn: {
-    fontSize: '20px',
-  },
-  text: {
-    width: 'calc(80% - 62px)',
-    marginLeft: '4px',
-  },
-  name: {
-    width: '20%',
-  },
-  '@media (max-width: 900px)': {
-    messageForm: {
-      width: '95%',
-    },
-  },
-};
+import { postMessages } from 'actions/messages/thunks';
+
+import styles from './styles';
 
 class MessageForm extends React.PureComponent {
   constructor(props) {
@@ -55,48 +34,70 @@ class MessageForm extends React.PureComponent {
 
   //When send btn clicked
   onSend = () => {
-    this.props.postMessage(
-      this.state.textValue,
-      this.state.nameValue,
-      this.props.match.params.chatKey,
-      this.props.lastId,
+    const {
+      postMessage,
+      match,
+      lastId,
+      onSend,
+    } = this.props;
+
+    const {
+      textValue,
+      nameValue,
+    } = this.state;
+
+    postMessage(
+      textValue,
+      nameValue,
+      match.params.chatKey,
+      lastId,
     );
+
     this.setState(
       {
         textValue: '',
       },
       () => {
         //update cookie for name if needed
-        if (Cookies.get('name') !== this.state.nameValue)
-          Cookies.set('name', this.state.nameValue, { expires: 1000 });
-        this.props.onSend();
+        if (Cookies.get('name') !== nameValue)
+          Cookies.set('name', nameValue, { expires: 1000 });
+        onSend();
       },
     );
   };
 
   render() {
+    const {
+      classes,
+    } = this.props;
+
+    const {
+      nameValue,
+      textValue,
+    } = this.state;
+
     return (
-      <Paper className={this.props.classes.messageForm}>
+      <Paper className={classes.messageForm}>
         <TextField
-          className={this.props.classes.name}
+          className={classes.name}
           label="Имя"
           id="form-name"
           onChange={this.onChange('nameValue')}
-          value={this.state.nameValue}
+          value={nameValue}
           variant="standard"
         />
         <TextField
-          className={this.props.classes.text}
+          className={classes.text}
           placeholder="Введите текст"
           multiline
           label="Текст"
           id="form-text"
           onChange={this.onChange('textValue')}
-          value={this.state.textValue}
+          value={textValue}
           variant="standard"
         />
         <Fab
-          className={this.props.classes.btn}
+          className={classes.btn}
           color="primary"
           onClick={this.onSend}
         >
@@ -109,6 +110,25 @@ class MessageForm extends React.PureComponent {
 
 MessageForm.propTypes = {
   postMessage: PropTypes.func.isRequired,
+  match: PropTypes.shape({}),
+  lastId: PropTypes.number,
+  onSend: PropTypes.func.isRequired,
+  classes: PropTypes.shape({}),
 };
 
-export default withStyles(styles)(MessageForm);
+const mapDispatchToProps = dispatch => {
+  return {
+    postMessage: (text, name, chatKey, penultimateId) => {
+      dispatch(postMessages(text, name, chatKey, penultimateId));
+    },
+  };
+};
+
+export default withStyles(styles)(
+  withRouter(
+    connect(
+      null,
+      mapDispatchToProps
+    )(MessageForm)
+  )
+);

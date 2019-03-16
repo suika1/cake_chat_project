@@ -18,7 +18,7 @@ function initCookies() {
 
 export default function MessagesReducer(state = initialState, action) {
   switch (action.type) {
-    case AT.GET_MESSAGES_REQUEST:
+    case AT.GET_MESSAGES:
       return { ...state, error: '', isFetching: true };
     case AT.GET_MESSAGES_SUCCESS: {
       let prevMsg = state.messages.find(a => a.chatKey === action.chatKey).msg; // find previous messages for this chat
@@ -102,13 +102,13 @@ export default function MessagesReducer(state = initialState, action) {
     }
     case AT.GET_MESSAGES_ERROR:
       return { ...state, isFetching: false, error: 'Get error' };
-    case AT.POST_MESSAGE_REQUEST:
+    case AT.POST_MESSAGE:
       return { ...state, error: '', isFetching: true };
     case AT.POST_MESSAGE_SUCCESS:
       return { ...state, error: '', isFetching: false };
     case AT.POST_MESSAGE_ERROR:
       return { ...state, isFetching: false, error: 'Post error' };
-    case AT.CREATE_CHAT_REQUEST:
+    case AT.CREATE_CHAT:
       return { ...state, isFetching: false, error: '' };
     case AT.CREATE_CHAT_SUCCESS:
       return {
