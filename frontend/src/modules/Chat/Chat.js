@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { List, Button, Fab, Typography, TextField } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import MessageForm from '../MessageForm/MessageForm';
-import Message from 'components/message/Message';
+import Message from 'components/Message/Message';
 import * as Scroll from 'react-scroll/modules';
 
 import { Link, NavLink } from 'react-router-dom';
@@ -16,7 +16,7 @@ import { COOKIE_CHATS, HOMEPAGE } from 'utils/app-constants';
 
 import Cookies from 'js-cookie';
 import { getDocHeight } from 'utils/utils';
-import { handleAuthClick } from 'actions/auth/actions';
+import { handleAuthClick } from 'actions/auth/thunks';
 
 import {
   getInitialMessages,

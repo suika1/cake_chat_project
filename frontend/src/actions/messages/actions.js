@@ -1,96 +1,76 @@
 import * as AT from './action-types';
 
 export {
+  getAllChats,
+  getAllChatsSuccess,
+  getAllChatsFailed,
+
   createChat,
   createChatSuccess,
-  createChatError,
-  leftChat,
-  getMessages,
-  getMessagesSuccess,
-  getInitialSuccess,
-  getMessagesError,
+  createChatFailed,
+
   postMessage,
   postMessageSuccess,
-  postMessageError,
+  postMessageFailed,
 }
 
-//Get action creators
+const getAllChats = () => ({
+  type: AT.GET_ALL_CHATS,
+});
 
-//Chat actions
-const createChat = chatName => {
-  return {
-    type: AT.CREATE_CHAT,
+const getAllChatsSuccess = ({ chats }) => ({
+  type: AT.GET_ALL_CHATS_SUCCESS,
+  payload: {
+    chats,
+  },
+});
+
+const getAllChatsFailed = ({ error }) => ({
+  type: AT.GET_ALL_CHATS_FAILED,
+  payload: {
+    error,
+  },
+});
+
+const createChat = ({ chatName }) => ({
+  type: AT.CREATE_CHAT,
+  payload: {
     chatName,
-  };
-};
+  },
+});
 
-const createChatSuccess = (chatKey, chatName) => {
-  return {
-    type: AT.CREATE_CHAT_SUCCESS,
-    chatKey: chatKey,
-    chatName: chatName,
-  };
-};
+const createChatSuccess = ({ chat }) => ({
+  type: AT.CREATE_CHAT_SUCCESS,
+  payload: {
+    chat,
+  },
+});
 
-const createChatError = () => {
-  return {
-    type: AT.CREATE_CHAT_ERROR,
-  };
-};
+const createChatFailed = ({ error }) => ({
+  type: AT.CREATE_CHAT_FAILED,
+  payload: {
+    error,
+  },
+});
 
-const leftChat = chatKey => {
-  return {
-    type: AT.LEFT_CHAT,
-    key: chatKey,
-  };
-};
+const postMessage = ({ message }) => ({
+  type: AT.POST_MESSAGE,
+  payload: {
+    message,
+  },
+});
 
-const getMessages = chatKey => {
-  return {
-    type: AT.GET_MESSAGES,
-    chatKey: chatKey,
-  };
-};
+const postMessageSuccess = ({ chat }) => ({
+  type: AT.POST_MESSAGE,
+  payload: {
+    chat,
+  },
+});
 
-const getMessagesSuccess = (newMessages, chatKey) => {
-  return {
-    type: AT.GET_MESSAGES_SUCCESS,
-    newMessages: newMessages,
-    chatKey: chatKey,
-  };
-};
+const postMessageFailed = ({ error }) => ({
+  type: AT.POST_MESSAGE_FAILED,
+  payload: {
+    error,
+  },
+});
 
-const getInitialSuccess = ({ newMessages, chatName, chatKey }) => {
-  return {
-    type: AT.GET_INITIAL_SUCCESS,
-    newMessages: newMessages,
-    chatName,
-    chatKey: chatKey,
-  };
-};
-
-const getMessagesError = () => {
-  return {
-    type: AT.GET_MESSAGES_ERROR,
-  };
-};
-
-//Post action creators
-
-const postMessage = () => {
-  return {
-    type: AT.POST_MESSAGE,
-  };
-};
-
-const postMessageSuccess = () => {
-  return {
-    type: AT.POST_MESSAGE_SUCCESS,
-  };
-};
-
-const postMessageError = () => {
-  return {
-    type: AT.POST_MESSAGE_ERROR,
-  };
-};
