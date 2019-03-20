@@ -4,6 +4,7 @@ const {
   ChatNotFoundException,
   BadFieldsException,
   ChatAlreadyExistsException,
+  MessageNotFoundException,
 } = require('../exceptions/exceptions');
 const moment = require('moment');
 const uuid = require('uuid/v4');
@@ -137,6 +138,22 @@ const addMessage = (chatId, {
   });
 };
 
+const editMessage = ({
+  chatId,
+  messageId,
+  newText,
+}) => {
+  const foundChat = chatStore.find(chat => chat.id === chatId);
+  if (!foundChat) {
+    throw new ChatNotFoundException(chatId);
+  }
+  const foundMessage = foundChat.messages.find(message => message.id === messageId);
+  if (!foundMessage) {
+    throw new MessageNotFoundException(chatId, messageId);
+  }
+  foundMessage.content = newText;
+}
+
 module.exports = {
   getChatList,
   getChat,
@@ -144,4 +161,5 @@ module.exports = {
   updateChatProperty,
   removeChat,
   addMessage,
+  editMessage,
 };

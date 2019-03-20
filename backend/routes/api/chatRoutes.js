@@ -4,6 +4,19 @@ const router = express.Router();
 const api = require('../../temporary-store/chats');
 const { generateResponse } = require('../../utils/utils');
 
+// Add new chat
+router.post('/', (req, res) => {
+  console.log('Add new chat');
+
+  const { name } = req.body;
+  const returnValue = api.addChat(name);
+
+  return generateResponse({
+    res,
+    results: returnValue,
+  });
+});
+
 // Get all chats
 router.get('/', (req, res) => {
   console.log('Get all chats');
@@ -27,16 +40,15 @@ router.get('/:chatId?', (req, res) => {
   });
 });
 
-// Add new chat
-router.post('/', (req, res) => {
-  console.log('Add new chat');
+// Edit chat info
+router.put('/', (req, res) => {
+  console.log('Edit chat info');
+  const { chatId, prop, value } = req.body;
 
-  const { name } = req.body;
-  const returnValue = api.addChat(name);
-
+  api.updateChatProperty(chatId, prop, value);
   return generateResponse({
     res,
-    results: returnValue,
+    results: api.getChat(chatId),
   });
 });
 
@@ -53,15 +65,26 @@ router.post('/:chatId', (req, res) => {
   });
 });
 
-// Edit chat info
-router.put('/', (req, res) => {
-  console.log('Edit chat info');
-  const { chatId, prop, value } = req.body;
+// Edit message
+router.put('/:chatId', (req, res) => {
+  console.log('Edit message');
 
-  api.updateChatProperty(chatId, prop, value);
+  const chatId = req.params.chatId;
+  
+  const {
+    text: newText,
+    id: messageId,
+  } = req.body;
+  
+  api.editMessage({
+    chatId,
+    messageId,
+    newText,
+  });
+
   return generateResponse({
     res,
-    results: api.getChat(chatId),
+    results: api.getChat(chatId).messages,
   });
 });
 

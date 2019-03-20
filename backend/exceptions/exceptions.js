@@ -4,6 +4,12 @@ class ChatNotFoundException extends Error {
   }
 }
 
+class MessageNotFoundException extends Error {
+  constructor(chatId, messageId) {
+    super(`Message with id = ${messageId} not found in chat with id = ${chatId}`)
+  }
+}
+
 class BadFieldsException extends Error {
   constructor(...badFieldNames) {
     super(`Bad value for fields: ${JSON.stringify(badFieldNames)}`);
@@ -21,4 +27,5 @@ module.exports = {
   ChatNotFoundException,
   BadFieldsException,
   ChatAlreadyExistsException,
+  MessageNotFoundException,
 };
