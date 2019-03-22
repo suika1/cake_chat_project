@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
 
-import Page from "components/page/Page";
+import Page from 'components/page/Page';
 // import Cookies from "js-cookie";
 // import { COOKIE_CHATS } from 'utils/app-constants';
 import { triggerGoogleLoaded } from 'actions/auth/thunks';
