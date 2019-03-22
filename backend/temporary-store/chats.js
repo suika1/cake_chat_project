@@ -59,19 +59,11 @@ const chatStore = [
   },
 ];
 
-// Requests
+// CREATE
 
-const getChatList = () => [...chatStore];
+// -- Chats
 
-const getChat = chatId => {
-  const res = chatStore.find(chat => chat.id === chatId);
-  if (!res) throw new ChatNotFoundException(chatId);
-  return res;
-};
-
-// Mutations
-
-const addChat = name => {
+const addChat = ({ name }) => {
   if (!name) {
     throw new BadFieldsException('name');
   }
@@ -88,7 +80,51 @@ const addChat = name => {
   return newChat;
 };
 
-const updateChatProperty = (chatId, prop, value) => {
+// -- Messages
+
+const addMessage = ({
+  chatId,
+  text,
+  author,
+}) => {
+  if (!text) {
+    throw new BadFieldsException('text');
+  } else if (!author) {
+    throw new BadFieldsException('author');
+  }
+  const found = chatStore.find(chat => chat.id === chatId);
+  if (!found) {
+    throw new ChatNotFoundException(chatId);
+  }
+  found.messages.push({
+    id: uuid(),
+    author,
+    sendTime: moment().format('DD-MM-YYYY HH-mm'),
+    content: text,
+  });
+};
+
+// READ
+
+// -- Chats
+
+const getChatList = () => [...chatStore];
+
+const getChat = ({ chatId }) => {
+  const res = chatStore.find(chat => chat.id === chatId);
+  if (!res) throw new ChatNotFoundException(chatId);
+  return res;
+};
+
+// UPDATE
+
+// -- Chats
+
+const updateChatProperty = ({
+  chatId,
+  prop,
+  value,
+}) => {
   if (!chatId || !prop || !value) {
     const badFields = {};
     [{ chatId }, { prop }, { value }]
@@ -115,30 +151,9 @@ const updateChatProperty = (chatId, prop, value) => {
   });
 };
 
-const removeChat = chatId => {
-  if (!chatStore.find(chat => chat.id === chatId)) {
-    throw new ChatNotFoundException(chatId);
-  }
-  lodash.remove(chat => chat.id === chatId);
-};
+// -- Messages
 
-const addMessage = (chatId, {
-  text,
-  author,
-}) => {
-  const found = chatStore.find(chat => chat.id === chatId);
-  if (!found) {
-    throw new ChatNotFoundException(chatId);
-  }
-  found.messages.push({
-    id: uuid(),
-    author,
-    sendTime: moment().format('DD-MM-YYYY HH-mm'),
-    content: text,
-  });
-};
-
-const editMessage = ({
+const updateMessage = ({
   chatId,
   messageId,
   newText,
@@ -147,19 +162,48 @@ const editMessage = ({
   if (!foundChat) {
     throw new ChatNotFoundException(chatId);
   }
+
   const foundMessage = foundChat.messages.find(message => message.id === messageId);
   if (!foundMessage) {
     throw new MessageNotFoundException(chatId, messageId);
   }
+
   foundMessage.content = newText;
 }
 
+// DELETE
+
+// -- Chats
+
+const removeChat = ({ chatId }) => {
+  if (!chatStore.find(chat => chat.id === chatId)) {
+    throw new ChatNotFoundException(chatId);
+  }
+  lodash.remove(chatStore, chat => chat.id === chatId);
+};
+
+// -- Messages
+
+const removeMessage = ({ chatId, messageId }) => {
+  const foundChat = chatStore.find(chat => chat.id === chatId);
+  
+  if (!foundChat) {
+    throw new ChatNotFoundException(chatId);
+  }
+
+  const removed = lodash.remove(foundChat.messages, message => message.id === messageId);
+  if (!removed || !removed.length) {
+    throw new MessageNotFoundException(chatId, messageId);
+  }
+}
+
 module.exports = {
+  addChat,
+  addMessage,
   getChatList,
   getChat,
-  addChat,
   updateChatProperty,
+  updateMessage,
   removeChat,
-  addMessage,
-  editMessage,
+  removeMessage,
 };
