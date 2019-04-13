@@ -4,21 +4,10 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Cookies from 'js-cookie';
 
-import styles from './styles';
+import styles from './styles.scss';
 
 class Message extends React.PureComponent {
   render() {
-    let { name, text, date, classes } = this.props;
-    let myDate = new Date(date * 1000);
-    let hrs = ('0' + myDate.getHours()).substr(-2);
-    let mins = ('0' + myDate.getMinutes()).substr(-2);
-    //TODO:if it's current user (now mock)
-    //TODO: avatar
-    let myName = 'lolkaName';
-    if (Cookies.get('name')) {
-      myName = Cookies.get('name');
-    }
-
     if (this.props.name === myName) {
       return (
         <ListItem className={classes.myMessage}>

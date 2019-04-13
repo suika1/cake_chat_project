@@ -3,16 +3,45 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
   mode: 'development',
   entry: ['@babel/polyfill', './src/index.js'],
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   module: {
     rules: [
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              sourceMap: true,
+              localIdentName: '[local]__[hash:base64:5]', // can add to beginning: [path][name]__
+              // minimize: true,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              // ident: 'postcss',
+              sourceMap: true,
+              plugins: () => [
+                autoprefixer({
+                  browsers: ['>1%', 'last 4 versions', 'Firefox ESR', 'not ie < 9']
+                })
+              ]
+            }
+          },
+          'sass-loader',
+        ]
       },
       {
         test: /\.js$/,
