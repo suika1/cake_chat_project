@@ -29,6 +29,12 @@
   right: 10%;
 }
 
+.loader {
+  text-align: center;
+  top: 25vh;
+  position: relative;
+}
+
 @media (max-width: 1200px) {
   .chat {
     left: 25%;

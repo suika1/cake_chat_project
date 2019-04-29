@@ -24,12 +24,10 @@
 }
 
 .messageMain {
-  margin-left: 25px;
   position: relative;
-  padding: 10px 20px;
-  padding-right: 40px;
-  background: brown;
-  border: 10px solid grey;
+  padding: 10px 25px;
+  padding-right: 60px;
+  background: #a52a79ab;
   border-radius: 30px;
 }
 
@@ -38,12 +36,11 @@
   width: max-content;
 }
 
-.text {}
 
 .date {
   position: absolute;
-  right: 0;
-  bottom: 0;
+  right: 9px;
+  bottom: 3px;
 }
 
 @media (max-width: 900px) {
