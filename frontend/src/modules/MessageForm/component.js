@@ -8,10 +8,30 @@ import styles from './styles.scss';
 export default class MessageForm extends React.PureComponent {
   state = {
     textValue: '',
+    nameValue: '',
   };
 
   //For controlling inputs
   onChange = fieldName => e => this.setState({ [fieldName]: e.target.value });
+
+  createMessage = () => {
+    const {
+      createMessage,
+      chatId,
+    } = this.props;
+    const {
+      textValue,
+      nameValue,
+    } = this.state;
+
+    createMessage({
+      data: {
+        text: textValue,
+        author: nameValue,
+        chatId,
+      },
+    });
+  }
 
   render() {
     const {
@@ -40,7 +60,7 @@ export default class MessageForm extends React.PureComponent {
         <Fab
           className={styles.btn}
           color="primary"
-          onClick={this.onSend}
+          onClick={this.createMessage}
         >
           >
         </Fab>
