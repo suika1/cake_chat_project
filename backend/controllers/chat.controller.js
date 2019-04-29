@@ -15,7 +15,7 @@ exports.chatCreate = (req, res, next) => {
   })
 };
 
-exports.getAllChats = (req, res) => {
+exports.getAllChats = (req, res, next) => {
   Chat.find((err, result) => {
     if (err) return next(err);
 
@@ -26,7 +26,7 @@ exports.getAllChats = (req, res) => {
   });
 };
 
-exports.getChatById = (req, res) => {
+exports.getChatById = (req, res, next) => {
   Chat.findById(req.params.id, (err, result) => {
     if (err) return next(err);
     
@@ -37,7 +37,7 @@ exports.getChatById = (req, res) => {
   });
 };
 
-exports.editChatInfo = (req, res) => {
+exports.editChatInfo = (req, res, next) => {
   Chat.findByIdAndUpdate(req.params.id, {$set: req.body}, (err, result) => {
     if (err) return next(err);
 
@@ -48,7 +48,7 @@ exports.editChatInfo = (req, res) => {
   });
 };
 
-exports.deleteChat = (req, res) => {
+exports.deleteChat = (req, res, next) => {
   Chat.findByIdAndRemove(req.params.id, (err) => {
     if (err) return next(err);
     

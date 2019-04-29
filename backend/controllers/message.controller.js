@@ -12,7 +12,7 @@ exports.createMessage = async (req, res, next) => {
       text,
       chatId,
     } = req.body;
-  
+
     const createdMessage = new Message({
       author,
       sendTime: Date.now(),
