@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Typography, Fab, TextField, Button } from '@material-ui/core';
+import cx from 'classnames';
 
 import styles from './styles.scss';
 
@@ -85,18 +86,17 @@ export default class ChatList extends React.Component {
         {chatList.map((chat, index) => (
           <NavLink
             key={index}
-            // className={styles.chat}
+            className={styles.link}
             to={`/${chat._id}`}
-            activeClassName={styles.activeChat}
-            isActive={() => match.params.chatKey === chat._id}
           >
             <div key={index} >
-              <Typography
-                className={styles.link}
-                variant="body2"
+              <h3
+                className={cx(
+                  { [styles.activeLink]: match.params.chatKey === chat._id },
+                )}
               >
                 {chat.name}
-              </Typography>
+              </h3>
             </div>
           </NavLink>
         ))}

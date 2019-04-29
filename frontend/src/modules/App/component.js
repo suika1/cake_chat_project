@@ -10,15 +10,11 @@ import styles from './styles.scss';
 
 const Routes = ['/:chatKey', '/'];
 
-const checkCookies = () => {
-  if (!navigator.cookieEnabled) {
-    alert('Включите cookie для комфортной работы с этим сайтом');
-  }
-};
-
 export default class App extends React.Component {
   componentDidMount() {
-    checkCookies();
+    if (!navigator.cookieEnabled) {
+      alert('Включите cookie для комфортной работы с этим сайтом');
+    }
   }
 
   render() {
