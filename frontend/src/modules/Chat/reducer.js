@@ -30,11 +30,12 @@ const ChatReducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: true,
+        messages: [],
       };
     case AT.GET_MESSAGES_SUCCESS:
       return {
         ...state,
-        messages: action.payload.messages,
+        messages: action.payload.results,
         isFetching: false,
       };
     case AT.GET_MESSAGES_FAILED:

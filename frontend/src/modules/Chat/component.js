@@ -8,8 +8,6 @@ import { List, Button, Fab, Typography, TextField } from '@material-ui/core';
 import MessageForm from '../MessageForm';
 import Message from 'modules/Message';
 
-import { getDocHeight } from 'utils/utils';
-
 import styles from './styles.scss';
 
 export default class Chat extends React.Component {
@@ -17,45 +15,57 @@ export default class Chat extends React.Component {
     super(props);
     const { match } = this.props
     this.state = {
-      timerId: null,
-      lastId: null,
       chatKey: match.params.chatKey,
       newPosted: false,
     };
   }
 
-  //onMount - scrolls to bottom
   componentDidMount = () => {
     const { match, getMessages } = this.props;
-    getMessages(match.params.chatKey);
+    getMessages({ chatId: match.params.chatKey });
   }
 
-  //Every component update - setup new state
-  componentDidUpdate = () => {
-    //this.resetTimer();
+  componentDidUpdate = (prevProps) => {
+    const {
+      match,
+      getMessages,
+    } = this.props;
+    const chatKey = match.params.chatKey;
+
+    if (chatKey !== prevProps.match.params.chatKey) {
+      getMessages({ chatId: chatKey })
+    }
   }
 
-  //clear timer before component is destroyed
-  componentWillUnmount = () => {
-    const { timerId } = this.state;
-    clearInterval(timerId);
+  renderMessages = () => {
+    const {
+      messages,
+      isFetching,
+    } = this.props;
+
+    if (isFetching) {
+      return (
+        <Typography
+          className={styles.loader}
+          variant="h3"
+        >
+          Loading...
+        </Typography>
+      )
+    }
+
+    return messages.map(item => (
+      <Message
+        key={item._id}
+        data={item}
+      />
+    ));
   }
 
   render() {
     const {
-      classes,
-      messages,
-      getInitialMessages,
       match,
-      loaded,
-      leaveChat,
     } = this.props;
-
-    const {
-      timerId: stateTimerId,
-      chatKey: stateChatKey,
-      lastId: stateLastId,
-    } = this.state;
 
     const chatKey = match.params.chatKey;
 
@@ -73,7 +83,7 @@ export default class Chat extends React.Component {
           />
           <Fab
             onClick={() => {
-              let input = document.getElementById('current-chat-key');
+              const input = document.getElementById('current-chat-key');
               input.select();
               document.execCommand('copy');
             }}
@@ -82,24 +92,11 @@ export default class Chat extends React.Component {
           </Fab>
         </div>
 
-        <Fab
-          color="secondary"
-          className={styles.topFab}
-          onClick={() => Scroll.animateScroll.scrollToTop()}
-        >
-          Up
-        </Fab>
-
-        <Fab
-          color="secondary"
-          className={styles.botFab}
-          onClick={() => Scroll.animateScroll.scrollTo(getDocHeight())}
-        >
-          Down
-        </Fab>
+        {this.renderMessages()}
 
         <MessageForm
           onSend={() => console.log('clicked on send')}
+          chatId={chatKey}
         />
       </div>
     );
