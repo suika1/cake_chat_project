@@ -1,7 +1,8 @@
 {
   "rules": {
       "semi": "off",
-      "allowArrowFunctions": true
+      "allowArrowFunctions": true,
+      "no-unused-vars": "off"
   },
   "parser": "babel-eslint",
   "parserOptions": {
@@ -19,7 +20,10 @@
     "module": false,
     "__dirname": false,
     "navigator": false,
-    "alert": false
+    "alert": false,
+    "clearInterval": false,
+    "setInterval": false,
+    "process": false
   },
   "extends": "eslint:recommended",
   "plugins": [

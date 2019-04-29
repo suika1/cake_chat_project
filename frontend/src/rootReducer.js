@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
-import auth from './actions/auth/reducer.js';
-import messages from './actions/messages/reducer.js';
+
+import chatList from './modules/ChatList/reducer';
+import chat from './modules/Chat/reducer';
 
 export default combineReducers({
-  auth,
-  messages,
+  chatList,
+  currentChat: chat,
 });

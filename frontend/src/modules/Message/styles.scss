@@ -1,0 +1,56 @@
+.message {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.myMessage {
+  display: flex;
+  flex-direction: column-reverse;
+  text-align: right;
+  margin-left: auto;
+  & > div:first-child {
+    margin-left: auto;
+    margin-right: 25px;
+  }
+  & > div:last-child > p {
+    margin-left: auto;
+  }
+}
+
+.messageHeader {
+  width: 100%;
+  height: 40px;
+}
+
+.messageMain {
+  position: relative;
+  padding: 10px 25px;
+  padding-right: 60px;
+  background: #a52a79ab;
+  border-radius: 30px;
+}
+
+.name {
+  border-bottom: 1px solid grey;
+  width: max-content;
+}
+
+
+.date {
+  position: absolute;
+  right: 9px;
+  bottom: 3px;
+}
+
+@media (max-width: 900px) {
+  myMessage {
+    & > div:last-child > p {
+      position: relative;
+      right: 30px;
+    }
+    & > div:first-child {
+      margin-right: 0;
+    }
+  }
+}

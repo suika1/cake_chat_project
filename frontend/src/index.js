@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 // import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { store } from './store/store';
-import App from './modules/App/App';
+import { store } from './store';
+import App from './modules/App';
 // import Cookies from 'js-cookie';
 // import { BaseUrl } from 'api/api';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -236,9 +236,7 @@ const theme = createMuiTheme({
 ReactDOM.render(
   <Router>
     <Provider store={store}>
-      <MuiThemeProvider theme={theme}>
-        <App />
-      </MuiThemeProvider>
+      <App />
     </Provider>
   </Router>,
   document.getElementById('root'),

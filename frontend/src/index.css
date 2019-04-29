@@ -10,12 +10,5 @@ html {
 }
 
 html {
-    background: url("./img/aska_4.jpg") no-repeat fixed 100%;
-    background-size: 500px 100%;
-}
-
-@media screen and (max-width: 900px) {
-    html {
-        background: linear-gradient(#4d78ff, #f1feff);
-    }
+    background: linear-gradient(#4d78ff, #f1feff);
 }
