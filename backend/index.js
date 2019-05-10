@@ -11,7 +11,7 @@ const {
 const { generateResponse } = require('./utils/utils');
 
 // Set up mongoose connection
-const dev_db_url = `mongodb+srv://suika1:${process.env.MONGO_PASS}@cluster0-jgkmz.mongodb.net/cake_chat_db?retryWrites=true`;
+const dev_db_url = `mongodb+srv://${process.env.MONGO_LOGIN}:${process.env.MONGO_PASS}@cluster0-jgkmz.mongodb.net/cake_chat_db?retryWrites=true`;
 const mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, {useNewUrlParser: true});
 // mongoose.Promise = global.Promise;
