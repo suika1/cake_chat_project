@@ -1,5 +1,5 @@
-const Message = require('../models/message.model');
-const Chat = require('../models/chat.model');
+const Message = require('../models/message');
+const Chat = require('../models/chat');
 
 const { MessageNotFoundException } = require('../exceptions/exceptions');
 

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const MessageController = require('../../controllers/message.controller');
+const MessageController = require('../../controllers/message');
 
 // CREATE
 router.post('/', MessageController.createMessage);

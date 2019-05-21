@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const MessageSchema = require('./message.model').schema;
+const MessageSchema = require('./message').schema;
 
 const ChatSchema = new Schema({
   name: { type: String, required: true, max: 50 },
