@@ -3,7 +3,7 @@ const {
   BadFieldsException,
   ChatAlreadyExistsException,
   MessageNotFoundException,
-} = require('./exceptions/exceptions');
+} = require('../exceptions/exceptions');
 const { generateResponse } = require('../utils/utils');
 
 // Log errors && Return respond with error
@@ -46,6 +46,4 @@ const genericErrorMiddleware = (err, req, res, next) => {
   });
 };
 
-module.exports = {
-  genericErrorMiddleware,
-};
+module.exports = genericErrorMiddleware;
