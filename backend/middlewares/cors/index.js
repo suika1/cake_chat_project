@@ -7,4 +7,4 @@ const corsMiddleware = (req, res, next) => {
   next();
 };
 
-module.exports = corsMiddleware;
+export default corsMiddleware;

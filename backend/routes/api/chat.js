@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const ChatController = require('../../controllers/chat');
+import * as ChatController from '../../controllers/chat'; 
 
 // CREATE
 router.post('/', ChatController.chatCreate);
@@ -17,4 +17,4 @@ router.put('/:id?', ChatController.editChatInfo);
 // DELETE
 router.delete('/:id?', ChatController.deleteChat);
 
-module.exports = router;
+export default router;

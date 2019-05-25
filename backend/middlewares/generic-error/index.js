@@ -1,10 +1,10 @@
-const {
+import {
   ChatNotFoundException,
   BadFieldsException,
   ChatAlreadyExistsException,
   MessageNotFoundException,
-} = require('../exceptions/exceptions');
-const { generateResponse } = require('../utils/utils');
+} from '../../exceptions/exceptions';
+import { generateResponse } from '../../utils/utils';
 
 // Log errors && Return respond with error
 const genericErrorMiddleware = (err, req, res, next) => {
@@ -46,4 +46,4 @@ const genericErrorMiddleware = (err, req, res, next) => {
   });
 };
 
-module.exports = genericErrorMiddleware;
+export default genericErrorMiddleware;

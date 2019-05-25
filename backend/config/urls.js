@@ -1,11 +1,11 @@
 const api = '/api/v1/';
 
-const chatList = `${api}chat-list/`;
-const messageList = `${api}message-list/`;
-const users = `${api}users/`;
+export const chatList = `${api}chat-list/`;
+export const messageList = `${api}message-list/`;
+export const users = `${api}users/`;
 
-module.exports = {
+export default {
   chatList,
   messageList,
   users,
-};
+}

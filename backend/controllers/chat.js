@@ -1,8 +1,8 @@
-const Chat = require('../models/chat');
+import { ChatModel as Chat } from '../models/chat';
 
-const utils = require('../utils/utils');
+import * as utils from '../utils/utils';
 
-exports.chatCreate = (req, res, next) => {
+export const chatCreate = (req, res, next) => {
   const createdChat = new Chat({
     name: req.body.name,
     messages: req.body.messages,
@@ -15,43 +15,43 @@ exports.chatCreate = (req, res, next) => {
   })
 };
 
-exports.getAllChats = (req, res, next) => {
+export const getAllChats = (req, res, next) => {
   Chat.find((err, result) => {
     if (err) return next(err);
 
-    utils.generateResponse({
+    return utils.generateResponse({
       res,
       results: result,
     });
   });
 };
 
-exports.getChatById = (req, res, next) => {
+export const getChatById = (req, res, next) => {
   Chat.findById(req.params.id, (err, result) => {
     if (err) return next(err);
     
-    utils.generateResponse({
+    return utils.generateResponse({
       res,
       results: result,
     });
   });
 };
 
-exports.editChatInfo = (req, res, next) => {
+export const editChatInfo = (req, res, next) => {
   Chat.findByIdAndUpdate(req.params.id, {$set: req.body}, (err, result) => {
     if (err) return next(err);
 
-    utils.generateResponse({
+    return utils.generateResponse({
       res,
       results: result,
     });
   });
 };
 
-exports.deleteChat = (req, res, next) => {
+export const deleteChat = (req, res, next) => {
   Chat.findByIdAndRemove(req.params.id, (err) => {
     if (err) return next(err);
     
-    utils.generateResponse({ res });
+    return utils.generateResponse({ res });
   })
 }

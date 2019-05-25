@@ -1,11 +1,11 @@
-const Message = require('../models/message');
-const Chat = require('../models/chat');
+import { MessageModel as Message } from '../models/message';
+import { ChatModel as Chat } from '../models/chat';
 
-const { MessageNotFoundException } = require('../exceptions/exceptions');
+import { MessageNotFoundException } from '../exceptions/exceptions';
 
-const utils = require('../utils/utils');
+import * as utils from '../utils/utils';
 
-exports.createMessage = async (req, res, next) => {
+export const createMessage = async (req, res, next) => {
   try {
     const {
       author,
@@ -28,7 +28,7 @@ exports.createMessage = async (req, res, next) => {
   }
 };
 
-exports.getMessage = async (req, res, next) => {
+export const getMessage = async (req, res, next) => {
   try {
     const {
       chatId,
@@ -50,7 +50,7 @@ exports.getMessage = async (req, res, next) => {
   }
 };
 
-exports.updateMessage = async (req, res, next) => {
+export const updateMessage = async (req, res, next) => {
   try {
     const {
       chatId,
@@ -78,7 +78,7 @@ exports.updateMessage = async (req, res, next) => {
   }
 };
 
-exports.deleteMessage = async (req, res, next) => {
+export const deleteMessage = async (req, res, next) => {
   try {
     const {
       chatId,
@@ -90,7 +90,7 @@ exports.deleteMessage = async (req, res, next) => {
       .filter(msg => msg._id.toString() !== messageId.toString());
     if (!chat || filteredMessages.length === chat.messages.length) {
       throw new MessageNotFoundException(chatId, messageId);
-    };
+    }
     
     chat.messages = filteredMessages;
     

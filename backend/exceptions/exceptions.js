@@ -23,7 +23,7 @@ class ChatAlreadyExistsException extends Error {
   }
 }
 
-module.exports = {
+export default {
   ChatNotFoundException,
   BadFieldsException,
   ChatAlreadyExistsException,

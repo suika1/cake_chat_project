@@ -1,30 +1,29 @@
-const User = require('../models/user');
-const Chat = require('../models/chat');
+import User from '../models/user';
 
-const utils = require('../utils/utils');
+import * as utils from '../utils/utils';
+import bcrypt from 'bcrypt';
 
-exports.createUser = async (req, res, next) => {
+export const createUser = async (req, res, next) => {
   try {
     const {
       email,
       name,
       password,
     } = req.body;
+
     // check if exists
     const foundDocs = await User.find({ name, email });
-    console.log('foundDocs', foundDocs);
     if (foundDocs && foundDocs.length) {
       return utils.generateResponse({
         res,
+        status: 400,
         ok: false,
         error: 'user already exists',
       });
     }
-    const bcrypt = require('bcrypt');
-    const saltRounds = 10;
 
+    const saltRounds = Math.ceil(Math.random() * 10);
     const hash = await bcrypt.hash(password, saltRounds);
-    console.log('hash', hash);
 
     const createdUser = new User({
       name,
@@ -32,13 +31,39 @@ exports.createUser = async (req, res, next) => {
       password: hash,
       chatList: [],
     });
-    // const chat = await Chat.findById(chatId);
-    // chat.messages.push(createdMessage);
-    console.log('createdUser', createdUser);
     await createdUser.save();
-    utils.generateResponse({ res, results: createdUser });
+    return utils.generateResponse({ res, results: createdUser });
   } catch (err) {
     next(err);
   }
 };
 
+export const validateUser = async (req, res, next) => {
+  try {
+    const {
+      email,
+      name,
+      password,
+    } = req.body;
+
+    const foundUsers = (await User.find({ email }))
+      .filter(user => user.name === name);
+    if (!foundUsers || !foundUsers.length) return utils.generateResponse({
+      res,
+      status: 400,
+      error: 'User not found',
+    });
+
+    // compare real password hash with received password
+    const result = await bcrypt.compare(password, foundUsers[0].password);
+    if (!result) return utils.generateResponse({
+      res,
+      status: 400,
+      error: 'Wrong password',
+    });
+
+    return utils.generateResponse({ res });
+  } catch (err) {
+    next(err);
+  }
+}

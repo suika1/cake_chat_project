@@ -1,10 +1,9 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import { Schema, model } from 'mongoose';
 
-const messageSchema = new Schema({
+export const MessageSchema = new Schema({
   author: { type: String, required: true, max: 50 },
   sendTime: { type: Date, default: Date.now },
   text: { type: String, required: true, max: 300 },
 });
 
-module.exports = mongoose.model('Message', messageSchema);
+export const MessageModel = model('Message', MessageSchema);

@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const MessageController = require('../../controllers/message');
+import * as MessageController from '../../controllers/message';
 
 // CREATE
 router.post('/', MessageController.createMessage);
@@ -15,4 +15,4 @@ router.put('/', MessageController.updateMessage);
 // DELETE
 router.delete('/', MessageController.deleteMessage);
 
-module.exports = router;
+export default router;
