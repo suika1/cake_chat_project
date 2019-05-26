@@ -4,7 +4,8 @@
       "allowArrowFunctions": true,
       "react/no-unescaped-entities": "off",
       "import/no-namespace": "off",
-      "arrow-body-style": "off"
+      "arrow-body-style": "off",
+      "no-console": "warn"
   },
   "parser": "babel-eslint",
   "parserOptions": {
