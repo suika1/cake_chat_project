@@ -8,21 +8,19 @@ import chatRoutes from './routes/api/chat';
 import messageRoutes from './routes/api/message';
 import userRoutes from './routes/api/user';
 
-import corsMiddleware from './middlewares/cors';
-import genericErrorMiddleware from './middlewares/generic-error';
-
+import middlewares from './middlewares';
 setupMongoConnection();
 
 // parse application/x-www-form-urlencoded && application/json
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use(corsMiddleware);
-app.use(genericErrorMiddleware);
+app.use(middlewares.cors);
+app.use(middlewares.genericError);
 
 // Delegate path to router
-app.use(urls.chatList, chatRoutes);
-app.use(urls.messageList, messageRoutes)
+app.use(urls.chatList, middlewares.checkToken, chatRoutes);
+app.use(urls.messageList, middlewares.checkToken, messageRoutes);
 app.use(urls.users, userRoutes);
 
 const PORT = process.env.PORT || 5000;

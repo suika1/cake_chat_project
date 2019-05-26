@@ -1,7 +1,9 @@
-import User from '../models/user';
-
-import * as utils from '../utils/utils';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
+import User from '../models/user';
+import * as utils from '../utils/utils';
+import tokenSecret from '../config/token-secret';
 
 export const createUser = async (req, res, next) => {
   try {
@@ -12,7 +14,7 @@ export const createUser = async (req, res, next) => {
     } = req.body;
 
     // check if exists
-    const foundDocs = await User.find({ name, email });
+    const foundDocs = await User.find({ email });
     if (foundDocs && foundDocs.length) {
       return utils.generateResponse({
         res,
@@ -25,6 +27,11 @@ export const createUser = async (req, res, next) => {
     const saltRounds = Math.ceil(Math.random() * 10);
     const hash = await bcrypt.hash(password, saltRounds);
 
+    const token = jwt.sign(
+      { email },
+      tokenSecret,
+      { expiresIn: '24h' }, // expires in 24 hours
+    );
     const createdUser = new User({
       name,
       email,
@@ -32,7 +39,7 @@ export const createUser = async (req, res, next) => {
       chatList: [],
     });
     await createdUser.save();
-    return utils.generateResponse({ res, results: createdUser });
+    return utils.generateResponse({ res, results: createdUser, token });
   } catch (err) {
     next(err);
   }
@@ -42,12 +49,10 @@ export const validateUser = async (req, res, next) => {
   try {
     const {
       email,
-      name,
       password,
     } = req.body;
 
-    const foundUsers = (await User.find({ email }))
-      .filter(user => user.name === name);
+    const foundUsers = await User.find({ email });
     if (!foundUsers || !foundUsers.length) return utils.generateResponse({
       res,
       status: 400,
@@ -62,7 +67,16 @@ export const validateUser = async (req, res, next) => {
       error: 'Wrong password',
     });
 
-    return utils.generateResponse({ res });
+    const token = jwt.sign(
+      { email },
+      tokenSecret,
+      { expiresIn: '24h' }, // expires in 24 hours
+    );
+
+    return utils.generateResponse({
+      res,
+      token,
+    });
   } catch (err) {
     next(err);
   }

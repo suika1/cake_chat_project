@@ -6,6 +6,7 @@ export const generateResponse = ({
   results = '',
   error = '',
   ok = true,
+  ...another
 }) => {
   if (error && error.length) ok = false;
   return res.status(status).send(
@@ -13,6 +14,7 @@ export const generateResponse = ({
       results,
       ok,
       error,
+      ...another,
     }),
   );
 };
