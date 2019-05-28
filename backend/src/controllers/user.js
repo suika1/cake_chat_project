@@ -12,6 +12,7 @@ export const createUser = async (req, res, next) => {
       name,
       password,
     } = req.body;
+    if (!email || !name || !password) throw new Error('Bad arguments');
 
     // check if exists
     const foundDocs = await User.find({ email });
