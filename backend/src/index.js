@@ -1,4 +1,5 @@
 import express from 'express';
+import swaggerUi from 'swagger-ui-express';
 const app = express();
 
 import * as urls from './config/urls';
@@ -11,14 +12,20 @@ import userRoutes from './routes/api/user';
 
 import middlewares from './middlewares';
 
+import swaggerDocument from '../swaggerSpec.json';
+import swaggerSetup from './config/swaggerDef';
 setupMongoConnection();
 startWebsocketServer();
+swaggerSetup();
 
 // parse application/x-www-form-urlencoded && application/json
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use(middlewares.cors);
+
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Delegate path to router
 app.use(urls.chatList, middlewares.checkToken, chatRoutes);
