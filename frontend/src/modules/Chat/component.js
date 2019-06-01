@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import * as Scroll from 'react-scroll/modules';
 import { List, Button, Fab, Typography, TextField } from '@material-ui/core';
 
-import MessageForm from '../MessageForm';
-import Message from 'modules/Message';
+import MessageForm from '../messageForm';
+import Message from 'modules/message';
 
 import styles from './styles.scss';
 

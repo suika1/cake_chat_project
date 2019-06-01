@@ -1,5 +1,5 @@
 import * as AT from './action-types';
-import { EDIT_CHAT_SUCCESS } from 'modules/Chat/action-types';
+import { EDIT_CHAT_SUCCESS } from 'modules/chat/action-types';
 
 const initialState = {
   isFetching: false,

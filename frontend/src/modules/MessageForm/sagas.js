@@ -5,7 +5,7 @@ import * as urls from 'api/urls';
 
 import * as AT from './action-types';
 import * as actions from './actions';
-import { getMessages } from 'modules/Chat/actions';
+import { getMessages } from 'modules/chat/actions';
 
 function* createMessage({
   payload: {
