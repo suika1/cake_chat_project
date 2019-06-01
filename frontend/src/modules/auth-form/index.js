@@ -43,13 +43,13 @@ class AuthForm extends React.Component {
 
     let i = 0;
     return (
-      <div className={s['auth-form-wrapper']}>
-        <div className={s['auth-form']}>
+      <div className={s.authFormWrapper}>
+        <div className={s.authForm}>
             <div className={s.options}>
                 {options.map((option, idx) => (
                   <div
                     key={idx}
-                    className={s['option-wrapper']}
+                    className={s.optionWrapper}
                   >
                     <button
                       className={cx(s.option, {
@@ -60,7 +60,7 @@ class AuthForm extends React.Component {
                       {option.name}
                     </button>
                     {chosenOption === idx && (
-                      <div className={s['pseudo-arrow']} />
+                      <div className={s.pseudoArrow} />
                     )}
                   </div>
                 ))}
@@ -75,7 +75,7 @@ class AuthForm extends React.Component {
                   />
                 ))}
             </div>
-            <button className={s['action-btn']} type="button">Submit</button>
+            <button className={s.actionBtn} type="button">Submit</button>
         </div>
       </div>
     )

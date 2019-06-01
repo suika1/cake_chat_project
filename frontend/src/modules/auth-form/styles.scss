@@ -1,4 +1,4 @@
-.auth-form-wrapper {
+.authFormWrapper {
   background: #1d0d41;
 
   padding-top: 200px;
@@ -7,7 +7,7 @@
   width: 100%;
 }
 
-.auth-form {
+.authForm {
   display: flex;
   flex-direction: column;
   
@@ -26,7 +26,7 @@
   justify-content: flex-start;
 }
 
-.option-wrapper {
+.optionWrapper {
   display: flex;
   flex-direction: column;
 
@@ -41,7 +41,7 @@
   }
 }
 
-.pseudo-arrow {
+.pseudoArrow {
   width: 0; 
   height: 0; 
 
@@ -108,7 +108,7 @@
   }
 }
 
-.action-btn {
+.actionBtn {
   font-size: 20px;
   font-weight: 500;
   letter-spacing: 0.03rem;
