@@ -1,4 +1,4 @@
-const modulePrefix = 'Chat/';
+const modulePrefix = 'chat/';
 
 export const EDIT_CHAT = `${modulePrefix}EDIT_CHAT`;
 export const EDIT_CHAT_SUCCESS = `${modulePrefix}EDIT_CHAT_SUCCESS`;
