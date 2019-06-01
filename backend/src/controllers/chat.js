@@ -1,21 +1,49 @@
 import { ChatModel as Chat } from '../models/chat';
+import { UserModel as User } from '../models/user';
 
 import * as utils from '../utils/utils';
 
-export const chatCreate = (req, res, next) => {
-  const createdChat = new Chat({
-    name: req.body.name,
-    messages: req.body.messages,
-  });
+export const chatCreate = async (req, res, next) => {
+  try {
+    const {
+      name,
+    } = req.body;
 
-  createdChat.save((err) => {
+    const {
+      email
+    } = req.decoded;
+
+    const users = await User.find({ email });
+    const foundUser = users[0];
+    const {
+      _id: authorId,
+    } = foundUser;
+
+    const createdChat = new Chat({
+      name,
+      userList: [authorId],
+    });
+
+    createdChat.save((err) => {
+        if (err) return next(err);
+    });
+
+    foundUser.chatList = foundUser.chatList.concat(createdChat._id);
+
+    foundUser.save((err) => {
       if (err) return next(err);
       
-      utils.generateResponse({ res });
-  })
+      utils.generateResponse({
+        res,
+        createdChat,
+      });
+    });
+  } catch (err) {
+    next(err);
+  }
 };
 
-export const getAllChats = (req, res, next) => {
+export const getAllChats = async (req, res, next) => {
   Chat.find((err, result) => {
     if (err) return next(err);
 
@@ -26,32 +54,50 @@ export const getAllChats = (req, res, next) => {
   });
 };
 
-export const getChatById = (req, res, next) => {
-  Chat.findById(req.params.id, (err, result) => {
-    if (err) return next(err);
-    
+export const getChatById = async (req, res, next) => {
+  try {
+    const result = await Chat.findById(req.params.id);
     return utils.generateResponse({
       res,
       results: result,
     });
-  });
+  } catch (err) {
+    next(err);
+  }
 };
 
-export const editChatInfo = (req, res, next) => {
-  Chat.findByIdAndUpdate(req.params.id, {$set: req.body}, (err, result) => {
-    if (err) return next(err);
+export const editChatInfo = async (req, res, next) => {
+  try {
+    const { chatId } = req.body;
+    const setVariables = {};
+    Object.entries(req.body)
+      .filter(([name]) => name !== 'chatId')
+      .forEach(([name, val]) => setVariables[name] = val);
+
+    const result = await Chat.findByIdAndUpdate(chatId, {$set: setVariables});
 
     return utils.generateResponse({
       res,
-      results: result,
+      results: {
+        ...result._doc,
+        name: setVariables.name,
+      },
     });
-  });
+  } catch (err) {
+    return next(err);
+  }
 };
 
-export const deleteChat = (req, res, next) => {
-  Chat.findByIdAndRemove(req.params.id, (err) => {
-    if (err) return next(err);
-    
+// TOOD: delete only if author tries to delete
+export const deleteChat = async (req, res, next) => {
+  try {
+    const { chatId } = req.body;
+
+    const foundChat = await Chat.findOne({ _id: chatId });
+
+    await foundChat.remove();
     return utils.generateResponse({ res });
-  })
+  } catch (err) {
+    next(err);
+  }
 }
