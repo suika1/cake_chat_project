@@ -1,9 +1,9 @@
 import createSagaMiddleware from 'redux-saga';
 import { all } from 'redux-saga/effects';
 
-import chatListSagas from 'modules/ChatList/sagas';
-import chatSagas from 'modules/Chat/sagas';
-import messageFormSagas from 'modules/MessageForm/sagas';
+import chatListSagas from 'modules/chatList/sagas';
+import chatSagas from 'modules/chat/sagas';
+import messageFormSagas from 'modules/messageForm/sagas';
 
 export default  [
   ...chatListSagas,
