@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route, Link, BrowserRouter as Router } from 'react-router-dom';
-import { withStyles } from '@material-ui/core/styles';
+import { Switch, BrowserRouter as Router } from 'react-router-dom';
 
-import Chat from 'modules/Chat';
-import ChatList from 'modules/ChatList';
+import routes from 'routes';
+import NotFoundPageRoute from 'routes/not-found-page';
 
 import styles from './styles.scss';
-
-const Routes = ['/:chatKey', '/'];
 
 export default class App extends React.Component {
   componentDidMount() {
@@ -22,33 +19,9 @@ export default class App extends React.Component {
       <Router>
         <div className={styles.app}>
           <Switch>
-            {Routes.map((path, index) => (
-              <Route
-                exact
-                path={path}
-                key={index}
-                render={() => (
-                  <React.Fragment>
-                    <ChatList />
+            {routes.map(Route => Route())}
 
-                    <Chat />
-                  </React.Fragment>
-                )}
-              />
-            ))}
-            {/*If wrong url*/}
-
-            {/* TODO: move to 404page component */}
-            <Route
-              render={() => (
-                <div>
-                  <h3>Sorry, it's wrong URL</h3>
-                  <p>
-                    You can navigate to <Link to="/">Home</Link> page:{' '}
-                  </p>
-                </div>
-              )}
-            />
+            <NotFoundPageRoute />
           </Switch>
         </div>
       </Router>
