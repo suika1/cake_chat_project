@@ -1,12 +1,13 @@
 import { Schema, model } from 'mongoose';
 
-import { ChatSchema } from './chat';
+import { ChatModel } from './chat';
 
 export const UserSchema = new Schema({
   email: { type: String, required: true, max: 50, unique: true },
   name: { type: String, required: true, max: 50 },
   password: { type: String, required: true },
-  chatList: [ChatSchema],
+  chatList: [{ type: Schema.Types.ObjectId, ref: ChatModel }],
 });
 
-export default model('User', UserSchema);
+export const UserModel = model('User', UserSchema);
+
