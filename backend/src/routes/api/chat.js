@@ -12,9 +12,9 @@ router.get('/', ChatController.getAllChats);
 router.get('/:id?', ChatController.getChatById);
 
 // UPDATE
-router.put('/:id?', ChatController.editChatInfo);
+router.put('/', ChatController.editChatInfo);
 
 // DELETE
-router.delete('/:id?', ChatController.deleteChat);
+router.delete('/', ChatController.deleteChat);
 
 export default router;
