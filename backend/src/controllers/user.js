@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import User from '../models/user';
+import { UserModel as User } from '../models/user';
 import * as utils from '../utils/utils';
 import tokenSecret from '../config/token-secret';
 
