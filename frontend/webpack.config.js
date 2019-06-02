@@ -55,11 +55,11 @@ module.exports = {
         use: 'file-loader',
       },
       {
-        test: /\.(ttf|eot|woff|woff2)$/,
+        test: /\.(\.jpe?g$|\.ico$|\.gif$|\.png$|\.svg$|ttf|eot|woff|woff2|.wav$|\.mp3$)$/,
         use: {
           loader: "file-loader",
           options: {
-            name: "fonts/[name].[ext]",
+            name: "file-loader?name=[name].[ext]",
           },
         },
       },
@@ -79,6 +79,7 @@ module.exports = {
       title: 'CakeProject',
       template: 'public/index.html',
       filename: 'index.html',
+      favicon: 'public/favicon.ico',
     }),
     new ManifestPlugin(),
     new webpack.HotModuleReplacementPlugin(),
