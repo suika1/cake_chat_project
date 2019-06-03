@@ -23,7 +23,8 @@
     "alert": false,
     "clearInterval": false,
     "setInterval": false,
-    "process": false
+    "process": false,
+    "localStorage": false
   },
   "extends": "eslint:recommended",
   "plugins": [
