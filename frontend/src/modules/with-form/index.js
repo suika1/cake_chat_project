@@ -17,12 +17,24 @@ const WithForm = (WrappedComponent) => {
         }
       }));
     }
+
+    removeField = (fieldName) => this.setState(state => ({
+        values: Object.entries(state.values)
+          .filter(([name]) => name !== fieldName)
+          .reduce((prev, [curName, curVal]) => {
+            prev[curName] = curVal;
+            return prev;
+          }, {}),
+    }));
     
     render() {
       return (
         <WrappedComponent
           formValues={this.getValues()}
-          changeField={this.changeFieldValue}
+          fieldProps={{
+            changeField: this.changeFieldValue,
+            removeField: this.removeField,
+          }}
           {...this.props}
         />
       )

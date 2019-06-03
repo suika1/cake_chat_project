@@ -4,7 +4,9 @@ export default class Field extends React.Component {
   componentDidMount = () => {
     const {
       name,
-      changeField,
+      fieldProps: {
+        changeField,
+      },
     } = this.props;
     changeField(name, '');
   }
@@ -12,17 +14,21 @@ export default class Field extends React.Component {
   componentWillUnmount = () => {
     const {
       name,
-      changeField,
+      fieldProps: {
+        removeField,
+      },
     } = this.props;
-    changeField(name, '');
-    console.log('unmount: ', name);
+    removeField(name);
   }
 
   render() {
     const {
       name,
       Component,
-      changeField,
+      fieldProps: {
+        changeField,
+        removeField,
+      },
       formValues,
       ...props
     } = this.props;
