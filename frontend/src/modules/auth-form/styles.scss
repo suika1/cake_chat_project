@@ -1,3 +1,5 @@
+$disabledBg: #a8a3a3;
+
 .authFormWrapper {
   background: #1d0d41;
 
@@ -73,24 +75,8 @@
   margin: 15px 0 5px 0;
   width: 100%;
 
-  /* &::before {
-    content: ' ';
-    height: 0;
-    width: 0;
-    
-    position: absolute;
-    border: 10px solid transparent;
-    border-bottom-color: white;
-    top: 26px;
-    
-    transition: left 0.35s cubic-bezier(0.4, 0, 1, 1);
-    left: 15px;
-   left: 105px; 
-      left: 265px;
-  } */
-
   & > input {
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Rubik', sans-serif;
     font-size: 20px;
   
     padding: 12px 12px 12px 12px;
@@ -124,5 +110,12 @@
 
   &:hover {
     background: #2e8327;
+  }
+}
+
+.btnDisabled {
+  background-color: $disabledBg;
+  &:hover {
+    background: $disabledBg;
   }
 }
