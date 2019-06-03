@@ -1,3 +1,5 @@
+$disabledBg: #a8a3a3;
+
 .authFormWrapper {
   background: #1d0d41;
 
@@ -112,5 +114,8 @@
 }
 
 .btnDisabled {
-  background-color: #a8a3a3;
+  background-color: $disabledBg;
+  &:hover {
+    background: $disabledBg;
+  }
 }
