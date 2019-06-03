@@ -67,6 +67,7 @@ module.exports = {
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
+    watchContentBase: true,
     hot: true,
     host: '0.0.0.0',
     port: 8000,
