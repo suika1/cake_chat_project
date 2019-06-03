@@ -24,6 +24,9 @@ const options = [{
    }, {
     placeholder: 'Password',
     type: 'password',
+   }, {
+    placeholder: 'Password again',
+    type: 'password',
    }],
 }, {
   name: 'Reset',
@@ -41,7 +44,6 @@ class AuthForm extends React.Component {
   render() {
     const { chosenOption } = this.state;
 
-    let i = 0;
     return (
       <div className={s.authFormWrapper}>
         <div className={s.authForm}>
