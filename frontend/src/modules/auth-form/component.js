@@ -24,6 +24,7 @@ const options = [{
     placeholder: 'Password',
     type: 'password',
     name: 'loginPassword',
+    autoComplete: 'off',
    }],
 }, {
   text: OPTION_TEXTS.registration,
@@ -39,10 +40,12 @@ const options = [{
     placeholder: 'Password',
     type: 'password',
     name: 'regPassword',
+    autoComplete: 'off',
    }, {
     placeholder: 'Password again',
     type: 'password',
     name: 'regPasswordAgain',
+    autoComplete: 'off',
    }],
 }, {
   name: OPTION_TEXTS.reset,
@@ -92,14 +95,14 @@ class AuthForm extends React.Component {
   }
 
   render() {
-    const { changeField, formValues } = this.props;
+    const { fieldProps, formValues } = this.props;
     const { chosenOption } = this.state;
 
     const isSubmitDisabled = this.isSubmitDisabled();
 
     return (
       <div className={s.authFormWrapper}>
-        <div className={s.authForm}>
+        <form className={s.authForm}>
             <div className={s.options}>
                 {options.map((option, idx) => (
                   <div
@@ -126,13 +129,11 @@ class AuthForm extends React.Component {
                 {options[chosenOption].fields.map((field, idx) => (
                   <Field
                     key={field.name}
-                    name={field.name}
-                    changeField={changeField}
+                    fieldProps={fieldProps}
                     Component={'input'}
                     formValues={formValues}
-                    type={field.type}
                     spellCheck="false"
-                    placeholder={field.placeholder}
+                    {...field}
                   />
                 ))}
             </div>
@@ -142,12 +143,12 @@ class AuthForm extends React.Component {
                 [s.btnDisabled]: isSubmitDisabled,
               })}
               type="button"
-              onClick={() => isSubmitDisabled && this.handleSubmit()}
+              onClick={() => !isSubmitDisabled && this.handleSubmit()}
               disabled={isSubmitDisabled}
             >
               Submit
             </button>
-        </div>
+        </form>
       </div>
     )
   }
@@ -155,7 +156,8 @@ class AuthForm extends React.Component {
 
 AuthForm.propTypes = {
   formValues: PropTypes.shape({}).isRequired,
-  changeField: PropTypes.func.isRequired,
+  fieldProps: PropTypes.shape({}).isRequired,
+  createUser: PropTypes.func.isRequired,
 }
 
 export default WithForm(AuthForm);
