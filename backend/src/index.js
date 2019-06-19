@@ -2,8 +2,6 @@ import express from 'express';
 const app = express();
 
 import * as urls from './config/urls';
-import { setupMongoConnection } from './utils/utils';
-import startWebsocketServer from './utils/websocket-server';
 
 import chatRoutes from './routes/api/chat';
 import messageRoutes from './routes/api/message';
@@ -11,8 +9,8 @@ import userRoutes from './routes/api/user';
 
 import middlewares from './middlewares';
 
-setupMongoConnection();
-startWebsocketServer();
+import './setup/mongo-connection';
+import './setup/websocket-server';
 
 // parse application/x-www-form-urlencoded && application/json
 app.use(express.urlencoded({ extended: false }));
