@@ -9,6 +9,7 @@ const mapStateToProps = {
 
 const mapDispatchToProps = {
   createUser: actions.createUser,
+  loginUser: actions.loginUser,
 };
 
 export default connect(

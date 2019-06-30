@@ -19,7 +19,7 @@ const ChatRoute = () => (
         },
       } = props;
 
-      if (!getAuthToken() && pathname !== urls.authForm) return <Redirect to={{pathname: urls.authForm}} />
+      if ((!getAuthToken() || getAuthToken() === '0') && pathname !== urls.authForm) return <Redirect to={{pathname: urls.authForm}} />
       return (
         <React.Fragment>
           <ChatList />

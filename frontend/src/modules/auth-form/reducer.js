@@ -12,7 +12,26 @@ const AuthFormReducer = (state = initialState, action) => {
         isFetching: true,
       };
     case AT.CREATE_USER_FAILED:
+      return {
+        ...state,
+        isFetching: false,
+      };
     case AT.CREATE_USER_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+      };
+    case AT.LOGIN_USER:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case AT.LOGIN_USER_FAILED:
+      return {
+        ...state,
+        isFetching: false,
+      };
+    case AT.LOGIN_USER_SUCCESS:
       return {
         ...state,
         isFetching: false,

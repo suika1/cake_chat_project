@@ -66,11 +66,27 @@ class AuthForm extends React.Component {
     const {
       formValues,
       createUser,
+      loginUser,
     } = this.props;
 
-    createUser({
-      data: formValues,
-    });
+    switch (this.state.chosenOption) {
+      case 0:
+        loginUser({ 
+          data: formValues 
+        });
+      break;
+      case 1:
+        createUser({
+          data: formValues,
+        });
+      break;
+      case 2:
+        alert('coming soon');
+      break;
+      default:
+        console.log('something go wrong');
+    }
+
   }
 
   isSubmitDisabled = () => {

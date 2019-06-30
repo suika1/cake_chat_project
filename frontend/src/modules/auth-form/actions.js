@@ -17,3 +17,23 @@ export const createUserFailed = ({ errorMessage }) => ({
     errorMessage,
   },
 });
+
+
+
+export const loginUser = ({ data }) => ({
+  type: AT.LOGIN_USER,
+  payload: {
+    data,
+  },
+});
+
+export const loginUserSuccess = () => ({
+  type: AT.LOGIN_USER_SUCCESS,
+});
+
+export const loginUserFailed = ({ errorMessage }) => ({
+  type: AT.LOGIN_USER_FAILED,
+  payload: {
+    errorMessage,
+  },
+})
