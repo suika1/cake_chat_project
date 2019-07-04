@@ -5,3 +5,4 @@ backend/src/config/token-secret.js
 frontend/package-lock.json
 .read_json_from_curl.js
 readme.txt
+backend/.env

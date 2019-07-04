@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import { config } from 'dotenv';
+config();
 
 (() => {
   const dev_db_url = `mongodb+srv://${process.env.MONGO_LOGIN}:${process.env.MONGO_PASS}@cluster0-jgkmz.mongodb.net/cake_chat_db?retryWrites=true`;
