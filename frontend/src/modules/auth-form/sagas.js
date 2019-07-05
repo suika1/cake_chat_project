@@ -24,9 +24,11 @@ function* createUser({
     
     if (response.ok) {
       setAuthToken(response.token);
+
       yield put(actions.createUserSuccess());
+      yield window.location.pathname = '/chats';
     } else {
-      throw new Error(results.error);
+      throw new Error(response.error);
     }
   } catch (error) {
     yield put(actions.createUserFailed({errorMessage: error.message}));
@@ -53,7 +55,9 @@ function* loginUser({
     
     if (response.ok) {
       setAuthToken(response.token);
+
       yield put(actions.loginUserSuccess());
+      yield window.location.pathname = '/chats';
     } else {
       throw new Error(response.error);
     }
