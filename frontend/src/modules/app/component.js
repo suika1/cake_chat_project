@@ -26,9 +26,9 @@ export default class App extends React.Component {
 						<Route exact path='/' render={
 							() => {
 								if (!getAuthToken() || getAuthToken() === '0') {
-									return <Redirect to={{pathname: urls.authForm}} />
+									return <Redirect to={{pathname: urls.authForm}} />;
 								} else if (getAuthToken() && getAuthToken() !== '0') {
-									return <Redirect to={{pathname: urls.chats}} />
+									return <Redirect to={{pathname: urls.chats}} />;
 								}
 							}
 						} />	

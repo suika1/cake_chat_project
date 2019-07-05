@@ -101,7 +101,7 @@ export default class ChatList extends React.Component {
           </NavLink>
         ))}
 
-        {/* {this.renderCreateChat()} */}
+        {this.renderCreateChat()}
       </div>
     );
   }
