@@ -4,7 +4,7 @@ const initialState = {
   isFetching: false,
 };
 
-const AuthFormReducer = (state = initialState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case AT.CREATE_USER:
       return {
@@ -40,5 +40,3 @@ const AuthFormReducer = (state = initialState, action) => {
       return state;
   }
 }
-
-export default AuthFormReducer;

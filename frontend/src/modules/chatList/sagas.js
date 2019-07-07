@@ -2,7 +2,7 @@ import {put, call, takeEvery} from 'redux-saga/effects';
 
 import * as api from 'api';
 import * as urls from 'api/urls';
-import { getAuthToken } from 'api/localStorage'
+import { getAuthToken, setAuthToken } from 'api/localStorage'
 
 import * as AT from './action-types';
 import * as actions from './actions';
@@ -16,11 +16,17 @@ function* getChatList() {
       }
     });
 
-    console.log(response)
-    const { results: chatList, ok } = response;
-    yield put(actions.getChatListSuccess({ chatList }))
+    const { results: chatList, ok, error } = response;
+
+    if (ok) {
+      yield put(actions.getChatListSuccess({ chatList }))
+    } else {
+      setAuthToken(0)
+      throw new Error(error)
+    }
   } catch (err) {
     yield put(actions.getChatListFailed({ errorMessage: err.message }));
+    yield window.location.pathname = '/login';
   }
 }
 

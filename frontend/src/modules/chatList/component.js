@@ -5,13 +5,9 @@ import { Typography, Fab, TextField, Button } from '@material-ui/core';
 import cx from 'classnames';
 
 import styles from './styles.scss';
+import CreateChat from './createChat'
 
 export default class ChatList extends React.Component {
-  state = {
-    showInput: false,
-    chatName: '',
-  };
-
   componentDidMount = () => {
     const {
       chatList,
@@ -20,54 +16,6 @@ export default class ChatList extends React.Component {
 
     if (!chatList || !chatList.length) {
       getChatList();
-    }
-  }
-
-  //For controlling inputs
-  onChange = fieldName => e => this.setState({ [fieldName]: e.target.value });
-
-  renderCreateChat() {
-    const {
-      createChat,
-    } = this.props;
-
-    const {
-      chatName,
-      showInput,
-    } = this.state;
-    if (!showInput) {
-      return (
-        <Fab onClick={() => this.setState({ showInput: true })} color="primary">
-          +
-        </Fab>
-      );
-    } else {
-      return (
-        <div className={styles.chatCreatorWrapper}>
-          <TextField
-            className={styles.chatNameInput}
-            label="Имя чата"
-            variant="outlined"
-            placeholder="Введите имя чата ..."
-            value={chatName}
-            onChange={this.onChange('chatName')}
-          />
-          <Button
-            className={styles.chatCreateBtn}
-            onClick={() => createChat(chatName)}
-            variant="text"
-          >
-            Создать
-          </Button>
-          <br />
-          <Fab
-            color="primary"
-            onClick={() => this.setState({ showInput: false, chatName: '' })}
-          >
-            ↑
-          </Fab>
-        </div>
-      );
     }
   }
 
@@ -101,7 +49,7 @@ export default class ChatList extends React.Component {
           </NavLink>
         ))}
 
-        {this.renderCreateChat()}
+        <CreateChat />
       </div>
     );
   }
