@@ -3,6 +3,9 @@ import tokenSecret from '../../config/token-secret';
 import * as utils from '../../utils/utils';
 
 const checkToken = (req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    return next();
+  }
   let token = req.headers['x-access-token'] || req.headers.authorization;
   if (token && token.length && token.startsWith('Bearer ')) {
     // Remove Bearer from string
