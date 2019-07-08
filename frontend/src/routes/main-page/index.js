@@ -3,6 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 
 import ChatList from 'modules/chatList';
 import Chat from 'modules/chat';
+import ChatPlace from 'routes/chat';
 
 import * as urls from 'appConfig/appUrls';
 import { getAuthToken } from 'api/localStorage';
@@ -10,6 +11,7 @@ import { getAuthToken } from 'api/localStorage';
 const ChatRoute = () => (
   <Route
     key={urls.chats}
+    //path={`${urls.chats}`}
     path={urls.chats}
     render={(props) => {
       const {
@@ -24,9 +26,12 @@ const ChatRoute = () => (
           <ChatList />
 
           <Route 
-            path={urls.exactChat}
+            key={urls.chats}
+            path={`${urls.chats}:id`}
             component={Chat}
           />
+          {/* <Chat /> */}
+          {/* <ChatPlace /> */}
         </React.Fragment>
       )
     }}

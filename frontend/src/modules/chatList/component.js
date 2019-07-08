@@ -35,7 +35,7 @@ export default class ChatList extends React.Component {
           <NavLink
             key={index}
             className={styles.link}
-            to={`/${chat._id}`}
+            to={match.path + chat._id}
           >
             <div key={index} >
               <h3
