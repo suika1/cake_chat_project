@@ -1,16 +1,19 @@
-
 .chat {
   position: relative;
   width: 70%;
   padding: 20px;
-  margin: 15px 0;
   left: 20%;
 }
 
 .messageList {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   margin: 50px auto;
   width: 70%;
   max-width: 800px;
+  min-height: 75vh;
+  //border: 1px solid red;
 }
 
 .topFab {

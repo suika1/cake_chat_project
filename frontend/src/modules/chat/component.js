@@ -11,114 +11,118 @@ import Message from 'modules/message';
 import styles from './styles.scss';
 
 export default class Chat extends React.Component {
-  constructor(props) {
-    super(props);
-    const { match } = this.props
-    this.state = {
-      chatKey: match.params.chatKey,
-      newPosted: false,
-    };
-  }
+	constructor(props) {
+		super(props);
+		const { match } = this.props
+		this.state = {
+			chatKey: match.params.chatKey,
+			newPosted: false,
+		};
+	}
 
-  componentDidMount = () => {
-    const { match, getMessages } = this.props;
-    getMessages({ chatId: match.params.chatKey });
-  }
+	componentDidMount = () => {
+		const { match, getMessages } = this.props;
+		getMessages({ chatId: match.params.chatKey });
+	}
 
-  componentDidUpdate = (prevProps) => {
-    const {
-      match,
-      getMessages,
-    } = this.props;
-    const chatKey = match.params.chatKey;
+	componentDidUpdate = (prevProps) => {	
+		const {
+			match,
+			getMessages,
+		} = this.props;
+		const chatKey = match.params.chatKey;
+		
+		if (chatKey !== prevProps.match.params.chatKey) {
+			getMessages({ chatId: chatKey })
+		}
 
-    if (chatKey !== prevProps.match.params.chatKey) {
-      getMessages({ chatId: chatKey })
-    }
-  }
+		window.scrollTo(0, document.body.scrollHeight);
+	}
+	
+	renderMessages = () => {
+		const {
+			messages,
+			isFetching,
+		} = this.props;
 
-  renderMessages = () => {
-    const {
-      messages,
-      isFetching,
-    } = this.props;
+		if (isFetching) {
+			return (
+				<Typography
+					className={styles.loader}
+					variant="h3"
+				>
+					Loading...
+				</Typography>
+			)
+		}
 
-    if (isFetching) {
-      return (
-        <Typography
-          className={styles.loader}
-          variant="h3"
-        >
-          Loading...
-        </Typography>
-      )
-    }
+		return messages.map(item => (
+			<Message
+				key={item._id}
+				data={item}
+			/>
+		));
+	}
 
-    return messages.map(item => (
-      <Message
-        key={item._id}
-        data={item}
-      />
-    ));
-  }
+	render() {
+		const {
+			match,
+		} = this.props;
 
-  render() {
-    const {
-      match,
-    } = this.props;
+		const chatKey = match.params.chatKey;
 
-    const chatKey = match.params.chatKey;
+		return (
+			<div className={styles.chat}>
+				<div className={styles.chatLinkBlock}>
+					<label htmlFor="current-chat-key">
+						<Typography variant="h5">Chat link:</Typography>
+					</label>
+					<TextField
+						className={styles.chatKeyInput}
+						id="current-chat-key"
+						value={chatKey}
+						variant="outlined"
+					/>
+					<Fab
+						onClick={() => {
+							const input = document.getElementById('current-chat-key');
+							input.select();
+							document.execCommand('copy');
+						}}
+					>
+						Copy
+					</Fab>
+				</div>
+				
+				<div className={styles.messageList}> 
+					{this.renderMessages()}
+				</div>
 
-    return (
-      <div className={styles.chat}>
-        <div className={styles.chatLinkBlock}>
-          <label htmlFor="current-chat-key">
-            <Typography variant="h5">Chat link:</Typography>
-          </label>
-          <TextField
-            className={styles.chatKeyInput}
-            id="current-chat-key"
-            value={chatKey}
-            variant="outlined"
-          />
-          <Fab
-            onClick={() => {
-              const input = document.getElementById('current-chat-key');
-              input.select();
-              document.execCommand('copy');
-            }}
-          >
-            Copy
-          </Fab>
-        </div>
-
-        {this.renderMessages()}
-
-        <MessageForm
-          onSend={() => console.log('clicked on send')}
-          chatId={chatKey}
-        />
-      </div>
-    );
-  }
+				<MessageForm
+					//onSend={() => console.log('clicked on send')}
+					chatId={chatKey}
+				/>
+			</div>
+		);
+	}
 }
 
 Chat.propTypes = {
-  //chatKeys: PropTypes.array.isRequired,
-  //TODO: remove:
-  user: PropTypes.object.isRequired,
-  loaded: PropTypes.bool,
-  messages: PropTypes.array.isRequired,
-  error: PropTypes.string,
-  getMessages: PropTypes.func.isRequired,
-  getInitialMessages: PropTypes.func.isRequired,
-  leaveChat: PropTypes.func.isRequired,
-  match: PropTypes.shape({}),
-  isFetching: PropTypes.bool,
+	//chatKeys: PropTypes.array.isRequired,
+	//TODO: remove:
+	user: PropTypes.object.isRequired,
+	loaded: PropTypes.bool,
+	messages: PropTypes.array.isRequired,
+	error: PropTypes.string,
+	getMessages: PropTypes.func.isRequired,
+	getInitialMessages: PropTypes.func.isRequired,
+	leaveChat: PropTypes.func.isRequired,
+	match: PropTypes.shape({}),
+	isFetching: PropTypes.bool,
 };
 
 Chat.defaultProps = {
-  loaded: false,
-  error: '',
-  isFetching: false,
+	loaded: false,
+	error: '',
+	isFetching: false,
 }

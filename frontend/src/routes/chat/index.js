@@ -1,5 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 
 import ChatList from 'modules/chatList';
 import Chat from 'modules/chat';
@@ -23,6 +25,10 @@ const ChatRoute = () => (
         <React.Fragment>
           <ChatList />
 
+          {/* <Route 
+            path={urls.chats}
+            component={ChatList}
+          /> */}
           <Route 
             path={urls.exactChat}
             component={Chat}

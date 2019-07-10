@@ -1,47 +1,60 @@
-import * as reduxSaga from 'redux-saga/effects';
+import { put, call, takeLatest} from 'redux-saga/effects';
 
 import * as AT from './action-types';
 import * as actions from './actions';
 
 import * as api from 'api';
 import * as urls from 'api/urls';
+import { getAuthToken } from 'api/localStorage';
 
 function* getMessages({
-  payload: {
-    chatId,
-  },
+	payload: {
+		chatId,
+	},
 }) {
-  try {
-    const {
-      results: {
-        messages,
-      },
-    } = yield reduxSaga.call(api.get, { url: `${urls.chatListApi}${chatId}`});
-    yield reduxSaga.put(actions.getMessagesSuccess({ results: messages }));
-  } catch (err) {
-    yield reduxSaga.put(actions.getMessagesFailed({ errorMessage: err.message }));
-  }
+	try {
+		const {
+			results: {
+				messages,
+			},
+			ok,
+			error
+		} = yield call(api.get, { 
+			url: `${urls.chatListApi}${chatId}`,
+			headers: {
+				Authorization: getAuthToken()
+			}
+		});
+
+		if (ok) {
+			yield put(actions.getMessagesSuccess({ results: messages }));
+		} else {
+			throw new Error(error)
+		}
+	} catch (err) {
+		yield put(actions.getMessagesFailed({ errorMessage: err.message }));
+	}
 }
 
 function* editChat() {
-  try {
-    yield reduxSaga.put(actions.editChatSuccess());
-  } catch (err) {
-    yield reduxSaga.put(actions.editChatFailed())
-  }
+	try {
+		yield put(actions.editChatSuccess());
+	} catch (err) {
+		yield put(actions.editChatFailed())
+	}
 }
 
 function* watchGetMessages() {
-  yield reduxSaga.takeLatest(AT.GET_MESSAGES, getMessages);
+	yield takeLatest(AT.GET_MESSAGES, getMessages);
 }
 
 function* watchEditChat() {
-  yield reduxSaga.takeLatest(AT.EDIT_CHAT, editChat);
+	yield takeLatest(AT.EDIT_CHAT, editChat);
 }
 
 const ChatSagas = [
-  watchGetMessages,
-  watchEditChat,
+	watchGetMessages,
+	watchEditChat,
 ];
 
 export default ChatSagas;

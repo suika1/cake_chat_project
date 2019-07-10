@@ -19,6 +19,7 @@ export default class MessageForm extends React.PureComponent {
       createMessage,
       chatId,
     } = this.props;
+    
     const {
       textValue,
       nameValue,
