@@ -7,6 +7,7 @@ import { UserModel } from './user';
 export const ChatSchema = new Schema({
   name: { type: String, required: true, max: 50 },
   messages: [MessageSchema],
+  authorId: { type: Schema.Types.ObjectId, ref: UserModel },
   userList: [{ type: Schema.Types.ObjectId, ref: UserModel }],
 });
 

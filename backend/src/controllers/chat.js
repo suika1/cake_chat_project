@@ -21,6 +21,7 @@ export const chatCreate = async (req, res, next) => {
 
     const createdChat = new Chat({
       name,
+      authorId,
       userList: [authorId],
     });
 
@@ -43,6 +44,7 @@ export const chatCreate = async (req, res, next) => {
   }
 };
 
+// TODO: return only chats in which current user participate
 export const getAllChats = async (req, res, next) => {
   Chat.find((err, result) => {
     if (err) return next(err);

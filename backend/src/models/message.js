@@ -1,7 +1,8 @@
 import { Schema, model } from 'mongoose';
+import { UserModel } from './user';
 
 export const MessageSchema = new Schema({
-  author: { type: String, required: true, max: 50 },
+  authorId: { type: Schema.Types.ObjectId, ref: UserModel },
   sendTime: { type: Date, default: Date.now },
   text: { type: String, required: true, max: 300 },
 });
