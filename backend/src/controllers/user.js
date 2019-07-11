@@ -46,22 +46,22 @@ export const createUser = async (req, res, next) => {
   }
 };
 
-export const validateUser = async (req, res, next) => {
+export const loginUser = async (req, res, next) => {
   try {
     const {
       email,
       password,
     } = req.body;
 
-    const foundUsers = await User.find({ email });
-    if (!foundUsers || !foundUsers.length) return utils.generateResponse({
+    const foundUser = await User.findOne({ email });
+    if (!foundUser) return utils.generateResponse({
       res,
       status: 400,
       error: 'User not found',
     });
 
     // compare real password hash with received password
-    const result = await bcrypt.compare(password, foundUsers[0].password);
+    const result = await bcrypt.compare(password, foundUser.password);
     if (!result) return utils.generateResponse({
       res,
       status: 400,
@@ -76,8 +76,38 @@ export const validateUser = async (req, res, next) => {
 
     return utils.generateResponse({
       res,
+      results: foundUser,
       token,
     });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export const validateUser = async (req, res, next) => {
+  try {
+    const {
+      email,
+    } = req.decoded;
+
+    const foundUser = await User.findOne({ email });
+    if (!foundUser) return utils.generateResponse({
+      res,
+      status: 400,
+      error: 'User not found',
+    });
+
+    const token = jwt.sign(
+      { email },
+      tokenSecret,
+      { expiresIn: '24h' },
+    );
+
+    return utils.generateResponse({
+      res,
+      results: foundUser,
+      token,
+    })
   } catch (err) {
     next(err);
   }
