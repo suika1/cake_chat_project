@@ -27,7 +27,7 @@ function* getChatList() {
     }
   } catch (err) {
     yield put(actions.getChatListFailed({ errorMessage: err.message }));
-    yield window.location.pathname = '/login';
+    //yield window.location.pathname = '/login';
   }
 }
 
