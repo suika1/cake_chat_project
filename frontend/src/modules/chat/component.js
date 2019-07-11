@@ -73,27 +73,10 @@ export default class Chat extends React.Component {
 
 		return (
 			<div className={styles.chat}>
-				<div className={styles.chatLinkBlock}>
-					<label htmlFor="current-chat-key">
-						<Typography variant="h5">Chat link:</Typography>
-					</label>
-					<TextField
-						className={styles.chatKeyInput}
-						id="current-chat-key"
-						value={chatKey}
-						variant="outlined"
-					/>
-					<Fab
-						onClick={() => {
-							const input = document.getElementById('current-chat-key');
-							input.select();
-							document.execCommand('copy');
-						}}
-					>
-						Copy
-					</Fab>
+				<div className={styles.header}>
+					
 				</div>
-				
+	
 				<div className={styles.messageList}> 
 					{this.renderMessages()}
 				</div>

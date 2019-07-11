@@ -21,12 +21,17 @@ export default class CreateChat extends React.Component {
       chatName,
       showInput,
 		} = this.state;
-		
+
     if (!showInput) {
       return (
-        <Fab onClick={() => this.setState({ showInput: true })} color="primary">
-          +
-        </Fab>
+        <div className={styles.chatCreatorWrapper}>
+          <Fab 
+            onClick={() => this.setState({ showInput: true })} 
+            color="#F9F9FA"
+          >
+            +
+          </Fab>
+        </div>
       );
     } else {
       return (
@@ -48,7 +53,7 @@ export default class CreateChat extends React.Component {
           </Button>
           <br />
           <Fab
-            color="primary"
+            color="#F9F9FA"
             onClick={() => this.setState({ showInput: false, chatName: '' })}
           >
             ↑
