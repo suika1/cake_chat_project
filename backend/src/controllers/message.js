@@ -1,5 +1,6 @@
 import { MessageModel as Message } from '../models/message';
 import { ChatModel as Chat } from '../models/chat';
+import { UserModel as User } from '../models/user';
 
 import { MessageNotFoundException } from '../exceptions/exceptions';
 
@@ -8,13 +9,24 @@ import * as utils from '../utils/utils';
 export const createMessage = async (req, res, next) => {
   try {
     const {
-      author,
       text,
       chatId,
     } = req.body;
 
+    const {
+      email
+    } = req.decoded;
+
+    const foundUser = await User.findOne({ email });
+    if (!foundUser) {
+      throw new Error('Bad user');
+    }
+    const {
+      _id: authorId,
+    } = foundUser;
+
     const createdMessage = new Message({
-      author,
+      authorId,
       sendTime: Date.now(),
       text,
     });
