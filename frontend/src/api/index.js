@@ -35,4 +35,21 @@ export const post = async ({
   return await response.json();
 };
 
+export const deleteRequest = async ({
+  url,
+  options = {},
+  headers = {},
+}) => {
+  const response = await fetch(url, {
+    method: "DELETE",
+    mode: "cors",
+    headers: {
+      ...headers,
+    },
+    ...options,
+  });
+
+  return await response.json();
+};
+
 
