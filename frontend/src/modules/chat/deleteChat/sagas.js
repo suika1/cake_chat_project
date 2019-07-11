@@ -15,12 +15,13 @@ function* deleteChat({
 	try {
 		const response = yield call(api.deleteRequest, {
 			url: urls.chatListApi,
+
 			headers: {
         Authorization: getAuthToken(),
 			},
 
 			body: {
-				'chatId': chatId,
+				chatId,
 			}
 		});
 

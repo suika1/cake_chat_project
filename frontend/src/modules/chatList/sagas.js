@@ -1,10 +1,11 @@
-import {put, call, takeEvery} from 'redux-saga/effects';
+import {put, call, takeEvery, takeLatest} from 'redux-saga/effects';
 
 import * as api from 'api';
 import * as urls from 'api/urls';
 import { getAuthToken, setAuthToken } from 'api/localStorage'
 
 import * as AT from './action-types';
+import { GET_MESSAGES_SUCCESS } from 'modules/chat/action-types'
 import * as actions from './actions';
 
 function* getChatList() {
@@ -34,8 +35,13 @@ function* watchGetChatList() {
   yield takeEvery(AT.GET_CHAT_LIST, getChatList);
 }
 
+function* watchGetMessages() {
+  yield takeLatest(GET_MESSAGES_SUCCESS, getChatList)
+}
+
 const chatListSagas = [
   watchGetChatList,
+  watchGetMessages,
 ];
 
 export default chatListSagas;

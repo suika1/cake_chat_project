@@ -1,6 +1,7 @@
 import * as AT from './action-types';
 import { EDIT_CHAT_SUCCESS } from 'modules/chat/action-types';
 import { CREATE_CHAT_SUCCESS } from 'modules/chatList/createChat/action-types';
+import { DELETE_CHAT_SUCCESS } from 'modules/chat/deleteChat/action-types'
 
 const initialState = {
   isFetching: false,
@@ -42,6 +43,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         elements: state.elements.concat(action.payload.createdChat)
+      }
+    case DELETE_CHAT_SUCCESS:
+      return {
+        ...state,
+        elements: state.elements.filter(
+          (chat) => {
+            if (chat._id !== action.payload.chatId) {
+              return chat;
+            }
+          }),
       }
     default:
       return state;
