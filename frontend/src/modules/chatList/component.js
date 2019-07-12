@@ -6,9 +6,9 @@ import { styled } from '@material-ui/styles';
 import moment from 'moment';
 import cx from 'classnames';
 
+import tr from 'utils/utils.js'
 import styles from './styles.scss';
 import CreateChat from './createChat'
-import tr from 'api/trancateString'
 
 export default class ChatList extends React.Component {
 	componentDidMount = () => {
@@ -49,7 +49,7 @@ export default class ChatList extends React.Component {
 								)}
 								to={match.path + chat._id}
 							>	
-								<Avatar>{chat.name.slice(0, 1)}</Avatar>
+								<Avatar>{chat.name.charAt(0)}</Avatar>
 								<div className={styles.chatInfo}>
 									<div className={styles.nameAndDate}>
 										<div className={styles.chatName}>{chat.name}</div>
