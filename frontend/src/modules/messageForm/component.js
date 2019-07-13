@@ -4,6 +4,7 @@ import { TextField, Fab, Paper } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
 import styles from './styles.scss';
+import { getName } from 'api/localStorage';
 
 export default class MessageForm extends React.PureComponent {
   state = {
@@ -22,33 +23,20 @@ export default class MessageForm extends React.PureComponent {
     
     const {
       textValue,
-      nameValue,
     } = this.state;
 
     createMessage({
       data: {
         text: textValue,
-        author: nameValue,
+        author: getName(),
         chatId,
       },
     });
   }
 
   render() {
-    const {
-      textValue,
-    } = this.state;
-
     return (
       <Paper className={styles.messageForm}>
-        <TextField
-          className={styles.name}
-          label="Имя"
-          id="form-name"
-          onChange={this.onChange('nameValue')}
-          placeholder={'Имя'}
-          variant="standard"
-        />
         <TextField
           className={styles.text}
           placeholder="Введите текст"

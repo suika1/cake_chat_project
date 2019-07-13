@@ -94,12 +94,12 @@ export default class Chat extends React.Component {
 Chat.propTypes = {
 	//chatKeys: PropTypes.array.isRequired,
 	//TODO: remove:
-	user: PropTypes.object.isRequired,
+	//user: PropTypes.object.isRequired,
 	loaded: PropTypes.bool,
 	messages: PropTypes.array.isRequired,
 	error: PropTypes.string,
 	getMessages: PropTypes.func.isRequired,
-	getInitialMessages: PropTypes.func.isRequired,
+	//getInitialMessages: PropTypes.func.isRequired,
 	leaveChat: PropTypes.func.isRequired,
 	match: PropTypes.shape({}),
 	isFetching: PropTypes.bool,

@@ -12,6 +12,7 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = {
   getChatList: actions.getChatList,
+  validateUser: actions.validateUser,
 };
 
 export default withRouter(

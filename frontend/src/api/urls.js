@@ -9,3 +9,4 @@ export const messageListApi = `${api}message-list/`;
 export const userListApi = `${api}users/`;
 
 export const validate = `${userListApi}validate/`
+export const login = `${userListApi}login/`

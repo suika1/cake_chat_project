@@ -18,3 +18,18 @@ export const getChatListFailed = ({ errorMessage }) => ({
   },
 });
 
+export const validateUser = () => ({
+  type: AT.VALIDATE_USER,
+});
+
+export const validateUserSuccess = () => ({
+  type: AT.VALIDATE_USER_SUCCESS,
+});
+
+export const validateUserFailed = ({ errorMessage }) => ({
+  type: AT.VALIDATE_USER_FAILED,
+  payload: {
+    errorMessage,
+  },
+});
+

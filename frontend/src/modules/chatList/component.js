@@ -6,20 +6,23 @@ import { styled } from '@material-ui/styles';
 import moment from 'moment';
 import cx from 'classnames';
 
-import tr from 'utils/utils.js'
+import { tr } from 'utils/utils.js';
 import styles from './styles.scss';
-import CreateChat from './createChat'
+import CreateChat from './createChat';
 
 export default class ChatList extends React.Component {
 	componentDidMount = () => {
 		const {
 			chatList,
 			getChatList,
+			validateUser,
 		} = this.props;
 
 		if (!chatList || !chatList.length) {
 			getChatList();
 		}
+
+		validateUser();
 	}
 
 	render() {
