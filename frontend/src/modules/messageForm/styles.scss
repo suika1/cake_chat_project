@@ -12,16 +12,10 @@
 };
 
 .text {
-  width: calc(80% - 62px);
+  width: calc(928px);
   margin-left: 4px;
 };
 
 .name {
   width: 20%;
-};
-
-@media (max-width: 900px) {
-  .messageForm {
-    width: 95%;
-  };
 };
