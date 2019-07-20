@@ -7,7 +7,7 @@
     "start": "node src/index",
     "lint": "eslint -c .eslintrc.json src/**",
     "dev": "nodemon --exec babel-node src/index",
-    "debug": "nodemon --exec babel-node inspect src/index"
+    "debug": "nodemon --exec babel-node --inspect-brk=0.0.0.0 src/index"
   },
   "keywords": [],
   "author": "",
