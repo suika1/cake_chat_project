@@ -5,7 +5,9 @@
       "react/no-unescaped-entities": "off",
       "import/no-namespace": "off",
       "arrow-body-style": "off",
-      "no-console": "warn"
+      "no-console": "warn",
+      "import/no-mutable-exports": "off",
+      "import/prefer-default-export": "off"
   },
   "parser": "babel-eslint",
   "parserOptions": {
