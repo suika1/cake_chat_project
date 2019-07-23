@@ -46,7 +46,7 @@ function* loginUser({
 }) {
   try {
     const response = yield call(api.post, {
-      url: urls.validate,
+      url: urls.login,
       body: {
         'email': data.loginEmail,
         'password': data.loginPassword,

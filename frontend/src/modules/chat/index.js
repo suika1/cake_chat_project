@@ -6,12 +6,13 @@ import * as actions from './actions';
 import { selectChat } from './selectors';
 
 import Chat from './component';
+import { getUserInfo } from 'api/localStorage';
 
 const mapStateToProps = state => {
   return {
     messages: selectChat(state).messages || [],
     isFetching: selectChat(state).isFetching || false,
-    // chatKeys: store.chatKeys,
+    //user: getUserInfo(), 
   };
 };
 

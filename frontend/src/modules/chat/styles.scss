@@ -1,17 +1,30 @@
-
 .chat {
   position: relative;
-  width: 70%;
-  padding: 20px;
-  margin: 15px 0;
-  left: 20%;
+  width: 1280px;
+  display: flex;
+  justify-content: flex-end;
+  padding-left: 290px;
+  .messageList {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 100px;
+    background: #f3f3f3;
+    width: 990px;
+  }
+  .header {
+    position: fixed;
+    display: flex;
+    justify-content: flex-end;
+    top: 0;
+    background: #F9F9FA;
+    height: 60px;
+    width: 1280px;
+    z-index: 888;
+    padding-left: 290px;
+  }
 }
 
-.messageList {
-  margin: 50px auto;
-  width: 70%;
-  max-width: 800px;
-}
 
 .topFab {
   position: fixed;
