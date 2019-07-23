@@ -19,6 +19,7 @@ module.exports = {
     // problems with linter in vscode
     'import/no-unresolved': 'off',
     'operator-linebreak': 'off',
+    'consistent-return': 'off',
     'jsx-a11y/anchor-is-valid': [
       'warn',
       {
