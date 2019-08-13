@@ -1,9 +1,12 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { config } from 'dotenv';
 
 import { UserModel as User } from '../models/user';
 import * as utils from '../utils/utils';
-import tokenSecret from '../config/token-secret';
+
+config();
+const tokenSecret = process.env.TOKEN_SECRET;
 
 export const createUser = async (req, res, next) => {
   try {
