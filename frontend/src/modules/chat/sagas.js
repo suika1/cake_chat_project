@@ -14,20 +14,31 @@ function* getMessages({
 }) {
 	try {
 		const {
-			results: {
-				messages,
-			},
+			results,
 			ok,
 			error
 		} = yield call(api.get, { 
-			url: `${urls.chatListApi}${chatId}`,
+			url: `${urls.chatListApi}`,
 			headers: {
 				Authorization: getAuthToken()
 			}
 		});
+		// const {
+		// 	results: {
+		// 		messages,
+		// 	},
+		// 	ok,
+		// 	error
+		// } = yield call(api.get, { 
+		// 	url: `${urls.chatListApi}${chatId}`,
+		// 	headers: {
+		// 		Authorization: getAuthToken()
+		// 	}
+		// });
 
 		if (ok) {
-			yield put(actions.getMessagesSuccess({ results: messages }));
+			yield put(actions.getMessagesSuccess({ results: results[1].messages }));
+			// yield put(actions.getMessagesSuccess({ results: messages }));
 		} else {
 			throw new Error(error)
 		}

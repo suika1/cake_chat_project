@@ -83,7 +83,6 @@ export default class Chat extends React.Component {
 				</div>
 
 				<MessageForm
-					//onSend={() => console.log('clicked on send')}
 					chatId={chatKey}
 				/>
 			</div>

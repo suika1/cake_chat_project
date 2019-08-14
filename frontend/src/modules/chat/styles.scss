@@ -1,14 +1,10 @@
 .chat {
-  position: relative;
-  width: 1280px;
   display: flex;
   justify-content: flex-end;
   padding-left: 290px;
   .messageList {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
     padding-bottom: 100px;
+    padding-top: 60px;
     background: #f3f3f3;
     width: 990px;
   }
