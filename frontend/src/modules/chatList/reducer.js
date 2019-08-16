@@ -2,6 +2,7 @@ import * as AT from './action-types';
 import { EDIT_CHAT_SUCCESS } from 'modules/chat/action-types';
 import { CREATE_CHAT_SUCCESS } from 'modules/chatList/createChat/action-types';
 import { DELETE_CHAT_SUCCESS } from 'modules/chat/deleteChat/action-types'
+import { RENAME_CHAT_SUCCESS } from 'modules/chat/renameChat/action-types'
 
 const initialState = {
   isFetching: false,
@@ -51,6 +52,20 @@ export default (state = initialState, action) => {
           (chat) => {
             if (chat._id !== action.payload.chatId) {
               return chat;
+            }
+          }),
+      }
+    case RENAME_CHAT_SUCCESS:
+      return {
+        ...state,
+        elements: state.elements.map(
+          (chat) => {
+            if (chat._id !== action.payload.chatId) {
+              return chat;
+            }
+            return {
+              ...chat,
+              name: action.payload.newName,
             }
           }),
       }

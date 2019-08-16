@@ -55,4 +55,24 @@ export const deleteRequest = async ({
   return await response.json();
 };
 
+export const putRequest = async ({
+  url,
+  body = {},
+  options = {},
+  headers = {},
+}) => {
+  const response = await fetch(url, {
+    method: "PUT",
+    mode: "cors",
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json',
+      ...headers,
+    },
+    ...options,
+  });
+
+  return await response.json();
+};
+
 

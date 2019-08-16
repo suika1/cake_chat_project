@@ -12,6 +12,7 @@ const mapStateToProps = state => {
   return {
     messages: selectChat(state).messages || [],
     isFetching: selectChat(state).isFetching || false,
+    chatName: selectChat(state).chatName || '',
     //user: getUserInfo(), 
   };
 };

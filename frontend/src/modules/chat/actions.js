@@ -26,10 +26,11 @@ export const getMessages = ({ chatId }) => ({
   },
 });
 
-export const getMessagesSuccess = ({ results }) => ({
+export const getMessagesSuccess = ({ results, chatName }) => ({
   type: AT.GET_MESSAGES_SUCCESS,
   payload: {
     results,
+    chatName,
   },
 });
 

@@ -1,4 +1,5 @@
 import * as AT from './action-types';
+import { RENAME_CHAT_SUCCESS } from './renameChat/action-types'
 
 const initialState = {
   isFetching: false,
@@ -19,11 +20,11 @@ const ChatReducer = (state = initialState, action) => {
         errorMessage: action.payload.errorMessage,
         isFetching: false,
       };
-    case AT.EDIT_CHAT_SUCCESS:
+    case RENAME_CHAT_SUCCESS:
       // ChatName changing logic in ChatList reducer
       return {
         ...state,
-        isFetching: false,
+        chatName: action.payload.newName,
       };
 
     case AT.GET_MESSAGES:
@@ -31,18 +32,21 @@ const ChatReducer = (state = initialState, action) => {
         ...state,
         isFetching: true,
         messages: [],
+        chatName: '',
       };
     case AT.GET_MESSAGES_SUCCESS:
       return {
         ...state,
         messages: action.payload.results,
         isFetching: false,
+        chatName: action.payload.chatName,
       };
     case AT.GET_MESSAGES_FAILED:
       return {
         ...state,
         isFetching: false,
         errorMessage: action.payload.errorMessage,
+        chatName: '',
       };
     
     default:

@@ -8,6 +8,7 @@ import { List, Button, Fab, Typography, TextField } from '@material-ui/core';
 import MessageForm from '../messageForm';
 import Message from 'modules/message';
 import DeleteChat from './deleteChat';
+import RenameChat from './renameChat';
 
 import styles from './styles.scss';
 
@@ -68,13 +69,15 @@ export default class Chat extends React.Component {
 	render() {
 		const {
 			match,
+			chatName,
 		} = this.props;
-
+		console.log(chatName)
 		const chatKey = match.params.chatKey;
 
 		return (
 			<div className={styles.chat}>
 				<div className={styles.header}>
+					<RenameChat chatId={chatKey}/>
 					<DeleteChat chatId={chatKey}/>
 				</div>
 	
