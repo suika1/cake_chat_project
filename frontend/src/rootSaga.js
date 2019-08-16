@@ -6,6 +6,7 @@ import createChatSagas from './modules/chatList/createChat/sagas';
 import chatSagas from 'modules/chat/sagas';
 import deleteChatSagas from 'modules/chat/deleteChat/sagas';
 import renameChatSaga from 'modules/chat/renameChat/sagas';
+import deleteMessageSagas from 'modules/chat/deleteMessage/sagas';
 import messageFormSagas from 'modules/messageForm/sagas';
 import authFormSagas from 'modules/auth-form/sagas';
 
@@ -17,4 +18,5 @@ export default  [
 	...messageFormSagas,
 	...deleteChatSagas,
 	...renameChatSaga,
+	...deleteMessageSagas,
 ];

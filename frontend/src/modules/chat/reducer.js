@@ -1,10 +1,14 @@
 import * as AT from './action-types';
 import { RENAME_CHAT_SUCCESS } from './renameChat/action-types'
+import { SELECT_MESSAGE } from 'modules/message/action-types';
+import { UNSELECT_MESSAGE } from 'modules/message/action-types';
+import { DELETE_MESSAGE_SUCCESS } from './deleteMessage/action-types';
 
 const initialState = {
   isFetching: false,
   errorMessage: '',
   messages: [],
+  selectedMessages: [],
 }
 
 const ChatReducer = (state = initialState, action) => {
@@ -47,6 +51,33 @@ const ChatReducer = (state = initialState, action) => {
         isFetching: false,
         errorMessage: action.payload.errorMessage,
         chatName: '',
+      };
+    case SELECT_MESSAGE:
+      return {
+        ...state,
+        selectedMessages: state.selectedMessages.concat([action.payload])
+      };
+    case UNSELECT_MESSAGE:
+      return {
+        ...state,
+        selectedMessages: state.selectedMessages.filter((item) => {
+          if (action.payload.messageId !== item.messageId) {
+            return item
+          }
+        })
+      };
+    case DELETE_MESSAGE_SUCCESS:
+      return {
+        ...state,
+        messages: state.messages.filter((item) => {
+          for (let i=0; i<action.payload.deletedMessagesIDs.length; i++) {
+            if (action.payload.deletedMessagesIDs[i] === item._id) {
+              return;
+            }
+          }
+          return item;
+        }),
+        selectedMessages: [],
       };
     
     default:

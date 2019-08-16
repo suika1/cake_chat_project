@@ -3,7 +3,7 @@
   justify-content: flex-end;
   padding-left: 290px;
   .messageList {
-    padding-bottom: 100px;
+    padding-bottom: 66px;
     padding-top: 60px;
     background: #f3f3f3;
     width: 990px;
@@ -18,6 +18,19 @@
     width: 1280px;
     z-index: 888;
     padding-left: 290px;
+    border-bottom: 1px solid rgb(228, 228, 228)
+  }
+  .headMenu {
+    display: flex;
+
+    position: fixed;
+    top: 60px;
+    background: #F9F9FA;
+    height: 60px;
+    width: 1280px;
+    z-index: 888;
+    padding-left: 304px;
+    border-bottom: 1px solid rgb(228, 228, 228)
   }
 }
 

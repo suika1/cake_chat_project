@@ -1,7 +1,9 @@
+$darkPurple: #38307B;
+
 .wrapper {
   display: flex;
   justify-content: flex-start;
-  margin: 15px 10px;
+  padding: 15px 0 15px 10px;
   .message {
     padding: 5px 10px 20px 10px;
     margin: 0 10px;
@@ -20,6 +22,10 @@
       font-weight: 300;
     }
   }
+}
+
+.selected {
+  background: rgba($darkPurple, 0.05);
 }
 
 .right {

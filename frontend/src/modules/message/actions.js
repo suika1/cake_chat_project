@@ -23,3 +23,19 @@ export const deleteMessageSuccess = () => ({
 export const deleteMessageFailed = () => ({
   type: AT.DELETE_MESSAGE_FAILED,
 });
+
+export const selectMessage = ({ chatId, messageId }) => ({
+  type: AT.SELECT_MESSAGE,
+  payload: {
+    chatId,
+    messageId,
+  }
+})
+
+export const unselectMessage = ({ chatId, messageId }) => ({
+  type: AT.UNSELECT_MESSAGE,
+  payload: {
+    chatId,
+    messageId,
+  }
+})
