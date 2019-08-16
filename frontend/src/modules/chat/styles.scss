@@ -7,6 +7,10 @@
     padding-top: 60px;
     background: #f3f3f3;
     width: 990px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
   }
   .header {
     position: fixed;

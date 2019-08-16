@@ -22,10 +22,16 @@ $darkPurple: #38307B;
       font-weight: 300;
     }
   }
+  &:hover {
+    background: rgba($darkPurple, 0.05);
+  }
 }
 
 .selected {
-  background: rgba($darkPurple, 0.05);
+  background: rgba($darkPurple, 0.08);
+  &:hover {
+    background: rgba($darkPurple, 0.08);
+  }
 }
 
 .right {
