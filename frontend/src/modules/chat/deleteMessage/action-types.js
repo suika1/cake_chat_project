@@ -1,4 +1,4 @@
-const modulePrefix = 'createChat/';
+const modulePrefix = 'chat/';
 
 export const DELETE_MESSAGE = `${modulePrefix}DELETE_MESSAGE`;
 export const DELETE_MESSAGE_SUCCESS = `${modulePrefix}DELETE_MESSAGE_SUCCESS`;

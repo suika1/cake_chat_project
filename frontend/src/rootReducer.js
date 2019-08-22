@@ -8,6 +8,7 @@ import chat from './modules/chat/reducer';
 import deleteChat from './modules/chat/deleteChat/reducer';
 import renameChat from './modules/chat/renameChat/reducer';
 import deleteMessage from './modules/chat/deleteMessage/reducer';
+import editMessage from './modules/chat/editMessage/reducer';
 import authForm from './modules/auth-form/reducer';
 
 export default combineReducers({
@@ -19,4 +20,5 @@ export default combineReducers({
   deleteChat,
   renameChat,
   deleteMessage,
+  editMessage,
 });

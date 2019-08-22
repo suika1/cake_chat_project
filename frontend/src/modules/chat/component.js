@@ -12,6 +12,7 @@ import RenameChat from './renameChat';
 import DeleteMessage from './deleteMessage';
 
 import styles from './styles.scss';
+import EditMessaage from './editMessage';
 
 export default class Chat extends React.Component {
 	constructor(props) {
@@ -90,6 +91,7 @@ export default class Chat extends React.Component {
 				{selectedMessages.length !== 0 &&
 					<div className={styles.headMenu}>
 						<DeleteMessage chatId={chatKey}/>
+						<EditMessaage chatId={chatKey}/>
 					</div>
 				}
 	

@@ -25,7 +25,7 @@ class Message extends React.PureComponent {
       this.setState({selected: false})
     } else {
       this.messageRef.current.classList.add(styles.selected)
-      selectMessage({ chatId, messageId: _id})
+      selectMessage({ chatId, messageId: _id, text})
       this.setState({selected: true})
     }
   }

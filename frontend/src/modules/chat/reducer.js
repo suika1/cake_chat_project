@@ -3,6 +3,7 @@ import { RENAME_CHAT_SUCCESS } from './renameChat/action-types'
 import { SELECT_MESSAGE } from 'modules/message/action-types';
 import { UNSELECT_MESSAGE } from 'modules/message/action-types';
 import { DELETE_MESSAGE_SUCCESS } from './deleteMessage/action-types';
+import { EDIT_MESSAGE_SUCCESS } from './editMessage/action-types';
 
 const initialState = {
   isFetching: false,
@@ -76,6 +77,19 @@ const ChatReducer = (state = initialState, action) => {
             }
           }
           return item;
+        }),
+        selectedMessages: [],
+      };
+    case EDIT_MESSAGE_SUCCESS:
+      return {
+        ...state,
+        messages: state.messages.map((item) => {
+          if (action.payload.messageId !== item._id) return item;
+
+          return {
+            ...item,
+            text: action.payload.text,
+          }
         }),
         selectedMessages: [],
       };
