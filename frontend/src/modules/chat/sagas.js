@@ -15,6 +15,7 @@ function* getMessages({
 	try {
 		const {
 			results: {
+				name,
 				messages,
 			},
 			ok,
@@ -27,7 +28,7 @@ function* getMessages({
 		});
 
 		if (ok) {
-			yield put(actions.getMessagesSuccess({ results: messages }));
+			yield put(actions.getMessagesSuccess({ results: messages, chatName: name }));
 		} else {
 			throw new Error(error)
 		}

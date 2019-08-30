@@ -8,8 +8,11 @@ import { List, Button, Fab, Typography, TextField } from '@material-ui/core';
 import MessageForm from '../messageForm';
 import Message from 'modules/message';
 import DeleteChat from './deleteChat';
+import RenameChat from './renameChat';
+import DeleteMessage from './deleteMessage';
 
 import styles from './styles.scss';
+import EditMessaage from './editMessage';
 
 export default class Chat extends React.Component {
 	constructor(props) {
@@ -30,6 +33,7 @@ export default class Chat extends React.Component {
 		const {
 			match,
 			getMessages,
+			selectedMessages
 		} = this.props;
 		const chatKey = match.params.chatKey;
 		
@@ -37,13 +41,16 @@ export default class Chat extends React.Component {
 			getMessages({ chatId: chatKey })
 		}
 
-		window.scrollTo(0, document.body.scrollHeight);
+		if (!selectedMessages.length) {
+			window.scrollTo(0, document.body.scrollHeight);
+		}
 	}
 	
 	renderMessages = () => {
 		const {
 			messages,
 			isFetching,
+			match,
 		} = this.props;
 
 		if (isFetching) {
@@ -61,6 +68,7 @@ export default class Chat extends React.Component {
 			<Message
 				key={item._id}
 				data={item}
+				chatId={match.params.chatKey}
 			/>
 		));
 	}
@@ -68,6 +76,8 @@ export default class Chat extends React.Component {
 	render() {
 		const {
 			match,
+			chatName,
+			selectedMessages,
 		} = this.props;
 
 		const chatKey = match.params.chatKey;
@@ -75,15 +85,21 @@ export default class Chat extends React.Component {
 		return (
 			<div className={styles.chat}>
 				<div className={styles.header}>
+					<RenameChat chatId={chatKey}/>
 					<DeleteChat chatId={chatKey}/>
 				</div>
+				{selectedMessages.length !== 0 &&
+					<div className={styles.headMenu}>
+						<DeleteMessage chatId={chatKey}/>
+						<EditMessaage chatId={chatKey}/>
+					</div>
+				}
 	
 				<div className={styles.messageList}> 
 					{this.renderMessages()}
 				</div>
 
 				<MessageForm
-					//onSend={() => console.log('clicked on send')}
 					chatId={chatKey}
 				/>
 			</div>

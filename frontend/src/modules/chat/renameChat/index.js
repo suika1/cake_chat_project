@@ -2,20 +2,19 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import * as actions from './actions';
-import Message from './component';
+import ChatRename from './component';
 
 const mapStateToProps = store => ({
-	
+	chatName: store.currentChat.chatName,
 })
 
 const mapDispatchToProps = {
-	selectMessage: actions.selectMessage,
-	unselectMessage: actions.unselectMessage,
+	renameChat: actions.renameChat,
 }
 
 export default withRouter(
 	connect(
-		null,
+		mapStateToProps,
 		mapDispatchToProps
-	)(Message)
+	)(ChatRename)
 )

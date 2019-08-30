@@ -11,6 +11,8 @@ export default class MessageForm extends React.PureComponent {
   state = {
     textValue: '',
     nameValue: '',
+    messageEditing: false,
+    editIsStart: false,
   };
 
   textField = React.createRef();
@@ -18,10 +20,13 @@ export default class MessageForm extends React.PureComponent {
   //For controlling inputs
   onChange = fieldName => e => this.setState({ [fieldName]: e.target.value });
 
-  createMessage = () => {
+  createOrEditMessage = () => {
     const {
       createMessage,
+      editMessage,
       chatId,
+      isEditing,
+      messageToEdit,
     } = this.props;
     
     const {
@@ -30,20 +35,28 @@ export default class MessageForm extends React.PureComponent {
 
     if (textValue.length < 2 || textValue.charCodeAt() === 10 || textValue.charCodeAt() === 32) return;
 
-    createMessage({
-      data: {
-        text: textValue,
-        author: getName(),
+    if (isEditing) {
+      editMessage({
         chatId,
-      },
-    });
+        messageId: messageToEdit.messageId,
+        text: textValue,
+      })
+    } else {
+      createMessage({
+        data: {
+          text: textValue,
+          author: getName(),
+          chatId,
+        },
+      });
+    }
 
     this.setState({ textValue: ''})
   }
 
   onKeyUp = (event) => {
     if (event.key === 'Enter' && !event.shiftKey) {
-      this.createMessage();
+      this.createOrEditMessage();
       event.target.value = '';
     }
   }
@@ -57,15 +70,43 @@ export default class MessageForm extends React.PureComponent {
     } 
   }
 
+  focusChanger = () => {
+
+    let { isEditing, cancelEditMessage, messageToEdit } = this.props;
+
+    this.setState({editIsStart: true })
+
+    if (isEditing) {
+      const messageForm = document.getElementById('form-text');
+      messageForm.focus();
+
+      messageForm.value = messageToEdit.text;
+
+      messageForm.onblur = () => {
+        if (isEditing) cancelEditMessage();
+        messageForm.value = '';
+        this.setState({editIsStart: false })
+      };
+    }
+  }
+
+  componentDidUpdate() {
+    let { isEditing } = this.props;
+
+    if (isEditing && !this.state.editIsStart) this.focusChanger()
+  }
+
   render() {
+
+
     return (
       <Paper className={styles.messageForm}>
         <TextField
           ref={this.textField}
           className={styles.text}
-          placeholder="Введите текст"
+          placeholder="Введите текст сообщения"
           multiline
-          label="Текст"
+          label="Сообщение"
           id="form-text"
           onChange={this.onChange('textValue')}
           onKeyUp={this.onKeyUp}
@@ -75,7 +116,7 @@ export default class MessageForm extends React.PureComponent {
         <Fab
           className={styles.btn}
           color="primary"
-          onClick={this.createMessage}
+          onClick={this.createOrEditMessage}
         >
           >
         </Fab>

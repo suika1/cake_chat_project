@@ -23,9 +23,9 @@ const ChatRoute = () => (
       if ((!getAuthToken() || getAuthToken() === '0') && pathname !== urls.authForm) return <Redirect to={{pathname: urls.authForm}} />
       return (
         <div style={{
-          display: 'flex', 
+          // display: 'flex', 
           width: '1280px', 
-          position: 'relative',
+          // position: 'relative',
           boxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 40px 5px'
           }}>
           <ChatList />

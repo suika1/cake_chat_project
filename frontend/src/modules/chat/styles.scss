@@ -1,27 +1,40 @@
 .chat {
-  position: relative;
-  width: 1280px;
   display: flex;
   justify-content: flex-end;
   padding-left: 290px;
   .messageList {
+    padding-bottom: 66px;
+    padding-top: 60px;
+    background: #f3f3f3;
+    width: 990px;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding-bottom: 100px;
-    background: #f3f3f3;
-    width: 990px;
   }
   .header {
     position: fixed;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     top: 0;
     background: #F9F9FA;
     height: 60px;
     width: 1280px;
     z-index: 888;
     padding-left: 290px;
+    border-bottom: 1px solid rgb(228, 228, 228)
+  }
+  .headMenu {
+    display: flex;
+
+    position: fixed;
+    top: 60px;
+    background: #F9F9FA;
+    height: 60px;
+    width: 1280px;
+    z-index: 888;
+    padding-left: 304px;
+    border-bottom: 1px solid rgb(228, 228, 228)
   }
 }
 
@@ -46,46 +59,4 @@
   text-align: center;
   top: 25vh;
   position: relative;
-}
-
-@media (max-width: 1200px) {
-  .chat {
-    left: 25%;
-  }
-}
-
-@media (max-width: 900px) {
-  .chat {
-    text-align: center;
-    margin: 0;
-    width: 100%;
-    left: 0;
-  }
-
-  .messageList {
-    width: 95%;
-    padding-right: 50px;
-  }
-
-  .chatKeyInput {
-    width: 100%;
-  }
-
-  .topFab {
-    right: 5px;
-  }
-
-  .botFab {
-    right: 5px;
-  }
-
-  .chatLinkBlock {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    & > * + * {
-      margin-top: 10px;
-    }
-  }
 }
