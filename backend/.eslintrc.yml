@@ -1,0 +1,24 @@
+env:
+  es6: true
+  node: true
+extends:
+  - airbnb-base
+globals:
+  Atomics: readonly
+  SharedArrayBuffer: readonly
+parserOptions:
+  ecmaVersion: 2018
+  sourceType: module
+rules:
+  ##   WARN   ##
+  semi: warn
+
+  ##   OFF   ##
+  import/no-mutable-exports: off
+  import/prefer-default-export: off
+  global-require: off
+  curly: off
+  consistent-return: off
+  arrow-parens: off
+  no-shadow: off
+  arrow-body-style: off
