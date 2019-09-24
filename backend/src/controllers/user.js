@@ -85,7 +85,7 @@ export const loginUser = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-}
+};
 
 export const validateUser = async (req, res, next) => {
   try {
@@ -110,8 +110,8 @@ export const validateUser = async (req, res, next) => {
       res,
       results: foundUser,
       token,
-    })
+    });
   } catch (err) {
     next(err);
   }
-}
+};
