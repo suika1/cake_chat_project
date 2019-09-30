@@ -11,7 +11,7 @@ export const chatCreate = async (req, res, next) => {
     } = req.body;
 
     const {
-      email
+      email,
     } = req.decoded;
 
     const users = await User.find({ email });
@@ -27,14 +27,14 @@ export const chatCreate = async (req, res, next) => {
     });
 
     createdChat.save((err) => {
-        if (err) return next(err);
+      if (err) return next(err);
     });
 
     foundUser.chatList = foundUser.chatList.concat(createdChat._id);
 
     foundUser.save((err) => {
       if (err) return next(err);
-      
+
       utils.generateResponse({
         res,
         createdChat,
@@ -84,7 +84,7 @@ export const editChatInfo = async (req, res, next) => {
       .filter(([name]) => name !== 'chatId')
       .forEach(([name, val]) => setVariables[name] = val);
 
-    const result = await Chat.findByIdAndUpdate(chatId, {$set: setVariables});
+    const result = await Chat.findByIdAndUpdate(chatId, { $set: setVariables });
 
     return utils.generateResponse({
       res,

@@ -14,7 +14,7 @@ export const createMessage = async (req, res, next) => {
     } = req.body;
 
     const {
-      email
+      email,
     } = req.decoded;
 
     const foundUser = await User.findOne({ email });
@@ -30,7 +30,7 @@ export const createMessage = async (req, res, next) => {
       sendTime: Date.now(),
       text,
     });
-  
+
     const chat = await Chat.findById(chatId);
     chat.messages.push(createdMessage);
     await chat.save();
@@ -77,10 +77,10 @@ export const updateMessage = async (req, res, next) => {
 
     chat.messages = chat.messages.map(msg => {
       return msg._id.toString() !== messageId.toString() ? msg : (() => {
-          const newMsg = msg;
-          newMsg.text = text;
-          return newMsg;
-        })();
+        const newMsg = msg;
+        newMsg.text = text;
+        return newMsg;
+      })();
     });
 
     chat.save();
@@ -103,9 +103,9 @@ export const deleteMessage = async (req, res, next) => {
     if (!chat || filteredMessages.length === chat.messages.length) {
       throw new MessageNotFoundException(chatId, messageId);
     }
-    
+
     chat.messages = filteredMessages;
-    
+
     chat.save();
     utils.generateResponse({ res });
   } catch (err) {

@@ -22,3 +22,6 @@ rules:
   arrow-parens: off
   no-shadow: off
   arrow-body-style: off
+  linebreak-style: off
+  no-underscore-dangle: off
+  no-return-assign: off
