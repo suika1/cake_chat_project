@@ -3,9 +3,9 @@ import {put, call, takeEvery, takeLatest} from 'redux-saga/effects';
 import * as api from 'api';
 import * as urls from 'api/urls';
 import { getAuthToken, setAuthToken, setUserInfo } from 'api/localStorage'
+import { GET_MESSAGES_SUCCESS } from 'modules/chat/action-types'
 
 import * as AT from './action-types';
-import { GET_MESSAGES_SUCCESS } from 'modules/chat/action-types'
 import * as actions from './actions';
 
 function* getChatList() {
@@ -56,8 +56,9 @@ function* validateUser() {
     });
 
     if (ok) {
-      yield call(setUserInfo, { name, email, _id })
-      yield put(actions.validateUserSuccess())
+      const user = { name, email, _id };
+      yield call(setUserInfo, user);
+      yield put(actions.validateUserSuccess({ user }));
     } else {
       throw new Error(error);
     }

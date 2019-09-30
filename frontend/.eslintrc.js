@@ -40,10 +40,6 @@ module.exports = {
     'no-plusplus': 'off',
     'no-nested-ternary': 'off',
     'react/jsx-filename-extension': 'off',
-    'function-paren-newline': [
-      'error',
-      'consistent',
-    ],
     'import/prefer-default-export': 'off',
 
     'react/no-typos': 'off',
@@ -59,6 +55,13 @@ module.exports = {
     'react/jsx-closing-bracket-location': 'off',
     'semi': 'off',
     'yoda': 'off',
+    'react/prop-types': 'off',
+    'jsx-a11y/click-events-have-key-events': 'off',
+    'function-paren-newline': 'off',
+    'react/forbid-prop-types': 'off',
+    'react/require-default-props': 'off',
+    'no-underscore-dangle': 'off',
+    'array-callback-return': 'off',
 
     // warn
     'import/no-cycle': 'warn',
@@ -69,6 +72,5 @@ module.exports = {
     'quote-props': 'warn',
     'react/no-unused-prop-types': 'warn',
     'react/prefer-stateless-function': 'warn',
-    'react/prop-types': 'warn',
   },
 }

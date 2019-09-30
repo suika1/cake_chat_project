@@ -1,3 +1,5 @@
+import lodash from 'lodash';
+
 const AUTH_TOKEN_NAME = 'auth_token';
 const USER_NAME = 'user_name';
 const USER_EMAIL = 'user_email';
@@ -7,12 +9,11 @@ export const getAuthToken = () => localStorage.getItem(AUTH_TOKEN_NAME);
 export const setAuthToken = (value) => localStorage.setItem(AUTH_TOKEN_NAME, value);
 
 export const getUserInfo = () => {
-  const info = { 
-    user_name, 
-    user_email, 
-    user_id 
-  } = localStorage;
-  
+  const info = lodash.pick(
+    localStorage,
+    ['user_name', 'user_email', 'user_id'],
+  );
+
   return info;
 };
 

@@ -20,12 +20,12 @@ const options = [{
     placeholder: 'Email',
     type: 'email',
     name: 'loginEmail',
-   }, {
+  }, {
     placeholder: 'Password',
     type: 'password',
     name: 'loginPassword',
     autoComplete: 'off',
-   }],
+  }],
 }, {
   text: OPTION_TEXTS.registration,
   fields: [{
@@ -36,17 +36,17 @@ const options = [{
     placeholder: 'Email',
     type: 'email',
     name: 'regEmail',
-   }, {
+  }, {
     placeholder: 'Password',
     type: 'password',
     name: 'regPassword',
     autoComplete: 'off',
-   }, {
+  }, {
     placeholder: 'Password again',
     type: 'password',
     name: 'regPasswordAgain',
     autoComplete: 'off',
-   }],
+  }],
 }, {
   name: OPTION_TEXTS.reset,
   text: 'Reset',
@@ -54,7 +54,7 @@ const options = [{
     placeholder: 'Email',
     type: 'email',
     name: 'resetEmail',
-   }],
+  }],
 }];
 
 class AuthForm extends React.Component {
@@ -74,15 +74,15 @@ class AuthForm extends React.Component {
         loginUser({ 
           data: formValues 
         });
-      break;
+        break;
       case 1:
         createUser({
           data: formValues,
         });
-      break;
+        break;
       case 2:
         alert('coming soon');
-      break;
+        break;
       default:
         console.log('something go wrong');
     }
@@ -98,7 +98,7 @@ class AuthForm extends React.Component {
       .filter(field => !formValues[field.name])
       .length
     ) {
-     return true; 
+      return true; 
     }
 
     // check if both passwords are same on registration step

@@ -2,7 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 
 import * as api from 'api';
 import * as urls from 'api/urls';
-import { setAuthToken } from 'api/localStorage'
+import { setAuthToken, setUserInfo } from 'api/localStorage'
 
 import * as AT from './action-types';
 import * as actions from './actions';
@@ -52,17 +52,20 @@ function* loginUser({
         'password': data.loginPassword,
       }
     })
-    
+
     if (response.ok) {
       setAuthToken(response.token);
 
-      yield put(actions.loginUserSuccess());
+      const user = response.results;
+
+      yield call(setUserInfo, user);
+      yield put(actions.loginUserSuccess({ user }));
       yield window.location.pathname = '/chats';
     } else {
       throw new Error(response.error);
     }
   } catch (error) {
-    yield put(actions.loginUserFailed({errorMessage: error.message}));
+    yield put(actions.loginUserFailed({ errorMessage: error.message }));
   }
 }
 

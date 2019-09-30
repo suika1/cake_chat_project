@@ -22,8 +22,11 @@ export const validateUser = () => ({
   type: AT.VALIDATE_USER,
 });
 
-export const validateUserSuccess = () => ({
+export const validateUserSuccess = ({ user }) => ({
   type: AT.VALIDATE_USER_SUCCESS,
+  payload: {
+    user,
+  },
 });
 
 export const validateUserFailed = ({ errorMessage }) => ({

@@ -18,8 +18,6 @@ export const createUserFailed = ({ errorMessage }) => ({
   },
 });
 
-
-
 export const loginUser = ({ data }) => ({
   type: AT.LOGIN_USER,
   payload: {
@@ -27,8 +25,11 @@ export const loginUser = ({ data }) => ({
   },
 });
 
-export const loginUserSuccess = () => ({
+export const loginUserSuccess = ({ user }) => ({
   type: AT.LOGIN_USER_SUCCESS,
+  payload: {
+    user,
+  },
 });
 
 export const loginUserFailed = ({ errorMessage }) => ({
