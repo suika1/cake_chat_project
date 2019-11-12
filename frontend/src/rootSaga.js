@@ -6,8 +6,8 @@ import createChatSagas from './modules/chatList/createChat/sagas';
 import chatSagas from 'modules/chat/sagas';
 import deleteChatSagas from 'modules/chat/deleteChat/sagas';
 import renameChatSaga from 'modules/chat/renameChat/sagas';
-import deleteMessageSagas from 'modules/Chat/messageActions/deleteMessage/sagas';
-import editMessageSagas from 'modules/Chat/messageActions/editMessage/sagas';
+import deleteMessageSagas from 'modules/chat/messageActions/deleteMessage/sagas';
+import editMessageSagas from 'modules/chat/messageActions/editMessage/sagas';
 import messageFormSagas from 'modules/messageForm/sagas';
 import authFormSagas from 'modules/auth-form/sagas';
 

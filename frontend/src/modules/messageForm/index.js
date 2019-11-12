@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import * as actions from './actions';
-import { editMessage, cancelEditMessage } from '../Chat/messageActions/editMessage/actions'
+import { editMessage, cancelEditMessage } from '../chat/messageActions/editMessage/actions'
 
 import MessageForm from './component';
 

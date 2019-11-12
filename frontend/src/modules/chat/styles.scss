@@ -1,7 +1,8 @@
 .chat {
   display: flex;
   justify-content: flex-end;
-  padding-left: 290px;
+  max-width: 990px;
+  margin-left: 290px;
   .messageList {
     padding-bottom: 66px;
     padding-top: 60px;
@@ -19,9 +20,8 @@
     top: 0;
     background: #F9F9FA;
     height: 60px;
-    width: 1280px;
+    width: 990px;
     z-index: 888;
-    padding-left: 290px;
     border-bottom: 1px solid rgb(228, 228, 228)
   }
 }
@@ -47,4 +47,17 @@
   text-align: center;
   top: 25vh;
   position: relative;
+}
+
+@media only screen and (max-width: 1280px) {
+  .chat {
+    width: 610px;
+    .messageList {
+      width: 610px;
+    }
+    .header {
+      width: 610px;
+    }
+  }
+  
 }

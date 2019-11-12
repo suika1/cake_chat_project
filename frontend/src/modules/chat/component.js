@@ -90,13 +90,11 @@ export default class Chat extends React.Component {
           <DeleteChat chatId={chatKey} />
         </div>
         {selectedMessages.length !== 0 && (
-          <MessageActions
-            chatId={chatKey}
-          />
-          <div >
-            <DeleteMessage chatId={chatKey} />
-            <EditMessaage chatId={chatKey} />
-          </div>
+          <React.Fragment>
+            <MessageActions
+              chatId={chatKey}
+            />
+          </React.Fragment>
         )}
 
         <div className={styles.messageList}>

@@ -12,10 +12,17 @@
 };
 
 .text {
-  width: calc(928px);
+  width: inherit;
   margin-left: 4px;
 };
 
 .name {
   width: 20%;
 };
+
+
+@media only screen and (max-width: 1280px) {
+  .messageForm {
+    width: 610px;
+  }
+}

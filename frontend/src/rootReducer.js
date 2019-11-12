@@ -7,8 +7,8 @@ import createChat from './modules/chatList/createChat/reducer';
 import chat from './modules/chat/reducer';
 import deleteChat from './modules/chat/deleteChat/reducer';
 import renameChat from './modules/chat/renameChat/reducer';
-import deleteMessage from './modules/Chat/messageActions/deleteMessage/reducer';
-import editMessage from './modules/Chat/messageActions/editMessage/reducer';
+import deleteMessage from './modules/chat/messageActions/deleteMessage/reducer';
+import editMessage from './modules/chat/messageActions/editMessage/reducer';
 import authForm from './modules/auth-form/reducer';
 
 export default combineReducers({
