@@ -3,43 +3,62 @@ import { TextField, Fab, Paper } from '@material-ui/core';
 
 import PropTypes from 'prop-types';
 
+import { getName, getUserInfo } from 'api/localStorage';
+
 import styles from './styles.scss';
-import { getName } from 'api/localStorage';
-import { ThemeProvider } from '@material-ui/styles';
 
 export default class MessageForm extends React.PureComponent {
   state = {
     textValue: '',
-    nameValue: '',
-    messageEditing: false,
-    editIsStart: false,
   };
 
-  textField = React.createRef();
+  componentDidUpdate = (prevProps) => {
+    const {
+      messageToEdit,
+    } = this.props;
 
-  //For controlling inputs
+    if (!prevProps.messageToEdit
+      && messageToEdit
+    ) {
+      this.setState({
+        textValue: messageToEdit.text,
+      });
+    } else if (prevProps.messageToEdit
+      && !messageToEdit
+    ) {
+      this.setState({
+        textValue: '',
+      });
+    }
+  }
+
+  // For controlling inputs
   onChange = fieldName => e => this.setState({ [fieldName]: e.target.value });
 
   createOrEditMessage = () => {
     const {
       createMessage,
-      editMessage,
       chatId,
-      isEditing,
       messageToEdit,
+      editMessage,
     } = this.props;
-    
+
     const {
       textValue,
     } = this.state;
 
-    if (textValue.length < 2 || textValue.charCodeAt() === 10 || textValue.charCodeAt() === 32) return;
+    if (textValue.length < 2
+      || textValue.charCodeAt() === 10
+      || textValue.charCodeAt() === 32
+    ) {
+      return;
+    }
 
-    if (isEditing) {
+    if (messageToEdit) {
       editMessage({
-        chatId,
-        messageId: messageToEdit.messageId,
         text: textValue,
+        messageId: messageToEdit.messageId,
+        chatId: messageToEdit.chatId,
       })
     } else {
       createMessage({
@@ -49,60 +68,51 @@ export default class MessageForm extends React.PureComponent {
           chatId,
         },
       });
-    }
 
-    this.setState({ textValue: ''})
+      this.setState({ textValue: '' });
+    }
   }
 
   onKeyUp = (event) => {
+    const {
+      messageToEdit,
+      deselectMessageToEdit,
+    } = this.props;
+
+    if (messageToEdit && event.key === 'Escape') {
+      deselectMessageToEdit();
+    }
+
     if (event.key === 'Enter' && !event.shiftKey) {
-      this.createOrEditMessage();
+      this.createMessage();
       event.target.value = '';
     }
   }
 
   onKeyDown = (e) => {
-    const textValue = this.state.textValue;
-    if (textValue.charCodeAt() === 10 || textValue.charCodeAt() === 32 || isNaN(textValue.charCodeAt())) {
+    const { textValue } = this.state;
+    if (textValue.charCodeAt() === 10
+      || textValue.charCodeAt() === 32
+      || isNaN(textValue.charCodeAt())
+    ) {
       if (event.key === 'Enter' && !event.shiftKey) {
         e.preventDefault()
       }
-    } 
-  }
-
-  focusChanger = () => {
-
-    let { isEditing, cancelEditMessage, messageToEdit } = this.props;
-
-    this.setState({editIsStart: true })
-
-    if (isEditing) {
-      const messageForm = document.getElementById('form-text');
-      messageForm.focus();
-
-      messageForm.value = messageToEdit.text;
-
-      messageForm.onblur = () => {
-        if (isEditing) cancelEditMessage();
-        messageForm.value = '';
-        this.setState({editIsStart: false })
-      };
     }
   }
 
-  componentDidUpdate() {
-    let { isEditing } = this.props;
-
-    if (isEditing && !this.state.editIsStart) this.focusChanger()
-  }
-
   render() {
+    const {
+      isFetching,
+    } = this.props;
 
+    const {
+      textValue,
+    } = this.state;
 
     return (
       <Paper className={styles.messageForm}>
         <TextField
-          ref={this.textField}
           className={styles.text}
           placeholder="Введите текст сообщения"
           multiline
@@ -112,13 +122,15 @@ export default class MessageForm extends React.PureComponent {
           onKeyUp={this.onKeyUp}
           onKeyDown={this.onKeyDown}
           variant="standard"
+          value={textValue}
         />
         <Fab
           className={styles.btn}
           color="primary"
           onClick={this.createOrEditMessage}
+          disabled={isFetching}
         >
-          >
+          &gt;
         </Fab>
       </Paper>
     );

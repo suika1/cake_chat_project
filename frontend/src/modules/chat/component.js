@@ -52,6 +52,7 @@ export default class Chat extends React.Component {
       messages,
       isFetching,
       match,
+      selectedMessages,
     } = this.props;
 
     if (isFetching) {
@@ -70,6 +71,7 @@ export default class Chat extends React.Component {
         key={item._id}
         data={item}
         chatId={match.params.chatKey}
+        isSelected={selectedMessages.find(msg => msg.messageId === item._id)}
       />
     ));
   }

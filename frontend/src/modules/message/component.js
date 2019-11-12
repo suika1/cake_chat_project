@@ -9,10 +9,6 @@ import { getId } from 'api/localStorage'
 import styles from './styles.scss';
 
 class Message extends React.PureComponent {
-  state = {
-    selected: false,
-  }
-
   selectMessageHandler = () => {
     const {
       data: {
@@ -23,18 +19,13 @@ class Message extends React.PureComponent {
       chatId,
       selectMessage,
       unselectMessage,
+      isSelected,
     } = this.props;
 
-    const {
-      selected,
-    } = this.state;
-
-    if (selected) {
+    if (isSelected) {
       unselectMessage({ chatId, messageId: _id })
-      this.setState({ selected: false })
     } else {
       selectMessage({ chatId, messageId: _id, text, authorId: author._id, })
-      this.setState({ selected: true })
     }
   }
 
@@ -47,12 +38,9 @@ class Message extends React.PureComponent {
           _id,
         },
         text,
-      }
+      },
+      isSelected,
     } = this.props;
-
-    const {
-      selected,
-    } = this.state;
 
     const msgTime = moment(sendTime).format('HH:mm');
     const isOwn = _id === getId();
@@ -61,10 +49,9 @@ class Message extends React.PureComponent {
       <div
         className={cx(styles.wrapper,
           { [styles.right]: isOwn },
-          { [styles.selected]: selected }
+          { [styles.selected]: isSelected }
         )}
         onClick={this.selectMessageHandler}
-        ref={this.messageRef}
       >
         {!isOwn && <Avatar>{name.charAt(0)}</Avatar>}
         <div className={styles.message}>

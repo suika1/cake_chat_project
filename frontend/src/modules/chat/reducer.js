@@ -1,9 +1,8 @@
+import { SELECT_MESSAGE, UNSELECT_MESSAGE } from 'modules/message/action-types';
+
 import * as AT from './action-types';
 import { RENAME_CHAT_SUCCESS } from './renameChat/action-types'
-import { SELECT_MESSAGE } from 'modules/message/action-types';
-import { UNSELECT_MESSAGE } from 'modules/message/action-types';
-import { DELETE_MESSAGE_SUCCESS } from './messageActions/deleteMessage/action-types';
-import { EDIT_MESSAGE_SUCCESS } from './messageActions/editMessage/action-types';
+import { EDIT_MESSAGE_SUCCESS } from 'modules/messageForm/action-types';
 
 const initialState = {
   isFetching: false,
@@ -13,7 +12,7 @@ const initialState = {
 }
 
 const ChatReducer = (state = initialState, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case AT.EDIT_CHAT:
       return {
         ...state,
@@ -67,19 +66,6 @@ const ChatReducer = (state = initialState, action) => {
           }
         })
       };
-    case DELETE_MESSAGE_SUCCESS:
-      return {
-        ...state,
-        messages: state.messages.filter((item) => {
-          for (let i=0; i<action.payload.deletedMessagesIDs.length; i++) {
-            if (action.payload.deletedMessagesIDs[i] === item._id) {
-              return;
-            }
-          }
-          return item;
-        }),
-        selectedMessages: [],
-      };
     case EDIT_MESSAGE_SUCCESS:
       return {
         ...state,
@@ -93,7 +79,6 @@ const ChatReducer = (state = initialState, action) => {
         }),
         selectedMessages: [],
       };
-    
     default:
       return state;
   }

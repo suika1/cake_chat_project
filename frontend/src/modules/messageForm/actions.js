@@ -17,3 +17,36 @@ export const createMessageFailed = ({ errorMessage }) => ({
     errorMessage,
   },
 });
+
+export const editMessage = ({
+  text,
+  messageId,
+  chatId,
+}) => ({
+  type: AT.EDIT_MESSAGE,
+  payload: {
+    text,
+    messageId,
+    chatId,
+  },
+});
+
+export const editMessageSuccess = ({
+  messageId,
+  text,
+  chatId,
+}) => ({
+  type: AT.EDIT_MESSAGE_SUCCESS,
+  payload: {
+    messageId,
+    text,
+    chatId,
+  },
+});
+
+export const editMessageFailed = ({ errorMessage }) => ({
+  type: AT.EDIT_MESSAGE_FAILED,
+  payload: {
+    errorMessage,
+  },
+});

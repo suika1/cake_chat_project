@@ -1,18 +1,22 @@
+import { getAuthToken } from 'api/localStorage'
+
 export const get = async ({
   url,
   options = {},
   headers = {},
 }) => {
   const response = await fetch(url, {
-    method: "GET",
-    mode: "cors",
+    method: 'GET',
+    mode: 'cors',
     headers: {
+      Authorization: getAuthToken(),
       ...headers,
     },
     ...options,
   });
 
-  return await response.json();
+  const json = await response.json();
+  return json;
 };
 
 export const post = async ({
@@ -22,17 +26,19 @@ export const post = async ({
   headers = {},
 }) => {
   const response = await fetch(url, {
-    method: "POST",
-    mode: "cors",
+    method: 'POST',
+    mode: 'cors',
     body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json',
+      Authorization: getAuthToken(),
       ...headers,
     },
     ...options,
   });
 
-  return await response.json();
+  const json = await response.json();
+  return json;
 };
 
 export const deleteRequest = async ({
@@ -42,37 +48,39 @@ export const deleteRequest = async ({
   headers = {},
 }) => {
   const response = await fetch(url, {
-    method: "DELETE",
-    mode: "cors",
+    method: 'DELETE',
+    mode: 'cors',
     body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json',
+      Authorization: getAuthToken(),
       ...headers,
     },
     ...options,
   });
 
-  return await response.json();
+  const json = await response.json();
+  return json;
 };
 
-export const putRequest = async ({
+export const put = async ({
   url,
   body = {},
   options = {},
   headers = {},
 }) => {
   const response = await fetch(url, {
-    method: "PUT",
-    mode: "cors",
+    method: 'PUT',
+    mode: 'cors',
     body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json',
+      Authorization: getAuthToken(),
       ...headers,
     },
     ...options,
   });
 
-  return await response.json();
+  const json = await response.json();
+  return json;
 };
-
-

@@ -1,20 +1,21 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
+import { deselectMessageToEdit } from 'modules/chat/messageActions/actions';
+
 import * as actions from './actions';
-import { editMessage, cancelEditMessage } from '../chat/messageActions/editMessage/actions'
 
 import MessageForm from './component';
 
 const mapStateToProps = state => ({
-  isEditing: state.editMessage.isEditing,
-  messageToEdit: state.currentChat.selectedMessages[0],
-})
+  messageToEdit: state.messageForm.messageToEdit,
+  isFetching: state.messageForm.isFetching,
+});
 
 const mapDispatchToProps = {
   createMessage: actions.createMessage,
-  editMessage,
-  cancelEditMessage,
+  editMessage: actions.editMessage,
+  deselectMessageToEdit,
 };
 
 export default withRouter(

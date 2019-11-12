@@ -62,6 +62,10 @@ module.exports = {
     'react/require-default-props': 'off',
     'no-underscore-dangle': 'off',
     'array-callback-return': 'off',
+    'react/prefer-stateless-function': 'off',
+    'camelcase': 'off',
+    'no-param-reassign': 'off',
+    'react/no-did-update-set-state': 'off',
 
     // warn
     'import/no-cycle': 'warn',
@@ -71,6 +75,5 @@ module.exports = {
     'padded-blocks': 'warn',
     'quote-props': 'warn',
     'react/no-unused-prop-types': 'warn',
-    'react/prefer-stateless-function': 'warn',
   },
 }

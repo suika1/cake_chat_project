@@ -7,9 +7,8 @@ import createChat from './modules/chatList/createChat/reducer';
 import chat from './modules/chat/reducer';
 import deleteChat from './modules/chat/deleteChat/reducer';
 import renameChat from './modules/chat/renameChat/reducer';
-import deleteMessage from './modules/chat/messageActions/deleteMessage/reducer';
-import editMessage from './modules/chat/messageActions/editMessage/reducer';
 import authForm from './modules/auth-form/reducer';
+import messageForm from './modules/messageForm/reducer';
 
 export default combineReducers({
   router: connectRouter(history),
@@ -19,6 +18,5 @@ export default combineReducers({
   currentChat: chat,
   deleteChat,
   renameChat,
-  deleteMessage,
-  editMessage,
+  messageForm,
 });

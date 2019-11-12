@@ -14,7 +14,7 @@ function* renameChat({
 	}
 }) {
 	try {
-		const response = yield call(api.putRequest, {
+		const response = yield call(api.put, {
 			url: urls.chatListApi,
 			headers: {
         Authorization: getAuthToken(),
