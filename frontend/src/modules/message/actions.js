@@ -41,3 +41,7 @@ export const unselectMessage = ({ chatId, messageId }) => ({
     messageId,
   },
 });
+
+export const unselectAllMessages = () => ({
+  type: AT.UNSELECT_ALL_MESSAGES,
+});

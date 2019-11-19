@@ -1,8 +1,9 @@
-import { SELECT_MESSAGE, UNSELECT_MESSAGE } from 'modules/message/action-types';
+import { SELECT_MESSAGE, UNSELECT_MESSAGE, UNSELECT_ALL_MESSAGES } from 'modules/message/action-types';
+
+import { EDIT_MESSAGE_SUCCESS } from 'modules/messageForm/action-types';
 
 import * as AT from './action-types';
 import { RENAME_CHAT_SUCCESS } from './renameChat/action-types'
-import { EDIT_MESSAGE_SUCCESS } from 'modules/messageForm/action-types';
 
 const initialState = {
   isFetching: false,
@@ -65,6 +66,11 @@ const ChatReducer = (state = initialState, action) => {
             return item
           }
         })
+      };
+    case UNSELECT_ALL_MESSAGES:
+      return {
+        ...state,
+        selectedMessages: [],
       };
     case EDIT_MESSAGE_SUCCESS:
       return {

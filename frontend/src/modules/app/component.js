@@ -10,43 +10,45 @@ import * as urls from 'appConfig/appUrls';
 import styles from './styles.scss';
 
 export default class App extends React.Component {
-	componentDidMount() {
-		if (!navigator.cookieEnabled) {
-			alert('Включите cookie для комфортной работы с этим сайтом');
-		}
-	}
+  componentDidMount() {
+    if (!navigator.cookieEnabled) {
+      alert('Включите cookie для комфортной работы с этим сайтом');
+    }
+  }
 
-	render() {
-		return (
-			<Router>
-				<div className={styles.app}>
-					<Switch>
-						{routes.map(Route => Route())}
+  render() {
+    return (
+      <Router>
+        <div className={styles.app}>
+          <Switch>
+            {routes.map(Route => Route())}
 
-						<Route exact path='/' render={
-							() => {
-								if (!getAuthToken() || getAuthToken() === '0') {
-									return <Redirect to={{pathname: urls.authForm}} />;
-								} else if (getAuthToken() && getAuthToken() !== '0') {
-									return <Redirect to={{pathname: urls.chats}} />;
-								}
-							}
-						} />	
-
-						<NotFoundPageRoute />
-					</Switch>
-				</div>
-			</Router>
-		);
-	}
+            <Route
+              exact
+              path="/"
+              render={() => {
+                if (!getAuthToken() || getAuthToken() === '0') {
+                  return <Redirect to={{ pathname: urls.authForm }} />;
+                }
+                if (getAuthToken() && getAuthToken() !== '0') {
+                  return <Redirect to={{ pathname: urls.chats }} />;
+                }
+              }}
+              />
+            <NotFoundPageRoute />
+          </Switch>
+        </div>
+      </Router>
+    );
+  }
 }
 
 App.propTypes = {
-	isFetching: PropTypes.bool,
-	error: PropTypes.string,
+  isFetching: PropTypes.bool,
+  error: PropTypes.string,
 };
 
 App.defaultProps = {
-	isFetching: false,
-	error: '',
+  isFetching: false,
+  error: '',
 }

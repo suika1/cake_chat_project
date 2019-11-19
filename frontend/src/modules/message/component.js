@@ -20,7 +20,12 @@ class Message extends React.PureComponent {
       selectMessage,
       unselectMessage,
       isSelected,
+      messageToEdit,
     } = this.props;
+
+    if (messageToEdit) {
+      return;
+    }
 
     if (isSelected) {
       unselectMessage({ chatId, messageId: _id })

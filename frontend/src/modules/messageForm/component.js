@@ -15,6 +15,8 @@ export default class MessageForm extends React.PureComponent {
   componentDidUpdate = (prevProps) => {
     const {
       messageToEdit,
+      location,
+      deselectMessageToEdit,
     } = this.props;
 
     if (!prevProps.messageToEdit
@@ -29,6 +31,15 @@ export default class MessageForm extends React.PureComponent {
       this.setState({
         textValue: '',
       });
+    }
+
+    if (location
+      && (
+        !prevProps.location
+        || location.pathname !== prevProps.location.pathname
+      )
+    ) {
+      deselectMessageToEdit();
     }
   }
 

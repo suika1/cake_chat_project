@@ -29,7 +29,8 @@ export default class ChatList extends React.Component {
     const {
       chatList,
       match,
-      location
+      location,
+      unselectAllMessages,
     } = this.props;
     return (
       <div className={styles.chatList}>
@@ -50,7 +51,10 @@ export default class ChatList extends React.Component {
                   { [styles.activeLink]: location.pathname === (match.path + chat._id)},
                 )}
                 to={match.path + chat._id}
-              >	
+                onClick={() => {
+                  unselectAllMessages();
+                }}
+              >
                 <Avatar>{chat.name.charAt(0)}</Avatar>
                 <div className={styles.chatInfo}>
                   <div className={styles.nameAndDate}>
@@ -64,8 +68,7 @@ export default class ChatList extends React.Component {
                       <div>{`${tr(getProp(() => lastMessage.author.name, '-'), 12)}:`}</div>
                       <div>{tr(lastMessage.text, 10)}</div>
                     </div>
-                  )
-                  }
+                  )}
                 </div>
               </NavLink>
             )
