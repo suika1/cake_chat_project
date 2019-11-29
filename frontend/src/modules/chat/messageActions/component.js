@@ -36,16 +36,18 @@ export default class MessageActions extends React.Component {
     return (
       <Dialog
         onClose={handleClose}
+        className={styles.deleteMsgModal}
         open
       >
         <DialogTitle>
           Do you really want to delete this message?
         </DialogTitle>
         <DialogActions>
-          <Button onClick={handleClose}>
+          <Button onClick={handleClose} className={styles.cancelBtn}>
             CANCEL
           </Button>
           <Button
+            className={styles.deleteBtn}
             onClick={() => {
               if (selectedMessages && selectedMessages.length === 1) {
                 deleteMessage({ message: selectedMessages[0] });
