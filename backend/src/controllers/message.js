@@ -98,6 +98,11 @@ export const deleteMessage = async (req, res, next) => {
     } = req.body;
 
     const chat = await Chat.findById(chatId);
+
+    if (!chat) {
+      throw new Error('Chat not found');
+    }
+
     const filteredMessages = chat.messages
       .filter(msg => msg._id.toString() !== messageId.toString());
     if (!chat || filteredMessages.length === chat.messages.length) {
