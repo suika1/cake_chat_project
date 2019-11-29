@@ -4,6 +4,7 @@ import { EDIT_MESSAGE_SUCCESS } from 'modules/messageForm/action-types';
 
 import * as AT from './action-types';
 import { RENAME_CHAT_SUCCESS } from './renameChat/action-types'
+import { DELETE_MESSAGE_SUCCESS } from './messageActions/action-types';
 
 const initialState = {
   isFetching: false,
@@ -85,6 +86,15 @@ const ChatReducer = (state = initialState, action) => {
         }),
         selectedMessages: [],
       };
+    case DELETE_MESSAGE_SUCCESS: {
+      return {
+        ...state,
+        messages: state.messages.filter((item) => {
+          return action.payload.message.messageId !== item._id;
+        }),
+        selectedMessages: [],
+      };
+    }
     default:
       return state;
   }

@@ -13,6 +13,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   selectMessageToEdit: actions.selectMessageToEdit,
   deselectMessageToEdit: actions.deselectMessageToEdit,
+  deleteMessage: actions.deleteMessage,
   unselectMessage,
 };
 
