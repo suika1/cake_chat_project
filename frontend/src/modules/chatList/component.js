@@ -5,10 +5,13 @@ import { Typography, Fab, TextField, Button, MenuList, MenuItem, Avatar } from '
 import { styled } from '@material-ui/styles';
 import moment from 'moment';
 import cx from 'classnames';
+import lodash from 'lodash';
 
 import { tr, getProp } from 'utils/utils.js';
 import styles from './styles.scss';
 import CreateChat from './createChat';
+
+const chatUrlRegexp = /\/chats(\/)?$/;
 
 export default class ChatList extends React.Component {
   componentDidMount = () => {
@@ -16,13 +19,30 @@ export default class ChatList extends React.Component {
       chatList,
       getChatList,
       validateUser,
+      pathname,
     } = this.props;
 
     if (!chatList || !chatList.length) {
       getChatList();
+    } else if (chatUrlRegexp.test(pathname)) {
+      window.location.pathname = `/chats/${chatList[0]._id}`;
     }
 
     validateUser();
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    const {
+      pathname,
+      chatList,
+    } = this.props;
+
+    if (chatList.length
+      && !lodash.isEqual(chatList, prevProps.chatList)
+      && chatUrlRegexp.test(pathname)
+    ) {
+      window.location.pathname = `/chats/${chatList[0]._id}`;
+    }
   }
 
   render() {
@@ -82,7 +102,4 @@ export default class ChatList extends React.Component {
 
 ChatList.propTypes = {
   chatList: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  // createChat: PropTypes.func.isRequired,
-  // classes: PropTypes.shape({}),
-  // match: PropTypes.shape({}),
 };

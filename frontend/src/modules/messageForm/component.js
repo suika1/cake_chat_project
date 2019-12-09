@@ -89,14 +89,24 @@ export default class MessageForm extends React.PureComponent {
       messageToEdit,
       deselectMessageToEdit,
     } = this.props;
+    const {
+      textValue,
+    } = this.state;
 
     if (messageToEdit && event.key === 'Escape') {
       deselectMessageToEdit();
     }
 
     if (event.key === 'Enter' && !event.shiftKey) {
-      this.createMessage();
-      event.target.value = '';
+      if (textValue[textValue.length - 1] === '\n') {
+        this.setState({
+          textValue: textValue.slice(0, textValue.length - 1),
+        }, () => {
+          this.createOrEditMessage();
+        });
+      } else {
+        this.createOrEditMessage();
+      }
     }
   }
 
