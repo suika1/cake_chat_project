@@ -9,7 +9,6 @@ import ChatListComponent from './component';
 const mapStateToProps = store => ({
   chatList: store.chatList.elements,
   messageToEdit: store.messageForm.messageToEdit,
-  pathname: store.router.location.pathname || '',
 });
 
 const mapDispatchToProps = {

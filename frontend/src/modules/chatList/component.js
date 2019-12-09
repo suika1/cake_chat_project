@@ -12,6 +12,7 @@ import styles from './styles.scss';
 import CreateChat from './createChat';
 
 const chatUrlRegexp = /\/chats(\/)?$/;
+const chatUrlWithChatId = /\/chats\/[\d\w]{1,}(\/)?$/;
 
 export default class ChatList extends React.Component {
   componentDidMount = () => {
@@ -19,7 +20,9 @@ export default class ChatList extends React.Component {
       chatList,
       getChatList,
       validateUser,
-      pathname,
+      location: {
+        pathname,
+      },
     } = this.props;
 
     if (!chatList || !chatList.length) {
@@ -33,15 +36,38 @@ export default class ChatList extends React.Component {
 
   componentDidUpdate = (prevProps, prevState) => {
     const {
-      pathname,
+      location: {
+        pathname,
+      },
       chatList,
     } = this.props;
 
-    if (chatList.length
+    if (
+      // If current url is like '/chats' -> redirect to first chat in list
+      chatList.length
       && !lodash.isEqual(chatList, prevProps.chatList)
       && chatUrlRegexp.test(pathname)
     ) {
       window.location.pathname = `/chats/${chatList[0]._id}`;
+    } else if (
+      // If current url's chat was deleted -> also redirect
+      // TODO: maybe move this logic to saga...
+      chatUrlWithChatId.test(pathname)
+    ) {
+      let pathnameWithoutSlash = pathname;
+      if (pathname[pathname.length - 1] === '/') {
+        pathnameWithoutSlash = pathname.slice(0, pathname.length - 1);
+      }
+
+      const currentChatId = pathnameWithoutSlash.split('/').pop();
+
+      if (!chatList.find(chat => chat._id === currentChatId)) {
+        if (chatList && chatList.length) {
+          window.location.pathname = `/chats/${chatList[0]._id}`;
+        } else {
+          window.location.pathname = '/chats/';
+        }
+      }
     }
   }
 

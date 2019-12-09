@@ -31,8 +31,8 @@ const ChatRename = ({renameChat, chatName, chatId}) => {
   return (
     <>
       <div onClick={handleClickOpen} className={styles.chatName}>{chatName}</div>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Изменить имя чата</DialogTitle>
+      <Dialog className={styles.renameChatModal} open={open} onClose={handleClose}>
+        <DialogTitle>Change chat name</DialogTitle>
         <DialogContent>
           <TextField
             onChange={(event) => setNewName(event.target.value)}
@@ -44,8 +44,8 @@ const ChatRename = ({renameChat, chatName, chatId}) => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Отмена</Button>
-          <Button onClick={editName}>Изменить</Button>
+          <Button className={styles.cancelBtn} onClick={handleClose}>Cancel</Button>
+          <Button className={styles.renameBtn} onClick={editName}>Rename</Button>
         </DialogActions>
       </Dialog>
     </>
