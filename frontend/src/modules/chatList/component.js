@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { Typography, Fab, TextField, Button, MenuList, MenuItem, Avatar } from '@material-ui/core';
-import { styled } from '@material-ui/styles';
+import { Avatar, Button } from '@material-ui/core';
 import moment from 'moment';
 import cx from 'classnames';
 import lodash from 'lodash';
@@ -10,6 +9,7 @@ import lodash from 'lodash';
 import { tr, getProp } from 'utils/utils.js';
 import styles from './styles.scss';
 import CreateChat from './createChat';
+import LogoutBtn from './logoutBtn';
 
 const chatUrlRegexp = /\/chats(\/)?$/;
 const chatUrlWithChatId = /\/chats\/[\d\w]{1,}(\/)?$/;
@@ -80,6 +80,10 @@ export default class ChatList extends React.Component {
     } = this.props;
     return (
       <div className={styles.chatList}>
+        <LogoutBtn
+          className={styles.logoutBtn}
+        />
+
         <div className={styles.chatGroup}>
           Public
         </div>
@@ -94,7 +98,7 @@ export default class ChatList extends React.Component {
                 key={index}
                 className={cx(
                   styles.link,
-                  { [styles.activeLink]: location.pathname === (match.path + chat._id)},
+                  { [styles.activeLink]: location.pathname === (match.path + chat._id) },
                 )}
                 to={match.path + chat._id}
                 onClick={() => {

@@ -24,11 +24,18 @@ export const getUserInfo = () => {
   return info;
 };
 
-export const setUserInfo = ({ name, email, _id }) => {
+export const setUserInfo = ({ name, email, _id } = {}) => {
   localStorage.setItem(USER_NAME, name);
   localStorage.setItem(USER_EMAIL, email);
   localStorage.setItem(USER_ID, _id);
 }
+
+export const logoutUser = () => {
+  localStorage.removeItem(USER_NAME);
+  localStorage.removeItem(USER_EMAIL);
+  localStorage.removeItem(USER_ID);
+  localStorage.removeItem(AUTH_TOKEN_NAME);
+};
 
 export const getName = () => localStorage.getItem(USER_NAME);
 export const getEmail = () => localStorage.getItem(USER_EMAIL);
