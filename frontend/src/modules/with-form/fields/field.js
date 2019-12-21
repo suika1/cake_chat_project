@@ -30,15 +30,36 @@ export default class Field extends React.Component {
         removeField,
       },
       formValues,
+      errorMessage,
+      clearError,
       ...props
     } = this.props;
-    return (
+
+    const defaultRender = (
       <Component
         name={name}
-        onChange={e => changeField(name, e.target.value)}
+        onChange={e => {
+          changeField(name, e.target.value);
+          if (errorMessage && errorMessage.label) {
+            clearError();
+          }
+        }}
         value={formValues[name] || ''}
         {...props}
       />
-    )
+    );
+
+    if (errorMessage && errorMessage.label) {
+      return (
+        <>
+          {defaultRender}
+          <div className={errorMessage.className}>
+            {errorMessage.label || ''}
+          </div>
+        </>
+      )
+    }
+
+    return defaultRender;
   }
 }

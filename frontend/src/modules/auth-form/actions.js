@@ -37,4 +37,19 @@ export const loginUserFailed = ({ errorMessage }) => ({
   payload: {
     errorMessage,
   },
-})
+});
+
+export const setBackendError = ({ name, message }) => ({
+  type: AT.SET_BACKEND_ERROR,
+  payload: {
+    name,
+    message,
+  },
+});
+
+export const clearBackendError = ({ name }) => ({
+  type: AT.CLEAR_BACKEND_ERROR,
+  payload: {
+    name,
+  },
+});

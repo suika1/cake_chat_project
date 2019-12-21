@@ -32,7 +32,7 @@ const options = [{
     placeholder: 'Name',
     type: 'text',
     name: 'regName',
-  },{
+  }, {
     placeholder: 'Email',
     type: 'email',
     name: 'regEmail',
@@ -71,8 +71,8 @@ class AuthForm extends React.Component {
 
     switch (this.state.chosenOption) {
       case 0:
-        loginUser({ 
-          data: formValues 
+        loginUser({
+          data: formValues,
         });
         break;
       case 1:
@@ -98,7 +98,7 @@ class AuthForm extends React.Component {
       .filter(field => !formValues[field.name])
       .length
     ) {
-      return true; 
+      return true;
     }
 
     // check if both passwords are same on registration step
@@ -111,59 +111,75 @@ class AuthForm extends React.Component {
   }
 
   render() {
-    const { fieldProps, formValues } = this.props;
+    const {
+      fieldProps,
+      formValues,
+      backendErrors,
+      clearBackendError,
+    } = this.props;
     const { chosenOption } = this.state;
 
-    const isSubmitDisabled = this.isSubmitDisabled();
+    const isSubmitDisabled = Object.keys(backendErrors).length
+      || this.isSubmitDisabled();
 
     return (
       <div className={s.authFormWrapper}>
         <form className={s.authForm}>
-            <div className={s.options}>
-                {options.map((option, idx) => (
-                  <div
-                    key={idx}
-                    className={s.optionWrapper}
-                  >
-                    <button
-                      type="button"
-                      className={cx(s.option, {
-                        [s.chosen]: chosenOption === idx,
-                      })}
-                      onClick={() => this.setState({ chosenOption: idx })}
-                    >
-                      {option.text}
-                    </button>
-                    {chosenOption === idx && (
-                      <div className={s.pseudoArrow} />
-                    )}
-                  </div>
-                ))}
-            </div>
+          <div className={s.options}>
+            {options.map((option, idx) => (
+              <div
+                key={idx}
+                className={s.optionWrapper}
+              >
+                <button
+                  type="button"
+                  className={cx(s.option, {
+                    [s.chosen]: chosenOption === idx,
+                  })}
+                  onClick={() => this.setState({ chosenOption: idx })}
+                >
+                  {option.text}
+                </button>
+                {chosenOption === idx && (
+                  <div className={s.pseudoArrow} />
+                )}
+              </div>
+            ))}
+          </div>
 
-            <div className={s.fields}>
-                {options[chosenOption].fields.map((field, idx) => (
-                  <Field
-                    key={field.name}
-                    fieldProps={fieldProps}
-                    Component={'input'}
-                    formValues={formValues}
-                    spellCheck="false"
-                    {...field}
-                  />
-                ))}
-            </div>
+          <div className={s.fields}>
+            {options[chosenOption].fields.map((field, idx) => (
+              <Field
+                key={field.name}
+                errorMessage={{
+                  label: backendErrors[field.name],
+                  className: s.errorLabel,
+                }}
+                clearError={() => clearBackendError({
+                  name: field.name,
+                })}
+                className={cx({
+                  error: backendErrors[field.name],
+                })}
+                fieldProps={fieldProps}
+                Component="input"
+                formValues={formValues}
+                spellCheck="false"
+                {...field}
+              />
+            ))}
+          </div>
 
-            <button
-              className={cx(s.actionBtn, {
-                [s.btnDisabled]: isSubmitDisabled,
-              })}
-              type="button"
-              onClick={() => !isSubmitDisabled && this.handleSubmit()}
-              disabled={isSubmitDisabled}
-            >
-              Submit
-            </button>
+          <button
+            className={cx(s.actionBtn, {
+              [s.btnDisabled]: isSubmitDisabled,
+            })}
+            type="button"
+            onClick={() => !isSubmitDisabled && this.handleSubmit()}
+            disabled={isSubmitDisabled}
+          >
+            Submit
+          </button>
         </form>
       </div>
     )

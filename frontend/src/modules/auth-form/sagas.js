@@ -16,12 +16,12 @@ function* createUser({
     const response = yield call(api.post, {
       url: urls.userListApi,
       body: {
-        'email': data.regEmail,
-        'name': data.regName,
-        'password': data.regPassword,
+        email: data.regEmail,
+        name: data.regName,
+        password: data.regPassword,
       }
     })
-    
+
     if (response.ok) {
       setAuthToken(response.token);
 
@@ -31,7 +31,7 @@ function* createUser({
       throw new Error(response.error);
     }
   } catch (error) {
-    yield put(actions.createUserFailed({errorMessage: error.message}));
+    yield put(actions.createUserFailed({ errorMessage: error.message }));
   }
 }
 
@@ -44,14 +44,28 @@ function* loginUser({
     data
   },
 }) {
+  const mapBackendNamesToFrontendNames = {
+    email: 'loginEmail',
+    password: 'loginPassword',
+  };
+
+  let error = null;
+
   try {
     const response = yield call(api.post, {
       url: urls.login,
-      body: {
-        'email': data.loginEmail,
-        'password': data.loginPassword,
-      }
-    })
+      body: Object.entries(data).reduce((prev, [name, val]) => {
+        const matchingEntry = Object.entries(mapBackendNamesToFrontendNames)
+          .find(([, frontendName]) => frontendName === name);
+
+        const matchingBackendName = matchingEntry && matchingEntry[0];
+
+        if (matchingBackendName) {
+          prev[matchingBackendName] = val;
+        }
+        return prev;
+      }, {}),
+    });
 
     if (response.ok) {
       setAuthToken(response.token);
@@ -62,10 +76,15 @@ function* loginUser({
       yield put(actions.loginUserSuccess({ user }));
       yield window.location.pathname = '/chats';
     } else {
-      throw new Error(response.error);
+      ({ error } = response);
+      throw new Error();
     }
-  } catch (error) {
+  } catch (e) {
     yield put(actions.loginUserFailed({ errorMessage: error.message }));
+    yield put(actions.setBackendError({
+      name: mapBackendNamesToFrontendNames[error.field],
+      message: error.message,
+    }));
   }
 }
 

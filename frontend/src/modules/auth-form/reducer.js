@@ -2,6 +2,7 @@ import * as AT from './action-types';
 
 const initialState = {
   isFetching: false,
+  backendErrors: {},
 };
 
 export default (state = initialState, action) => {
@@ -36,6 +37,29 @@ export default (state = initialState, action) => {
         ...state,
         isFetching: false,
       };
+    case AT.SET_BACKEND_ERROR:
+      return {
+        ...state,
+        backendErrors: {
+          ...state.backendErrors,
+          [action.payload.name]: action.payload.message,
+        },
+      };
+    case AT.CLEAR_BACKEND_ERROR: {
+      const { backendErrors } = state;
+      const {
+        name,
+      } = action.payload;
+
+      if (backendErrors[name]) {
+        delete backendErrors[name];
+      }
+
+      return {
+        ...state,
+        backendErrors,
+      };
+    }
     default:
       return state;
   }

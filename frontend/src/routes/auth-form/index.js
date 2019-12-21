@@ -13,7 +13,7 @@ const AuthFormRoute = () => (
     path={urls.authForm}
     render={() => {
       if (getAuthToken() && getAuthToken() !== '0') return <Redirect to={{pathname: urls.chats}} />
-      return <AuthFormComponent/>
+      return <AuthFormComponent />
     }}
   />
 );
