@@ -3,6 +3,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import * as api from 'api';
 import * as urls from 'api/urls';
 import { setAuthToken, setUserInfo } from 'api/localStorage'
+import history from 'api/browserHistory'
 
 import * as AT from './action-types';
 import * as actions from './actions';
@@ -26,7 +27,7 @@ function* createUser({
       setAuthToken(response.token);
 
       yield put(actions.createUserSuccess());
-      yield window.location.pathname = '/chats';
+      yield history.push('/chats');
     } else {
       throw new Error(response.error);
     }
@@ -74,7 +75,7 @@ function* loginUser({
 
       yield call(setUserInfo, user);
       yield put(actions.loginUserSuccess({ user }));
-      yield window.location.pathname = '/chats';
+      yield history.push('/chats');
     } else {
       ({ error } = response);
       throw new Error();

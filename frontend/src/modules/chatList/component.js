@@ -7,6 +7,7 @@ import cx from 'classnames';
 import lodash from 'lodash';
 
 import { tr, getProp } from 'utils/utils.js';
+import history from 'api/browserHistory';
 import styles from './styles.scss';
 import CreateChat from './createChat';
 import LogoutBtn from './logoutBtn';
@@ -28,7 +29,7 @@ export default class ChatList extends React.Component {
     if (!chatList || !chatList.length) {
       getChatList();
     } else if (chatUrlRegexp.test(pathname)) {
-      window.location.pathname = `/chats/${chatList[0]._id}`;
+      history.push(`/chats/${chatList[0]._id}`);
     }
 
     validateUser();
@@ -48,7 +49,7 @@ export default class ChatList extends React.Component {
       && !lodash.isEqual(chatList, prevProps.chatList)
       && chatUrlRegexp.test(pathname)
     ) {
-      window.location.pathname = `/chats/${chatList[0]._id}`;
+      history.push(`/chats/${chatList[0]._id}`);
     } else if (
       // If current url's chat was deleted -> also redirect
       // TODO: maybe move this logic to saga...
@@ -63,9 +64,9 @@ export default class ChatList extends React.Component {
 
       if (!chatList.find(chat => chat._id === currentChatId)) {
         if (chatList && chatList.length) {
-          window.location.pathname = `/chats/${chatList[0]._id}`;
+          history.push(`/chats/${chatList[0]._id}`);
         } else {
-          window.location.pathname = '/chats/';
+          history.push('/chats/');
         }
       }
     }

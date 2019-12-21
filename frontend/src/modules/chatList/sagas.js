@@ -64,7 +64,7 @@ function* validateUser() {
     }
   } catch (err) {
     yield put(actions.validateUserFailed({ errorMessage: err.message }));
-    yield window.location.pathname = '/login';
+    yield history.push('/login');
   }
 }
 
