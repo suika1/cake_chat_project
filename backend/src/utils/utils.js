@@ -6,7 +6,15 @@ export const generateResponse = ({
   ok = true,
   ...another
 }) => {
-  if (error && error.length) ok = false;
+  if (error
+    && (
+      error.length
+      || Object.keys(error).length
+    )
+  ) {
+    ok = false;
+  }
+
   return res.status(status).send(
     JSON.stringify({
       results,
