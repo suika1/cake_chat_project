@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { Switch, Router, Route, Redirect } from 'react-router-dom';
 
 import routes from 'routes';
 import NotFoundPageRoute from 'routes/not-found-page';
 import { getAuthToken } from 'api/localStorage';
+import history from 'api/browserHistory';
 import * as urls from 'appConfig/appUrls';
 
 import styles from './styles.scss';
@@ -18,7 +19,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <Router>
+      <Router history={history}>
         <div className={styles.app}>
           <Switch>
             {routes.map(Route => Route())}

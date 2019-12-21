@@ -10,10 +10,8 @@ import history from './api/browserHistory';
 import 'styles/index.css';
 
 ReactDOM.render(
-  <Router history={history}>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </Router>,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root'),
 );
