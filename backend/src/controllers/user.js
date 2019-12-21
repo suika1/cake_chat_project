@@ -60,7 +60,10 @@ export const loginUser = async (req, res, next) => {
     if (!foundUser) return utils.generateResponse({
       res,
       status: 400,
-      error: 'User not found',
+      error: {
+        message: 'Incorrect email',
+        field: 'email',
+      },
     });
 
     // compare real password hash with received password
@@ -68,7 +71,10 @@ export const loginUser = async (req, res, next) => {
     if (!result) return utils.generateResponse({
       res,
       status: 400,
-      error: 'Wrong password',
+      error: {
+        message: 'Incorrect password',
+        field: 'password',
+      },
     });
 
     const token = jwt.sign(
