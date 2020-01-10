@@ -14,6 +14,7 @@ const mapStateToProps = state => {
     isFetching: selectChat(state).isFetching || false,
     chatName: selectChat(state).chatName || '',
     selectedMessages: selectChat(state).selectedMessages || [],
+    currentUser: state.currentUser.user,
   };
 };
 

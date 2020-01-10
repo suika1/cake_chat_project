@@ -2,6 +2,8 @@ import { combineReducers } from 'redux';
 import history from 'api/browserHistory';
 import { connectRouter } from 'connected-react-router';
 
+import currentUser from 'reducers/currentUser';
+
 import chatList from './modules/chatList/reducer';
 import createChat from './modules/chatList/createChat/reducer';
 import chat from './modules/chat/reducer';
@@ -16,6 +18,7 @@ export default combineReducers({
   chatList,
   createChat,
   currentChat: chat,
+  currentUser,
   deleteChat,
   renameChat,
   messageForm,

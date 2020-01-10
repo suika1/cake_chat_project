@@ -40,3 +40,14 @@ export const getMessagesFailed = ({ errorMessage }) => ({
     errorMessage,
   },
 });
+
+export const getMessagesFromWsSuccess = ({
+  createdMessages,
+  deletedMessages,
+}) => ({
+  type: AT.GET_MESSAGES_FROM_WS_SUCCESS,
+  payload: {
+    createdMessages,
+    deletedMessages,
+  },
+});

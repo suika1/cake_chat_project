@@ -1,11 +1,10 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import * as Scroll from 'react-scroll/modules';
-import { List, Button, Fab, Typography, TextField } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 import Message from 'modules/message';
+import { subscribeToChat } from 'api/websocket';
 
 import MessageForm from '../messageForm';
 import DeleteChat from './deleteChat';
@@ -26,20 +25,48 @@ export default class Chat extends React.Component {
   }
 
   componentDidMount = () => {
-    const { match, getMessages } = this.props;
-    getMessages({ chatId: match.params.chatKey });
+    const {
+      match: {
+        params: {
+          chatKey: chatId,
+        },
+      },
+      getMessages,
+      currentUser,
+    } = this.props;
+
+    getMessages({ chatId });
+    if (currentUser) {
+      subscribeToChat({
+        userId: currentUser._id,
+        chatId,
+      });
+    }
   }
 
   componentDidUpdate = (prevProps) => {
     const {
       match,
       getMessages,
-      selectedMessages
+      selectedMessages,
+      currentUser,
     } = this.props;
-    const { chatKey } = match.params;
+    const { chatKey: chatId } = match.params;
 
-    if (chatKey !== prevProps.match.params.chatKey) {
-      getMessages({ chatId: chatKey })
+    if (chatId !== prevProps.match.params.chatKey) {
+      getMessages({ chatId });
+
+      if (currentUser) {
+        subscribeToChat({
+          userId: currentUser._id,
+          chatId,
+        });
+      }
+    } else if (!prevProps.currentUser && currentUser) {
+      subscribeToChat({
+        userId: currentUser._id,
+        chatId,
+      });
     }
 
     if (!selectedMessages.length) {

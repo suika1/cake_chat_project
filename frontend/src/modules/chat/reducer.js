@@ -1,6 +1,7 @@
 import { SELECT_MESSAGE, UNSELECT_MESSAGE, UNSELECT_ALL_MESSAGES } from 'modules/message/action-types';
 
 import { EDIT_MESSAGE_SUCCESS } from 'modules/messageForm/action-types';
+import moment from 'moment';
 
 import * as AT from './action-types';
 import { RENAME_CHAT_SUCCESS } from './renameChat/action-types'
@@ -47,6 +48,22 @@ const ChatReducer = (state = initialState, action) => {
         isFetching: false,
         chatName: action.payload.chatName,
       };
+    case AT.GET_MESSAGES_FROM_WS_SUCCESS: {
+      const {
+        createdMessages,
+        deletedMessages,
+      } = action.payload;
+
+      const newMessages = state.messages
+        .filter(msg => !deletedMessages.find(anotherMsg => anotherMsg._id === msg._id))
+        .concat(createdMessages)
+        .sort((first, second) => moment.utc(first.sendTime).diff(moment.utc(second.sendTime)));
+
+      return {
+        ...state,
+        messages: newMessages
+      }
+    }
     case AT.GET_MESSAGES_FAILED:
       return {
         ...state,

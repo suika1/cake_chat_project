@@ -2,7 +2,9 @@ import { Schema, model } from 'mongoose';
 import lodash from 'lodash';
 
 import { MessageSchema } from './message';
+import { notifyAboutChatChanges } from 'src/setup/websocket-server';
 import { UserModel } from './user';
+import { addAuthorsToMessages } from '../helpers/addAuthorsToMessages';
 
 export const ChatSchema = new Schema({
   name: { type: String, required: true, max: 50 },
@@ -29,5 +31,39 @@ ChatSchema.post('remove', (doc) => {
     console.log(err.stack);
   }
 });
+
+ChatSchema.pre('save', async function(next) {
+  try {
+    const prevChat = await ChatModel.findOne({ _id: this._id });
+    const currentChat = this;
+
+    const createdMessagesIds = lodash.difference(
+      currentChat.messages.map(a => a.id),
+      prevChat.messages.map(a => a.id),
+    );
+    const deletedMessagesIds = lodash.difference(
+      prevChat.messages.map(a => a.id),
+      currentChat.messages.map(a => a.id),
+    );
+
+    const createdMessages = await addAuthorsToMessages(
+      currentChat.messages
+        .filter(msg => createdMessagesIds.includes(msg.id))
+    );
+    const deletedMessages = await addAuthorsToMessages(
+      prevChat.messages
+        .filter(msg => deletedMessagesIds.includes(msg.id))
+    );
+
+    notifyAboutChatChanges({
+      chatId: currentChat.id,
+      createdMessages,
+      deletedMessages,
+    })
+    next();
+  } catch (err) {
+    console.error(err);
+  }
+})
 
 export const ChatModel = model('Chat', ChatSchema);

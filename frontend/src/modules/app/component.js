@@ -6,12 +6,15 @@ import routes from 'routes';
 import NotFoundPageRoute from 'routes/not-found-page';
 import { getAuthToken } from 'api/localStorage';
 import history from 'api/browserHistory';
+import { initializeWebsocketConnection } from 'api/websocket.js';
 import * as urls from 'appConfig/appUrls';
 
 import styles from './styles.scss';
 
 export default class App extends React.Component {
   componentDidMount() {
+    initializeWebsocketConnection();
+
     if (!navigator.cookieEnabled) {
       alert('Включите cookie для комфортной работы с этим сайтом');
     }
