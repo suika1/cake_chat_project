@@ -66,6 +66,7 @@ module.exports = {
     'camelcase': 'off',
     'no-param-reassign': 'off',
     'react/no-did-update-set-state': 'off',
+    'import/no-mutable-exports': 'off',
 
     // warn
     'import/no-cycle': 'warn',
