@@ -8,6 +8,7 @@ import * as AT from './action-types';
 import * as actions from './actions';
 
 import messageActionsSagas from './messageActions/sagas';
+import inviteUsersToChatSagas from './inviteUsersToChat/sagas';
 
 function* getMessages({
   payload: {
@@ -60,6 +61,7 @@ const ChatSagas = [
   watchGetMessages,
   watchEditChat,
   ...messageActionsSagas,
+  ...inviteUsersToChatSagas,
 ];
 
 export default ChatSagas;

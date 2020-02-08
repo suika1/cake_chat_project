@@ -9,6 +9,7 @@ import { subscribeToChat } from 'api/websocket';
 import MessageForm from '../messageForm';
 import DeleteChat from './deleteChat';
 import RenameChat from './renameChat';
+import InviteUsersToChat from './inviteUsersToChat';
 
 import MessageActions from './messageActions';
 
@@ -106,17 +107,30 @@ export default class Chat extends React.Component {
   render() {
     const {
       match,
-      chatName,
+      chatList,
       selectedMessages,
+      currentUser,
     } = this.props;
 
     const { chatKey } = match.params;
+
+    const chat = chatList.find(a => a._id === chatKey);
+    if (!chat) {
+      return '';
+    }
+
+    const isAuthor = chat.authorId === currentUser._id;
 
     return (
       <div className={styles.chat}>
         <div className={styles.header}>
           <RenameChat chatId={chatKey} />
-          <DeleteChat chatId={chatKey} />
+          <div className={styles.rightBtnSection}>
+            <InviteUsersToChat chatId={chatKey} />
+            {isAuthor && (
+              <DeleteChat chatId={chatKey} />
+            )}
+          </div>
         </div>
         {selectedMessages.length !== 0 && (
           <React.Fragment>
