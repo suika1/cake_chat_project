@@ -86,7 +86,6 @@ class AuthForm extends React.Component {
       default:
         console.log('something go wrong');
     }
-
   }
 
   isSubmitDisabled = () => {
