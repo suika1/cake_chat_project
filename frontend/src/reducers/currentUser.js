@@ -1,5 +1,5 @@
 import { VALIDATE_USER_SUCCESS } from 'modules/chatList/action-types';
-import { LOGIN_USER_SUCCESS } from 'modules/auth-form/action-types';
+import { LOGIN_USER_SUCCESS, CREATE_USER_SUCCESS } from 'modules/auth-form/action-types';
 
 const initialState = {
   user: null,
@@ -13,6 +13,7 @@ export default (state = initialState, action) => {
         user: action.payload.user,
       }
     case LOGIN_USER_SUCCESS:
+    case CREATE_USER_SUCCESS:
       return {
         ...state,
         user: action.payload.user,
