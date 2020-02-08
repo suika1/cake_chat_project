@@ -4,6 +4,7 @@ import * as urls from './config/urls';
 import chatRoutes from './routes/api/chat';
 import messageRoutes from './routes/api/message';
 import userRoutes from './routes/api/user';
+import chatsUsersRoutes from './routes/api/chatsUsers';
 
 import middlewares from './middlewares';
 
@@ -24,6 +25,7 @@ app.use(middlewares.cors);
 app.use(urls.chatList, middlewares.checkToken, chatRoutes);
 app.use(urls.messageList, middlewares.checkToken, messageRoutes);
 app.use(urls.users, userRoutes);
+app.use(urls.chatsUsers, middlewares.checkToken, chatsUsersRoutes);
 
 app.use(middlewares.genericError);
 
