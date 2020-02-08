@@ -20,7 +20,6 @@ export default class ChatList extends React.Component {
     const {
       chatList,
       getChatList,
-      validateUser,
       location: {
         pathname,
       },
@@ -31,8 +30,6 @@ export default class ChatList extends React.Component {
     } else if (chatUrlRegexp.test(pathname)) {
       history.push(`/chats/${chatList[0]._id}`);
     }
-
-    validateUser();
   }
 
   componentDidUpdate = (prevProps, prevState) => {

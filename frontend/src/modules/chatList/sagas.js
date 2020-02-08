@@ -1,9 +1,10 @@
-import {put, call, takeEvery, takeLatest} from 'redux-saga/effects';
+import { put, call, takeEvery, takeLatest } from 'redux-saga/effects';
 
 import * as api from 'api';
 import * as urls from 'api/urls';
 import { getAuthToken, setAuthToken, setUserInfo } from 'api/localStorage'
 import { GET_MESSAGES_SUCCESS } from 'modules/chat/action-types'
+import history from 'api/browserHistory'
 
 import * as AT from './action-types';
 import * as actions from './actions';

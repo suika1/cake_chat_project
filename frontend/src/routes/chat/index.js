@@ -22,7 +22,9 @@ const ChatRoute = () => (
         },
       } = props;
 
-      if ((!getAuthToken() || getAuthToken() === '0') && pathname !== urls.authForm) return <Redirect to={{pathname: urls.authForm}} />
+      if ((!getAuthToken() || getAuthToken() === '0') && pathname !== urls.authForm) {
+        return <Redirect to={{ pathname: urls.authForm }} />
+      }
       return (
         <div className={s.chatWindowWrapper}>
           <ChatList />
