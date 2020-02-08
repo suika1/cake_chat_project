@@ -11,14 +11,35 @@ import * as urls from 'appConfig/appUrls';
 
 import styles from './styles.scss';
 
+export const authFormUrlRegexp = /\/login(\/)?$/;
+
 export default class App extends React.Component {
   componentDidMount() {
+    const {
+      // TODO: move to app reducer & actions
+      validateUser,
+    } = this.props;
+
     initializeWebsocketConnection();
+    validateUser();
 
     if (!navigator.cookieEnabled) {
       alert('Включите cookie для комфортной работы с этим сайтом');
     }
   }
+
+  componentDidUpdate = (prevProps) => {
+    const {
+      currentUser,
+    } = this.props;
+
+    if (!prevProps.currentUser
+      && currentUser
+      && authFormUrlRegexp.test(window.location.pathname)
+    ) {
+      history.push('/chats/');
+    }
+  };
 
   render() {
     return (

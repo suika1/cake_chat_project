@@ -88,7 +88,9 @@ export const getChatsWithAuthors = async ({
       userObjects: { $push: '$userObjects' },
     },
   }]);
-  const chatsForCurrentUser = chats.filter(chat => userChatList.includes(JSON.stringify(chat._id)));
+  const chatsForCurrentUser = chats
+    .filter(chat => userChatList.includes(JSON.stringify(chat._id)))
+    .sort((one, two) => one.name.toString().localeCompare(two.name.toString()));
 
   chatsForCurrentUser.forEach(chat => {
     chat.messages.forEach(message => {

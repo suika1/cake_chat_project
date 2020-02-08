@@ -12,7 +12,7 @@ const genericErrorMiddleware = (err, req, res, next) => {
 
   console.warn('--------------- Error ---------------');
   console.error(err.message);
-  console.warn('--------------------------------------');
+  console.warn('-------------------------------------');
   if (err instanceof ChatNotFoundException
     || err instanceof ChatAlreadyExistsException
     || err instanceof MessageNotFoundException) {

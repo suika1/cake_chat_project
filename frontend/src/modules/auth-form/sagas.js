@@ -26,7 +26,9 @@ function* createUser({
     if (response.ok) {
       setAuthToken(response.token);
 
-      yield put(actions.createUserSuccess());
+      yield put(actions.createUserSuccess({
+        user: response.results,
+      }));
       yield history.push('/chats');
     } else {
       throw new Error(response.error);

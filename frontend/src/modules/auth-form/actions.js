@@ -7,8 +7,11 @@ export const createUser = ({ data }) => ({
   },
 });
 
-export const createUserSuccess = () => ({
+export const createUserSuccess = ({ user }) => ({
   type: AT.CREATE_USER_SUCCESS,
+  payload: {
+    user,
+  },
 });
 
 export const createUserFailed = ({ errorMessage }) => ({

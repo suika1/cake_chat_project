@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
 
+import { validateUser } from 'modules/chatList/actions';
+
 import AppComponent from './component';
 
 const mapStateToProps = store => {
@@ -8,8 +10,8 @@ const mapStateToProps = store => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {};
+const mapDispatchToProps = {
+  validateUser,
 };
 
 export default connect(

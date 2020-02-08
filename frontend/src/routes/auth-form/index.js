@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 import AuthFormComponent from 'modules/auth-form';
 
 import * as urls from 'appConfig/appUrls';
-import { getAuthToken } from 'api/localStorage';
+import { getUserInfo } from 'api/localStorage';
 
 const AuthFormRoute = () => (
   <Route
@@ -12,7 +12,6 @@ const AuthFormRoute = () => (
     exact
     path={urls.authForm}
     render={() => {
-      if (getAuthToken() && getAuthToken() !== '0') return <Redirect to={{pathname: urls.chats}} />
       return <AuthFormComponent />
     }}
   />

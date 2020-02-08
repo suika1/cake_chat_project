@@ -5,16 +5,16 @@ import * as actions from './actions';
 import ChatRename from './component';
 
 const mapStateToProps = store => ({
-	chatName: store.currentChat.chatName,
+  chatName: store.currentChat.chatName,
 })
 
 const mapDispatchToProps = {
-	renameChat: actions.renameChat,
+  renameChat: actions.renameChat,
 }
 
 export default withRouter(
-	connect(
-		mapStateToProps,
-		mapDispatchToProps
-	)(ChatRename)
-)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ChatRename)
+);
