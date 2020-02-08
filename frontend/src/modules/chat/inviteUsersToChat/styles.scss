@@ -1,0 +1,22 @@
+.renameChatModal {
+  width: 400px;
+  min-height: 300px;
+}
+
+.select {
+  width: 100%;
+}
+
+.selectMenu {
+  max-height: 300px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.chip {
+  margin: 2;
+  background-color: #6a656545;
+}
